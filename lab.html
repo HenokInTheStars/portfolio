@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="description" content="The Lab — Experimental sandboxes, prototypes, and micro-tools exploring web primitives and AI ergonomics by Henok.">
+  <meta name="author" content="Henok">
+  <title>The Lab // Henok</title>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet & Tokens -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Tailwind CDN & Dynamic Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/lab.js" defer></script>
+</head>
+
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <!-- Accessibility Skip Link -->
+  <a class="sr-only focus:not-sr-only focus:fixed focus:top-space-sm focus:left-space-sm focus:z-[100] focus:px-space-md focus:py-space-xs focus:bg-on-surface focus:text-inverse-on-surface focus:rounded font-code text-code focus:outline-none focus:ring-1 focus:ring-primary" href="#main-content">
+    Skip to main content
+  </a>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-background/90 backdrop-blur-md border-b border-secondary-fixed">
+    <div class="h-16 max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between">
+      <!-- Brand Monogram -->
+      <div class="flex items-center gap-space-lg">
+        <a aria-label="Henok Home Index" class="min-h-[44px] min-w-[44px] flex items-center font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
+          <span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav aria-label="Primary navigation" class="flex items-center gap-space-xs sm:gap-space-sm">
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="work.html">Work</a>
+        <a aria-current="page" class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded text-on-surface border-b-2 border-primary" href="lab.html">Lab</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">Writing</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#about">About</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#contact">Contact</a>
+      </nav>
+
+      <!-- Global Actions -->
+      <div class="flex items-center gap-space-xs sm:gap-space-sm">
+        <button aria-label="Search or ask assistant" class="min-h-[36px] px-space-sm py-1 bg-surface-container border border-secondary-fixed rounded text-on-surface hover:border-primary flex items-center gap-space-xs font-code text-label-sm transition-colors" type="button">
+          <span class="material-symbols-outlined text-primary text-[16px]">search</span>
+          <span class="hidden sm:inline">Search</span>
+          <span class="px-1 py-0.5 bg-surface-container-highest text-on-surface-variant rounded text-[10px]">⌘K</span>
+        </button>
+        <button aria-label="Toggle color mode" data-action="toggle-theme" class="w-11 h-11 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary" type="button">
+          <span class="material-symbols-outlined text-[18px]">contrast</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas -->
+  <main class="w-full pt-16 bg-background max-w-[1120px] mx-auto px-space-md lg:px-margin min-h-[calc(100vh-4rem)]" id="main-content">
+    <div class="flex flex-col w-full pb-space-xl">
+
+      <!-- Page Header & Narrative Intro -->
+      <header class="py-space-xl flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+        <div class="max-w-2xl space-y-space-sm">
+          <div class="flex items-center gap-space-xs font-code text-label-sm text-primary uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-primary inline-block animate-pulse"></span>
+            <span>Index / Laboratory / Research Substrates</span>
+          </div>
+          <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">The Lab</h1>
+          <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            Small utilities, open-source prototypes, and micro-tools exploring web primitives and AI ergonomics. Deterministic sandbox artifacts engineered for rapid production evaluation.
+          </p>
+        </div>
+
+        <!-- Quick Telemetry Pill -->
+        <div class="bg-surface-container p-space-md rounded-lg flex flex-col sm:flex-row items-start sm:items-center gap-space-md shadow-sm border border-secondary-fixed/50">
+          <div class="flex flex-col">
+            <span class="font-code text-label-sm text-on-secondary-container">ACTIVE RUNNERS</span>
+            <span class="font-code text-label-md text-on-surface font-semibold">05 PROTOTYPES</span>
+          </div>
+          <div class="h-6 w-px bg-surface-variant hidden sm:block"></div>
+          <div class="flex flex-col">
+            <span class="font-code text-label-sm text-on-secondary-container">CORE RUNTIME</span>
+            <span class="font-code text-label-md text-primary font-semibold">WASM / V8 / WEB_API</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Control & Filter Bar -->
+      <section class="py-space-sm mb-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md">
+        <div class="flex items-center gap-space-xs w-full sm:w-auto">
+          <button class="px-space-md py-space-xs bg-surface-container text-on-surface rounded font-code text-label-md flex items-center gap-space-xs transition-colors shadow-sm" id="btn-view-grid" type="button">
+            <span class="material-symbols-outlined text-[16px]">grid_view</span>
+            <span>GRID</span>
+          </button>
+          <button class="px-space-md py-space-xs bg-surface-container-low text-on-surface-variant hover:text-on-surface rounded font-code text-label-md flex items-center gap-space-xs transition-colors" id="btn-view-table" type="button">
+            <span class="material-symbols-outlined text-[16px]">reorder</span>
+            <span>INDEX TABLE</span>
+          </button>
+        </div>
+        <div class="w-full sm:w-80 flex items-center bg-surface-container-low px-space-md py-space-xs rounded shadow-sm border border-secondary-fixed/50 focus-within:bg-surface-container">
+          <span class="material-symbols-outlined text-secondary text-[18px] mr-space-xs">search</span>
+          <input class="bg-transparent border-none text-on-surface font-code text-code w-full focus:outline-none placeholder:text-secondary" id="lab-search" placeholder="Filter by primitive, schema, or date..." type="text">
+          <span class="font-code text-label-sm text-on-secondary-container bg-surface-container px-1.5 py-0.5 rounded">/</span>
+        </div>
+      </section>
+
+      <!-- Interactive Sandbox Display: Primary Benchmark Tool (Live Tokenizer & Streaming Evaluator) -->
+      <article class="w-full mb-space-xl bg-surface-container-lowest p-space-lg rounded-xl shadow-md space-y-space-md border border-secondary-fixed">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-low p-space-md rounded-lg border border-secondary-fixed/50">
+          <div class="flex flex-wrap items-center gap-space-xs">
+            <span class="text-on-surface font-code text-label-md font-semibold">Live AI Telemetry &amp; Tokenizer Sandbox</span>
+            <span class="text-on-surface-variant font-code text-label-sm">·</span>
+            <span class="font-code text-label-sm text-on-surface-variant">In-Browser WASM / Web APIs</span>
+            <span class="text-on-surface-variant font-code text-label-sm">·</span>
+            <span class="px-space-xs py-0.5 bg-surface-container text-on-surface font-code text-label-sm rounded">Hugging Face Transformers.js Ready</span>
+          </div>
+          <div class="flex items-center gap-space-sm">
+            <span class="flex items-center gap-1 font-code text-label-sm text-primary">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Active Runtime
+            </span>
+            <a class="font-code text-label-sm text-on-surface hover:text-primary flex items-center gap-0.5 transition-colors" href="https://github.com/HenokInTheStars" rel="noopener noreferrer" target="_blank">
+              <span>Source</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+          <!-- Left Column: Controls, Input & Live Token Chips -->
+          <div class="lg:col-span-6 space-y-space-sm">
+            <div class="flex items-center justify-between">
+              <h2 class="font-headline-md text-headline-md text-on-surface">Interactive Tokenizer &amp; Stream Profiler</h2>
+              <!-- Vocabulary Model Selector -->
+              <select id="tokenizer-vocab-select" aria-label="Tokenizer Vocabulary Profile" class="bg-surface-container font-code text-label-sm text-on-surface border border-secondary-fixed/60 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+                <option value="gpt4o">GPT-4o (o200k_base)</option>
+                <option value="llama3">Llama 3 / Mistral (BPE 128k)</option>
+                <option value="bert">BERT (WordPiece 30k)</option>
+              </select>
+            </div>
+
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Type or select a payload below to inspect byte-boundary tokenization, character-to-token compression ratio, and live server-sent event (SSE) chunk latency curves under synthetic network pressure.
+            </p>
+
+            <!-- Prompt Input & Presets -->
+            <div class="space-y-space-xs">
+              <div class="flex items-center justify-between font-code text-label-sm text-secondary">
+                <span>PAYLOAD BUFFER:</span>
+                <div class="flex items-center gap-1">
+                  <span class="text-primary font-medium" id="stat-token-count">24 tokens</span>
+                  <span>·</span>
+                  <span id="stat-compression">5.2 chars/tok</span>
+                </div>
+              </div>
+              <textarea id="tokenizer-input" rows="3" class="w-full bg-surface-container-low border border-secondary-fixed/60 rounded-lg p-space-sm font-code text-code text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none placeholder:text-secondary" placeholder="Type text, code, or unicode to tokenize...">Evaluating real-time server-sent event (SSE) stream latency, TTFT jitter, and byte-boundary token distribution under synthetic 3G pressure.</textarea>
+
+              <!-- Sample Presets -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span class="font-code text-label-sm text-secondary">Presets:</span>
+                <button type="button" class="btn-prompt-preset px-2 py-0.5 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded font-code text-[11px] transition-colors" data-prompt="Evaluating real-time server-sent event (SSE) stream latency, TTFT jitter, and byte-boundary token distribution under synthetic 3G pressure.">SSE Latency</button>
+                <button type="button" class="btn-prompt-preset px-2 py-0.5 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded font-code text-[11px] transition-colors" data-prompt="const stream = new ReadableStream({ start(controller) { controller.enqueue(new TextEncoder().encode('data: {\x22ttft\x22: 142}\n\n')); } });">Code &amp; JSON</button>
+                <button type="button" class="btn-prompt-preset px-2 py-0.5 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded font-code text-[11px] transition-colors" data-prompt="Exploring multi-byte unicode tokenization with emojis 🚀 ✨ and Amharic script: ሰላም ለዓለም!">Unicode &amp; Multilingual 🌍</button>
+              </div>
+            </div>
+
+            <!-- Tokenizer Token Boundary Chips Preview -->
+            <div class="space-y-1 pt-space-xs">
+              <div class="flex items-center justify-between font-code text-label-sm text-secondary">
+                <span>TOKEN BOUNDARY VISUALIZER (BPE):</span>
+                <span class="text-[11px]">Hover token for ID</span>
+              </div>
+              <div id="token-chips-container" class="min-h-[56px] max-h-36 overflow-y-auto p-space-xs bg-surface-container-low border border-secondary-fixed/50 rounded-lg flex flex-wrap gap-1 font-code text-[12px] leading-relaxed">
+                <!-- Dynamically populated token chips -->
+              </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="pt-space-xs flex items-center gap-space-sm">
+              <button class="px-space-md py-space-xs bg-primary text-on-primary rounded font-code text-label-md flex items-center gap-space-xs hover:opacity-90 transition-opacity shadow-sm" id="btn-run-simulation" type="button">
+                <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                <span>DISPATCH TOKEN STREAM</span>
+              </button>
+              <button class="px-space-sm py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface rounded font-code text-label-md transition-colors" id="btn-reset-stream" type="button">
+                <span>RESET</span>
+              </button>
+              <span class="font-code text-label-sm text-secondary font-medium" id="sim-status">READY · IDLE</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Sparkline, Live Stream Terminal & Metrics -->
+          <div class="lg:col-span-6 space-y-space-sm">
+            <!-- Telemetry Graph Header -->
+            <div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm border border-secondary-fixed/50">
+              <div class="flex items-center justify-between font-code text-label-sm">
+                <span class="text-on-secondary-container uppercase">Inter-Token Delta Jitter Profile (MS)</span>
+                <span class="text-primary font-semibold" id="telemetry-ttft">TTFT: 142ms</span>
+              </div>
+              <!-- Inline SVG Latency Distribution -->
+              <div class="w-full h-28 flex items-end">
+                <svg class="w-full h-full overflow-visible text-primary" preserveAspectRatio="none" viewBox="0 0 400 100">
+                  <defs>
+                    <linearGradient id="streamGrad" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="currentColor" stop-opacity="0.25"></stop>
+                      <stop offset="100%" stop-color="currentColor" stop-opacity="0.0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 0,90 L 0,65 L 40,75 L 80,45 L 120,55 L 160,20 L 200,60 L 240,35 L 280,40 L 320,15 L 360,30 L 400,25 L 400,90 Z" fill="url(#streamGrad)" id="stream-area"></path>
+                  <path d="M 0,65 L 40,75 L 80,45 L 120,55 L 160,20 L 200,60 L 240,35 L 280,40 L 320,15 L 360,30 L 400,25" fill="none" id="stream-line" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                  <circle id="spark-point-1" class="fill-primary" cx="160" cy="20" r="3"></circle>
+                  <circle id="spark-point-2" class="fill-primary" cx="320" cy="15" r="3"></circle>
+                </svg>
+              </div>
+              <!-- Metric Readout Tiles -->
+              <div class="grid grid-cols-3 gap-space-xs pt-space-xs font-code">
+                <div class="bg-surface-container-lowest p-space-xs rounded flex flex-col border border-secondary-fixed/40">
+                  <span class="text-[11px] text-secondary">MEAN_DELTA</span>
+                  <span class="text-label-md text-on-surface font-semibold" id="val-mean-delta">18.4 ms</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-xs rounded flex flex-col border border-secondary-fixed/40">
+                  <span class="text-[11px] text-secondary">CHUNKS</span>
+                  <span class="text-label-md text-on-surface font-semibold" id="val-chunk-count">24 pkts</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-xs rounded flex flex-col border border-secondary-fixed/40">
+                  <span class="text-[11px] text-secondary">VARIANCE</span>
+                  <span class="text-label-md text-on-surface font-semibold" id="val-variance">σ 4.21</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Streaming Emission Terminal -->
+            <div class="bg-surface-container-low p-space-sm rounded-lg border border-secondary-fixed/50 font-code text-label-sm space-y-1">
+              <div class="flex items-center justify-between text-secondary border-b border-secondary-fixed/40 pb-1">
+                <span class="flex items-center gap-1.5 text-primary text-[11px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+                  <span>LIVE SSE TOKEN EMISSION BUFFER</span>
+                </span>
+                <span class="text-[11px]" id="stream-token-progress">0 / 0 TOKENS</span>
+              </div>
+              <div id="streaming-terminal" class="h-24 overflow-y-auto font-code text-xs text-on-surface p-1.5 bg-surface-container-lowest rounded border border-secondary-fixed/30 whitespace-pre-wrap leading-relaxed select-text">
+                <span class="text-secondary italic">Click "DISPATCH TOKEN STREAM" to begin in-flight chunk emission...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- VIEW A: Cards Grid Container -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-space-lg" id="lab-grid-container">
+        <!-- Log Entry 1: SSE Buffer Chunk Profiler -->
+        <div class="tool-card bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow group border border-secondary-fixed/40" data-date="2026-01-12" data-tags="sse chunk latency buffer streaming" data-title="SSE Buffer Chunk Profiler">
+          <div class="space-y-space-sm">
+            <div class="flex items-center justify-between font-code text-label-sm text-on-surface-variant">
+              <span>Build log · Web Streams</span>
+              <span>Jan 12, 2026</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">SSE Buffer Chunk Profiler</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Micro-benchmark measuring byte boundary fragmentation and token burst jitter under synthetic 3G conditions.
+            </p>
+            <div class="pt-space-xs flex items-center gap-space-xs font-code text-label-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[14px]">commit</span>
+              <span>commit 9a4e21d · prompt: stream-chunk-harness.md</span>
+            </div>
+          </div>
+          <div class="pt-space-md space-y-space-sm border-t border-secondary-fixed/50 mt-space-md">
+            <div class="flex items-center justify-between font-code text-label-sm">
+              <span class="text-on-surface-variant">Target: Claude 3.5 Sonnet &amp; GPT-4o</span>
+              <div class="flex items-center gap-space-sm">
+                <button class="text-primary hover:underline flex items-center gap-0.5" onclick="simulateTokenStream()">Live demo <span class="material-symbols-outlined text-[14px]">play_arrow</span></button>
+                <a class="text-on-surface hover:text-primary flex items-center gap-0.5" href="https://github.com/HenokInTheStars" rel="noopener noreferrer" target="_blank">Source <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Log Entry 2: SMS Spam Detection Classifier -->
+        <div class="tool-card bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow group border border-secondary-fixed/40" data-date="2025-11-04" data-tags="nlp tfidf naive bayes sms classification" data-title="SMS Spam Detection Classifier">
+          <div class="space-y-space-sm">
+            <div class="flex items-center justify-between font-code text-label-sm text-on-surface-variant">
+              <span>Model Log · NLP Classification</span>
+              <span>Nov 04, 2025</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">SMS Spam Detection Pipeline</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              High-precision TF-IDF + Multinomial Naive Bayes text classifier trained on 5,572 messages, achieving 99.24% precision to protect legitimate communications.
+            </p>
+            <div class="pt-space-xs flex items-center gap-space-xs font-code text-label-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[14px]">verified</span>
+              <span>Accuracy: 98.21% · F1-Score: 92.86%</span>
+            </div>
+
+            <!-- Interactive In-Browser Spam Classifier Console -->
+            <div class="mt-space-md pt-space-sm border-t border-secondary-fixed/50 space-y-space-xs">
+              <div class="flex items-center justify-between font-code text-label-sm">
+                <span class="text-primary font-medium flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                  <span>In-Browser NLP Inference</span>
+                </span>
+                <span class="text-secondary text-[11px]" id="spam-latency">~2.1ms (V8 / WASM)</span>
+              </div>
+
+              <!-- Input & Quick Samples -->
+              <div class="space-y-1">
+                <input id="spam-input" type="text"
+                  class="w-full bg-surface-container-lowest border border-secondary-fixed/60 rounded px-space-sm py-1.5 font-code text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-secondary text-xs sm:text-sm transition-colors"
+                  placeholder="Type SMS or phishing message to classify..."
+                  value="URGENT! You won £1,000 cash prize. Reply CLAIM to 88088 now!">
+                <div class="flex flex-wrap gap-1 pt-0.5">
+                  <button type="button" class="btn-spam-sample px-2 py-0.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-code text-[11px] transition-colors" data-sample="URGENT! You won £1,000 cash prize. Reply CLAIM to 88088 now!">Spam ⚠️</button>
+                  <button type="button" class="btn-spam-sample px-2 py-0.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-code text-[11px] transition-colors" data-sample="Hey Henok, are we still meeting at 3pm to review the streaming architecture?">Safe Ham ✅</button>
+                  <button type="button" class="btn-spam-sample px-2 py-0.5 rounded bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-code text-[11px] transition-colors" data-sample="Security Alert: Unusual sign-in detected on your account. Verify identity immediately at bit.ly/secure-login">Phishing Link ⚠️</button>
+                </div>
+              </div>
+
+              <!-- Prediction Readout Card -->
+              <div id="spam-result-box" class="bg-surface-container-lowest p-space-xs rounded border border-secondary-fixed/50 font-code text-label-sm space-y-1 mt-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-secondary text-[11px]">CLASSIFICATION:</span>
+                  <span id="spam-label-badge" class="px-2 py-0.5 rounded font-bold text-xs bg-error/15 text-error border border-error/30">SPAM (99.4%)</span>
+                </div>
+                <!-- Confidence Probability Bar -->
+                <div class="space-y-0.5">
+                  <div class="flex justify-between text-[10px] text-secondary">
+                    <span>Legitimate (Ham)</span>
+                    <span>Spam / Suspicious</span>
+                  </div>
+                  <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden flex">
+                    <div id="spam-bar-ham" class="bg-primary h-full transition-all duration-300" style="width: 1%;"></div>
+                    <div id="spam-bar-spam" class="bg-error h-full transition-all duration-300" style="width: 99%;"></div>
+                  </div>
+                </div>
+                <div class="text-[10px] text-secondary flex flex-wrap items-center justify-between pt-0.5 gap-1">
+                  <span id="spam-triggers" class="truncate max-w-[220px]">Triggers: urgent, won, prize, claim</span>
+                  <button id="btn-load-hf" type="button" class="text-primary hover:underline inline-flex items-center gap-0.5 text-[10px] cursor-pointer">
+                    <span id="hf-btn-text">Load HF Model</span>
+                    <span class="material-symbols-outlined text-[12px]">bolt</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pt-space-md space-y-space-sm border-t border-secondary-fixed/50 mt-space-md">
+            <div class="flex items-center justify-between font-code text-label-sm">
+              <span class="text-on-surface-variant">Scikit-Learn / Python / In-Browser</span>
+              <div class="flex items-center gap-space-sm">
+                <a class="text-primary hover:underline flex items-center gap-0.5" href="work.html#spam-detector">Case study <span class="material-symbols-outlined text-[14px]">open_in_new</span></a>
+                <a class="text-on-surface hover:text-primary flex items-center gap-0.5" href="https://github.com/HenokInTheStars/Spam-Detector" rel="noopener noreferrer" target="_blank">Source <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Log Entry 3: Time-Series Anomaly Detection (MAD vs Z-Score) -->
+        <div class="tool-card bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow group border border-secondary-fixed/40" data-date="2025-08-18" data-tags="time-series anomaly detection zscore mad knn" data-title="Time-Series Anomaly Detection (MAD vs Z-Score)">
+          <div class="space-y-space-sm">
+            <div class="flex items-center justify-between font-code text-label-sm text-on-surface-variant">
+              <span>Analysis Log · Statistical Observability</span>
+              <span>Aug 18, 2025</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Anomaly Detection &amp; MAD Masking Mitigation</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Diagnostic observability suite evaluating two years of continuous sales telemetry. Demonstrates standard deviation masking breakdowns and resolves via Modified Z-Score (MAD).
+            </p>
+            <div class="pt-space-xs flex items-center gap-space-xs font-code text-label-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[14px]">insights</span>
+              <span>2 Years Daily Observations · 4 Products</span>
+            </div>
+          </div>
+          <div class="pt-space-md space-y-space-sm border-t border-secondary-fixed/50 mt-space-md">
+            <div class="flex items-center justify-between font-code text-label-sm">
+              <span class="text-on-surface-variant">NumPy / SciPy / KNN</span>
+              <div class="flex items-center gap-space-sm">
+                <a class="text-primary hover:underline flex items-center gap-0.5" href="work.html#anomaly-detection">Case study <span class="material-symbols-outlined text-[14px]">open_in_new</span></a>
+                <a class="text-on-surface hover:text-primary flex items-center gap-0.5" href="https://github.com/HenokInTheStars/anomaly-detection" rel="noopener noreferrer" target="_blank">Source <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Log Entry 4: Ethiopian Airlines Flight Price Feature Estimator -->
+        <div class="tool-card bg-surface-container-low p-space-lg rounded-xl flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow group border border-secondary-fixed/40" data-date="2025-05-22" data-tags="regression machine learning lightgbm xgboost streamlit" data-title="Ethiopian Airlines Flight Price Feature Estimator">
+          <div class="space-y-space-sm">
+            <div class="flex items-center justify-between font-code text-label-sm text-on-surface-variant">
+              <span>Model Log · Predictive Regression</span>
+              <span>May 22, 2025</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Flight Price Feature Estimator &amp; Streamlit App</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Regression modeling comparing 11 algorithms predicting Ethiopian Airlines ticket prices from route, cabin class, timing, and aircraft features with interactive Streamlit deployment.
+            </p>
+            <div class="pt-space-xs flex items-center gap-space-xs font-code text-label-sm text-on-surface-variant">
+              <span class="material-symbols-outlined text-[14px]">tune</span>
+              <span>11 Models Evaluated · Sub-12ms Serving</span>
+            </div>
+          </div>
+          <div class="pt-space-md space-y-space-sm border-t border-secondary-fixed/50 mt-space-md">
+            <div class="flex items-center justify-between font-code text-label-sm">
+              <span class="text-on-surface-variant">LightGBM / XGBoost / Streamlit</span>
+              <div class="flex items-center gap-space-sm">
+                <a class="text-primary hover:underline flex items-center gap-0.5" href="work.html#flight-price">Case study <span class="material-symbols-outlined text-[14px]">open_in_new</span></a>
+                <a class="text-on-surface hover:text-primary flex items-center gap-0.5" href="https://github.com/HenokInTheStars/flight-price-prediction" rel="noopener noreferrer" target="_blank">Source <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Log Entry 5: KeywordSense Conversational Agent -->
+        <div class="tool-card md:col-span-2 bg-surface-container-low p-space-lg rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-space-lg shadow-sm hover:shadow-md transition-shadow group border border-secondary-fixed/40" data-date="2025-02-15" data-tags="nlp chatbot intent sentiment textblob python" data-title="KeywordSense Conversational Agent">
+          <div class="max-w-xl space-y-space-sm">
+            <div class="flex items-center gap-space-sm font-code text-label-sm text-on-surface-variant">
+              <span>Prototype Log · Conversational AI</span>
+              <span>·</span>
+              <span>Feb 15, 2025</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">KeywordSense Intent &amp; Sentiment Fallback</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Lightweight conversational CLI engine combining keyword intent pattern matching with TextBlob sentiment polarity analysis as an empathetic fallback loop.
+            </p>
+            <div class="flex items-center gap-space-xs font-code text-label-sm text-on-surface-variant pt-space-xs">
+              <span class="material-symbols-outlined text-[14px]">smart_toy</span>
+              <span>Sentiment Polarity Fallback · Extensible Intent Dictionaries</span>
+            </div>
+          </div>
+          <div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col gap-space-sm min-w-[280px] sm:min-w-[320px] border border-secondary-fixed/40">
+            <div class="flex items-center justify-between font-code text-label-sm">
+              <span class="text-on-surface-variant font-medium">Pipeline Strategy</span>
+              <span class="text-primary font-semibold">Intent + Sentiment</span>
+            </div>
+
+            <!-- Live Utterance Evaluator -->
+            <div class="space-y-1">
+              <label for="intent-input" class="text-[11px] font-code text-secondary block">LIVE UTTERANCE PROBE:</label>
+              <input id="intent-input" type="text"
+                class="w-full bg-surface-container-low border border-secondary-fixed/60 rounded px-2 py-1 font-code text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-secondary"
+                placeholder="Test utterance e.g. I need help fixing database..."
+                value="The server connection is failing repeatedly and I'm really frustrated.">
+            </div>
+
+            <div class="space-y-space-xs pt-1 border-t border-secondary-fixed/40">
+              <div class="flex justify-between font-code text-xs text-on-surface">
+                <span class="text-secondary">Intent:</span>
+                <span id="intent-matched" class="text-primary font-bold">TROUBLESHOOT_ERRORS</span>
+              </div>
+              <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+                <div id="intent-bar" class="bg-primary h-full w-[88%] rounded-full transition-all duration-300"></div>
+              </div>
+              <div class="flex justify-between font-code text-xs text-on-surface pt-1">
+                <span class="text-secondary">Sentiment Polarity:</span>
+                <span id="sentiment-score" class="text-tertiary font-bold">-0.72 (Empathetic Loop)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-space-xs font-code text-label-sm border-t border-secondary-fixed/50 mt-space-xs">
+              <span class="text-secondary font-code text-xs">TextBlob / Python / In-Browser</span>
+              <a class="text-on-surface hover:text-primary flex items-center gap-0.5" href="https://github.com/HenokInTheStars/keywordsense-chatbot" rel="noopener noreferrer" target="_blank">Source <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW B: Editorial Table Layout -->
+      <section class="hidden w-full overflow-x-auto bg-surface-container-lowest rounded-xl shadow-sm border border-secondary-fixed" id="lab-table-container">
+        <table class="w-full text-left font-body-md text-body-md">
+          <thead>
+            <tr class="bg-surface-container text-on-secondary-container font-code text-label-sm uppercase tracking-wider">
+              <th class="py-space-md px-space-md">ID</th>
+              <th class="py-space-md px-space-md">Tool / Primitive</th>
+              <th class="py-space-md px-space-md">Application Domain</th>
+              <th class="py-space-md px-space-md">Published</th>
+              <th class="py-space-md px-space-md text-right">Repository</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y-0" id="table-body">
+            <tr class="hover:bg-surface-container-low transition-colors" data-date="2026-01-12" data-tags="sse chunk latency streaming" data-title="Token streaming visualizer">
+              <td class="py-space-md px-space-md font-code text-label-sm text-primary">#01</td>
+              <td class="py-space-md px-space-md">
+                <div class="font-headline-md text-body-lg text-on-surface font-semibold">SSE Buffer Chunk Profiler</div>
+                <div class="font-body-md text-body-md text-on-surface-variant">Evaluates byte fragmentation and TTFT latency across LLM streams</div>
+              </td>
+              <td class="py-space-md px-space-md">
+                <span class="font-code text-label-sm bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">Streams / Web API</span>
+              </td>
+              <td class="py-space-md px-space-md font-code text-label-sm text-secondary">2026-01-12</td>
+              <td class="py-space-md px-space-md text-right font-code text-label-sm">
+                <a class="text-primary hover:underline inline-flex items-center gap-0.5" href="lab.html" onclick="simulateTokenStream()">
+                  <span>demo</span>
+                  <span class="material-symbols-outlined text-[14px]">play_arrow</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors" data-date="2025-11-04" data-tags="nlp tfidf naive bayes sms classification" data-title="SMS Spam Detection Pipeline">
+              <td class="py-space-md px-space-md font-code text-label-sm text-primary">#EXP-02</td>
+              <td class="py-space-md px-space-md">
+                <div class="font-headline-md text-body-lg text-on-surface font-semibold">SMS Spam Detection Pipeline</div>
+                <div class="font-body-md text-body-md text-on-surface-variant">TF-IDF + Naive Bayes text classifier achieving 99.24% precision</div>
+              </td>
+              <td class="py-space-md px-space-md">
+                <span class="font-code text-label-sm bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">NLP / Scikit-Learn</span>
+              </td>
+              <td class="py-space-md px-space-md font-code text-label-sm text-secondary">2025-11-04</td>
+              <td class="py-space-md px-space-md text-right font-code text-label-sm">
+                <a class="text-primary hover:underline inline-flex items-center gap-0.5" href="https://github.com/HenokInTheStars/Spam-Detector" rel="noopener noreferrer" target="_blank">
+                  <span>code</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors" data-date="2025-08-18" data-tags="time-series anomaly detection zscore mad knn" data-title="Anomaly Detection & MAD Masking">
+              <td class="py-space-md px-space-md font-code text-label-sm text-primary">#EXP-03</td>
+              <td class="py-space-md px-space-md">
+                <div class="font-headline-md text-body-lg text-on-surface font-semibold">Anomaly Detection &amp; MAD Masking Mitigation</div>
+                <div class="font-body-md text-body-md text-on-surface-variant">Diagnoses standard deviation masking with Modified Z-Score &amp; KNN</div>
+              </td>
+              <td class="py-space-md px-space-md">
+                <span class="font-code text-label-sm bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">Time-Series / Stats</span>
+              </td>
+              <td class="py-space-md px-space-md font-code text-label-sm text-secondary">2025-08-18</td>
+              <td class="py-space-md px-space-md text-right font-code text-label-sm">
+                <a class="text-primary hover:underline inline-flex items-center gap-0.5" href="https://github.com/HenokInTheStars/anomaly-detection" rel="noopener noreferrer" target="_blank">
+                  <span>code</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors" data-date="2025-05-22" data-tags="regression machine learning lightgbm xgboost streamlit" data-title="Flight Price Feature Estimator">
+              <td class="py-space-md px-space-md font-code text-label-sm text-primary">#EXP-04</td>
+              <td class="py-space-md px-space-md">
+                <div class="font-headline-md text-body-lg text-on-surface font-semibold">Flight Price Feature Estimator</div>
+                <div class="font-body-md text-body-md text-on-surface-variant">11-model regression comparison deployed with interactive Streamlit UI</div>
+              </td>
+              <td class="py-space-md px-space-md">
+                <span class="font-code text-label-sm bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">ML / Streamlit</span>
+              </td>
+              <td class="py-space-md px-space-md font-code text-label-sm text-secondary">2025-05-22</td>
+              <td class="py-space-md px-space-md text-right font-code text-label-sm">
+                <a class="text-primary hover:underline inline-flex items-center gap-0.5" href="https://github.com/HenokInTheStars/flight-price-prediction" rel="noopener noreferrer" target="_blank">
+                  <span>code</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors" data-date="2025-02-15" data-tags="nlp chatbot intent sentiment textblob python" data-title="KeywordSense Intent & Sentiment Agent">
+              <td class="py-space-md px-space-md font-code text-label-sm text-primary">#EXP-05</td>
+              <td class="py-space-md px-space-md">
+                <div class="font-headline-md text-body-lg text-on-surface font-semibold">KeywordSense Intent &amp; Sentiment Agent</div>
+                <div class="font-body-md text-body-md text-on-surface-variant">CLI intent matching engine with TextBlob sentiment polarity fallback loop</div>
+              </td>
+              <td class="py-space-md px-space-md">
+                <span class="font-code text-label-sm bg-surface-container px-space-xs py-0.5 rounded text-on-surface-variant">Conversational AI</span>
+              </td>
+              <td class="py-space-md px-space-md font-code text-label-sm text-secondary">2025-02-15</td>
+              <td class="py-space-md px-space-md text-right font-code text-label-sm">
+                <a class="text-primary hover:underline inline-flex items-center gap-0.5" href="https://github.com/HenokInTheStars/keywordsense-chatbot" rel="noopener noreferrer" target="_blank">
+                  <span>code</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Editorial Substrate Manifest Footer Note -->
+      <footer class="mt-space-xl p-space-lg bg-surface-container-low rounded-xl flex flex-col sm:flex-row items-baseline justify-between gap-space-md border border-secondary-fixed/50">
+        <div class="space-y-space-xs max-w-xl">
+          <div class="font-code text-label-sm text-primary uppercase tracking-wider font-semibold">METHODOLOGY &amp; PHILOSOPHY</div>
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            All experiments are deployed without external telemetry trackers or vendor analytics. Source targets adhere strictly to modern web standards (ES Modules, WebAssembly, and standard DOM Streams).
+          </p>
+        </div>
+        <div class="font-code text-label-sm text-secondary shrink-0">
+          VERSION: 2026.1.0-STABLE
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Footer / Colophon -->
+  <footer class="w-full border-t border-secondary-fixed bg-surface-container-low">
+    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="about">
+      <div class="space-y-space-xs">
+        <p class="font-code text-label-md text-on-surface tracking-tight uppercase">Colophon &amp; Dispatches</p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+          Engineered by Henok for deterministic execution and technical rigor. Set in Newsreader, Geist, &amp; JetBrains Mono.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-space-md sm:gap-space-lg">
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">RSS FEED</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="docs/DESIGN.md">DESIGN SPEC</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://github.com/HenokInTheStars" target="_blank" rel="noopener">GITHUB</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="mailto:hello@example.com">CONTACT</a>
+      </div>
+    </div>
+    <div class="border-t border-secondary-fixed/50 py-space-md">
+      <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between text-on-surface-variant font-code text-label-sm">
+        <span>© 2026 Henok</span>
+        <span>PRECISION SYSTEMS ARCHITECTURE</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Technical Editorial Design System - Custom Tokens & Global Styles
+   ========================================================================== */
+
+:root {
+  /* Light Theme (Default Alabaster Editorial) */
+  --color-background: #fcf9f8;
+  --color-on-background: #1c1b1b;
+  --color-surface: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-bright: #fcf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-variant: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #3e4947;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-outline: #6e7977;
+  --color-outline-variant: #bdc9c6;
+  --color-surface-tint: #006a63;
+  --color-primary: #005c55;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0f766e;
+  --color-on-primary-container: #a3faef;
+  --color-primary-fixed: #9cf2e8;
+  --color-primary-fixed-dim: #80d5cb;
+  --color-on-primary-fixed: #00201d;
+  --color-on-primary-fixed-variant: #00504a;
+  --color-inverse-primary: #80d5cb;
+  --color-secondary: #5f5f59;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e4e3db;
+  --color-on-secondary-container: #65655e;
+  --color-secondary-fixed: #e4e3db;
+  --color-secondary-fixed-dim: #c8c7bf;
+  --color-on-secondary-fixed: #1b1c17;
+  --color-on-secondary-fixed-variant: #474741;
+  --color-tertiary: #7f4025;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #9c573a;
+  --color-on-tertiary-container: #ffe5db;
+  --color-tertiary-fixed: #ffdbce;
+  --color-tertiary-fixed-dim: #ffb598;
+  --color-on-tertiary-fixed: #370e00;
+  --color-on-tertiary-fixed-variant: #72361b;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+}
+
+html.dark {
+  /* Dark Theme (Obsidian & Carbon Technical) */
+  --color-background: #0e0f11;
+  --color-on-background: #ededed;
+  --color-surface: #17181b;
+  --color-surface-dim: #090a0c;
+  --color-surface-bright: #1e1f23;
+  --color-surface-container-lowest: #0e0f11;
+  --color-surface-container-low: #151619;
+  --color-surface-container: #1b1c20;
+  --color-surface-container-high: #222328;
+  --color-surface-container-highest: #28292e;
+  --color-surface-variant: #26272b;
+  --color-on-surface: #ededed;
+  --color-on-surface-variant: #a1a1aa;
+  --color-inverse-surface: #ededed;
+  --color-inverse-on-surface: #17181b;
+  --color-outline: #52525b;
+  --color-outline-variant: #27272a;
+  --color-surface-tint: #2dd4bf;
+  --color-primary: #2dd4bf;
+  --color-on-primary: #042f2e;
+  --color-primary-container: #0f766e;
+  --color-on-primary-container: #ccfbf1;
+  --color-primary-fixed: #2dd4bf;
+  --color-primary-fixed-dim: #14b8a6;
+  --color-on-primary-fixed: #042f2e;
+  --color-on-primary-fixed-variant: #0f766e;
+  --color-inverse-primary: #005c55;
+  --color-secondary: #9ca3af;
+  --color-on-secondary: #111827;
+  --color-secondary-container: #26272b;
+  --color-on-secondary-container: #d1d5db;
+  --color-secondary-fixed: #26272b;
+  --color-secondary-fixed-dim: #1f2024;
+  --color-on-secondary-fixed: #f3f4f6;
+  --color-on-secondary-fixed-variant: #9ca3af;
+  --color-tertiary: #f97316;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #7c2d12;
+  --color-on-tertiary-container: #ffedd5;
+  --color-tertiary-fixed: #ffedd5;
+  --color-tertiary-fixed-dim: #fed7aa;
+  --color-on-tertiary-fixed: #431407;
+  --color-on-tertiary-fixed-variant: #9a3412;
+  --color-error: #f87171;
+  --color-on-error: #450a0a;
+  --color-error-container: #7f1d1d;
+  --color-on-error-container: #fecaca;
+}
+
+/* Global Reset & Smooth Font Rendering */
+html {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-container-low);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* Command Palette Modal Transitions */
+#command-palette-backdrop {
+  transition: opacity 0.15s ease-out;
+}
+#command-palette-modal {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease-out;
+}
+
+/* Active Navigation State Underline */
+.nav-link.active {
+  color: var(--color-on-surface);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* Smooth Interactive Focus Rings */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}

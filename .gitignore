@@ -1,0 +1,15 @@
+# OS Metadata
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment & Dependencies
+.env
+.env.local
+node_modules/

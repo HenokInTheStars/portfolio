@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="description" content="Production web applications, streaming interfaces, and applied AI systems by Henok. Engineered for deterministic reliability and sub-second latency.">
+  <meta name="author" content="Henok">
+  <title>Work &amp; Systems // Henok</title>
+
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet & Tokens -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Tailwind CDN & Dynamic Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/work.js" defer></script>
+</head>
+
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <!-- Accessibility Skip Link -->
+  <a class="sr-only focus:not-sr-only focus:fixed focus:top-space-sm focus:left-space-sm focus:z-[100] focus:px-space-md focus:py-space-xs focus:bg-on-surface focus:text-inverse-on-surface focus:rounded font-code text-code focus:outline-none focus:ring-1 focus:ring-primary" href="#main-content">
+    Skip to main content
+  </a>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-background/90 backdrop-blur-md border-b border-secondary-fixed">
+    <div class="h-16 max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between">
+      <!-- Brand Monogram -->
+      <div class="flex items-center gap-space-lg">
+        <a aria-label="Henok Home Index" class="min-h-[44px] min-w-[44px] flex items-center font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
+          <span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav aria-label="Primary navigation" class="flex items-center gap-space-xs sm:gap-space-sm">
+        <a aria-current="page" class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded text-on-surface border-b-2 border-primary" href="work.html">Work</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="lab.html">Lab</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">Writing</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#about">About</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#contact">Contact</a>
+      </nav>
+
+      <!-- Global Actions -->
+      <div class="flex items-center gap-space-xs sm:gap-space-sm">
+        <button aria-label="Search or ask assistant" class="min-h-[36px] px-space-sm py-1 bg-surface-container border border-secondary-fixed rounded text-on-surface hover:border-primary flex items-center gap-space-xs font-code text-label-sm transition-colors" type="button">
+          <span class="material-symbols-outlined text-primary text-[16px]">search</span>
+          <span class="hidden sm:inline">Search</span>
+          <span class="px-1 py-0.5 bg-surface-container-highest text-on-surface-variant rounded text-[10px]">⌘K</span>
+        </button>
+        <button aria-label="Toggle color mode" data-action="toggle-theme" class="w-11 h-11 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary" type="button">
+          <span class="material-symbols-outlined text-[18px]">contrast</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas -->
+  <main class="w-full pt-16 bg-background max-w-[1120px] mx-auto px-space-md lg:px-margin min-h-[calc(100vh-4rem)]" id="main-content">
+    <div class="flex flex-col w-full pb-space-xl">
+
+      <!-- Editorial Header Zone -->
+      <section class="py-space-xl">
+        <div class="flex flex-col gap-space-xs">
+          <div class="flex items-center gap-space-sm text-primary">
+            <span class="font-code text-label-sm tracking-wider uppercase bg-surface-container text-on-surface-variant px-space-sm py-0.5 rounded border border-secondary-fixed">
+              SELECTED WORK
+            </span>
+            <span class="font-code text-label-sm text-secondary">CASE STUDIES &amp; PRODUCTION SYSTEMS</span>
+          </div>
+          <h1 class="font-display text-display text-on-surface tracking-tight mt-space-xs">Work &amp; Systems</h1>
+          <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-space-xs">
+            Production web applications, streaming interfaces, and applied AI systems engineered for deterministic reliability, sub-second latency, and rigorous evaluation pipelines.
+          </p>
+        </div>
+
+        <!-- Telemetry & Filter Bar -->
+        <div class="mt-space-lg p-space-md bg-surface-container-low rounded-xl flex flex-wrap items-center justify-between gap-space-md shadow-sm border border-secondary-fixed/50">
+          <div class="flex flex-wrap items-center gap-space-xs sm:gap-space-sm" id="tag-filters">
+            <button class="px-space-sm py-1 rounded bg-on-surface text-inverse-on-surface font-code text-label-sm filter-btn transition-colors" data-filter="all">ALL [5]</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="fullstack-ai">FULL-STACK &amp; AI</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="ml-regression">ML &amp; REGRESSION</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="nlp-evals">NLP &amp; EVALS</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="anomaly-clustering">ANOMALY &amp; CLUSTERING</button>
+          </div>
+          <div class="flex items-center gap-space-lg font-code text-label-sm text-secondary">
+            <div class="flex items-center gap-space-xs">
+              <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              <span>5 PRODUCTION SYSTEMS</span>
+            </div>
+            <div class="hidden sm:flex items-center gap-space-xs">
+              <span class="material-symbols-outlined text-[16px] text-primary">bolt</span>
+              <span>p99 &lt; 95ms</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project Stream -->
+      <div class="flex flex-col gap-space-xl" id="projects-container">
+
+        <!-- PROJECT 1: SMART FRONT DESK SYSTEM -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="fullstack-ai" id="smart-front-desk">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">01 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Case Study</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">&lt; 95ms Latency</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>STACK: FASTAPI / PYTHON</span>
+                <span>ASYNC EVENT QUEUE</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+              <div class="lg:col-span-7 flex flex-col gap-space-xs">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                  <a class="hover:text-primary transition-colors" href="#breakdown-1">Smart Front Desk System</a>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                  Asynchronous full-stack automation platform streamlining visitor intake, check-in registration, lobby telemetry, and staff dispatching with sub-100ms API response latency.
+                </p>
+                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-secondary uppercase w-12">Web:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Modern Web UI</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Tailwind CSS</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">WebSocket Telemetry</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Stateful FSM</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-primary uppercase w-12">Backend:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">FastAPI / Python 3.11</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Pydantic V2 Schemas</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Async Event Workers</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Webhook Dispatch</span>
+                  </div>
+                </div>
+                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-1" type="button">
+                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
+                  </button>
+                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars" rel="noopener" target="_blank">
+                    <span>GITHUB</span>
+                    <span class="material-symbols-outlined text-[14px]">code</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Telemetry Stream Diagram -->
+              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
+                <div class="flex items-center justify-between pb-space-xs">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-surface-variant"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-surface-variant"></span>
+                  </div>
+                  <span class="font-code text-label-sm text-secondary">INTAKE TELEMETRY</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
+                  <div class="flex items-center justify-between text-on-surface-variant">
+                    <span>SPAN: client-intake-handshake</span>
+                    <span class="text-primary font-semibold">14ms (OK)</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
+                    <div class="bg-primary h-full w-[20%]"></div>
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface-variant">
+                    <span>SPAN: pydantic-schema-guard</span>
+                    <span class="text-primary font-semibold">8ms (VALIDATED)</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
+                    <div class="bg-primary h-full w-[45%]"></div>
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface-variant">
+                    <span>SPAN: async-queue-dispatch</span>
+                    <span class="text-primary font-semibold">42ms (DELIVERED)</span>
+                  </div>
+                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
+                    <div class="bg-primary h-full w-[85%]"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-1">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: SFD-RFC-01</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">sync</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Streaming &amp; Perception</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Real-time receptionist dashboard with instant attendee notifications and live lobby queue state sync via event streaming.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Queue sync: &lt; 30ms</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">rule</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Schema &amp; Validation</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Strict Pydantic v2 schemas at every HTTP and WebSocket boundary, rejecting malformed registration fields before database transactions.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Schema pass: 100%</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Evals &amp; Reliability</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Automated integration test harness verifying visitor session idempotency, webhook retry logic, and zero dropped notifications under concurrent check-ins.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Delivery rate: 99.98%</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">speed</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Performance &amp; Footprint</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Asynchronous non-blocking Python backend achieving sub-95ms p99 endpoint latency with minimal server memory footprint.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">p99 latency: 92ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 2: ETHIOPIAN AIRLINES FLIGHT PRICE PREDICTION -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="ml-regression" id="flight-price">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">02 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Machine Learning</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">11 Candidate Models</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>LIGHTGBM &amp; XGBOOST</span>
+                <span>STREAMLIT APP</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+              <div class="lg:col-span-7 flex flex-col gap-space-xs">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                  <a class="hover:text-primary transition-colors" href="#breakdown-2">Ethiopian Airlines Flight Price Prediction Engine</a>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                  Production regression pipeline and interactive Streamlit application predicting ticket fares (ETB) across domestic and international routes, rigorously evaluated across 11 algorithms.
+                </p>
+                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-secondary uppercase w-12">Web:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Streamlit App</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Real-Time Sliders</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Feature Importance Plots</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Sub-Second Serving</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-primary uppercase w-12">ML:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">LightGBM &amp; XGBoost</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Random Forest &amp; SVR</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Cyclic Time Encoding</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Stratified K-Fold CV</span>
+                  </div>
+                </div>
+                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-2" type="button">
+                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
+                  </button>
+                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/flight-price-prediction" rel="noopener" target="_blank">
+                    <span>GITHUB REPO</span>
+                    <span class="material-symbols-outlined text-[14px]">code</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
+                <div class="flex items-center justify-between pb-space-xs">
+                  <span class="font-code text-label-sm text-secondary">MODEL COMPARISON</span>
+                  <span class="font-code text-label-sm text-primary font-semibold">11 ALGORITHMS</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
+                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50">
+                    <span class="text-primary font-bold">Top Models:</span> LightGBM, XGBoost, Random Forest
+                  </div>
+                  <div class="flex items-center gap-2 text-on-surface-variant text-[11px]">
+                    <span class="material-symbols-outlined text-[14px] text-primary">tune</span>
+                    <span>Features: Route, Cabin, Timing, Aircraft Type</span>
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface text-[11px] pt-1 border-t border-secondary-fixed/40">
+                    <span>Inference: &lt; 12ms</span>
+                    <span class="text-primary font-medium">Streamlit Deployed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-2">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: ETH-FLIGHT-02</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">account_tree</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Feature Engineering</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Engineered cyclical trigonometric time encoding, route distance vectors, cabin class multipliers, and aircraft seat capacity tiers.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Derived features: 18</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">compare</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Algorithm Benchmark</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Systematic benchmarking across 11 algorithms: Linear, Ridge, Lasso, SVR, Decision Tree, Random Forest, Extra Trees, AdaBoost, Gradient Boosting, XGBoost, and LightGBM.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Models benchmarked: 11</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">analytics</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Evals &amp; Residuals</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Multi-metric cross-validation measuring R², MAE, RMSE, and residual homoscedasticity across peak vs off-peak flight trajectories.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Split: 80/20 Stratified</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Interactive Deployment</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Serialized with pickle into an interactive Streamlit inference app with reactive form inputs and real-time fare predictions.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Serving latency: &lt; 12ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 3: SMS SPAM DETECTION ENGINE -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="nlp-evals" id="spam-detector">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">03 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">NLP Classification</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">98.21% Accuracy</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>TF-IDF + NAIVE BAYES</span>
+                <span>5,572 DATASET</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+              <div class="lg:col-span-7 flex flex-col gap-space-xs">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                  <a class="hover:text-primary transition-colors" href="#breakdown-3">SMS Spam Detection Engine</a>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                  High-precision text classification pipeline trained on 5,572 labeled messages, engineered with near-zero false-positive rate (99.24% precision) to protect legitimate communications.
+                </p>
+                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-secondary uppercase w-12">Pipeline:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn Pipeline</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">TF-IDF Vectorization</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Token Preprocessing</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Sub-5ms Inference</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-primary uppercase w-12">Metrics:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">98.21% Accuracy</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">99.24% Precision</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">87.25% Recall</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">92.86% F1-Score</span>
+                  </div>
+                </div>
+                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-3" type="button">
+                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
+                  </button>
+                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/Spam-Detector" rel="noopener" target="_blank">
+                    <span>GITHUB REPO</span>
+                    <span class="material-symbols-outlined text-[14px]">code</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
+                <div class="flex items-center justify-between pb-space-xs">
+                  <span class="font-code text-label-sm text-secondary">CLASSIFIER EVALUATION</span>
+                  <span class="font-code text-label-sm text-primary font-semibold">99.24% PRECISION</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
+                  <div class="flex items-center justify-between text-on-surface">
+                    <span>Dataset: 5,572 Messages</span>
+                    <span class="text-primary font-semibold">80/20 Stratified</span>
+                  </div>
+                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px] space-y-1">
+                    <div class="flex justify-between"><span>Accuracy:</span><span class="text-primary font-bold">98.21%</span></div>
+                    <div class="flex justify-between"><span>Precision (Spam):</span><span class="text-primary font-bold">99.24%</span></div>
+                    <div class="flex justify-between"><span>F1-Score:</span><span class="text-on-surface font-semibold">92.86%</span></div>
+                  </div>
+                  <div class="flex justify-between text-[11px] text-on-surface-variant border-t border-secondary-fixed/40 pt-1">
+                    <span>False Positives: Minimal</span>
+                    <span class="text-primary">Latency: 3.2ms</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-3">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: SMS-SPAM-03</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">subtitles</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Text Preprocessing</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Token cleansing, lowercase conversion, punctuation and special character normalization, and customized stop-word filtering.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Sample size: 5,572</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">calculate</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">TF-IDF Vectorization</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Sub-linear term frequency scaling and inverse document frequency penalization to isolate high-signal spam markers.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Features: Sub-linear TF</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">High-Precision Tuning</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Optimized decision boundary achieving 99.24% precision, guaranteeing that critical transactional alerts are never misclassified.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Precision: 99.24%</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">speed</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Inference Speed</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Compact model weights with under 2MB serialized memory footprint capable of processing 1,200+ texts per second on a single core.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Latency: 3.2ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 4: TIME-SERIES ANOMALY DETECTION SUITE -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="anomaly-clustering" id="anomaly-detection">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">04 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Case Study</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">2-Year Dataset</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>Z-SCORE &amp; MAD</span>
+                <span>KNN DENSITY</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+              <div class="lg:col-span-7 flex flex-col gap-space-xs">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                  <a class="hover:text-primary transition-colors" href="#breakdown-4">Time-Series Anomaly Detection Suite</a>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                  Observability framework evaluating two years of continuous daily sales telemetry, resolving classical Z-score masking via Modified Z-Score (MAD) and KNN spatial outlier scoring.
+                </p>
+                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-secondary uppercase w-12">Analysis:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Time-Series Telemetry</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Point Spikes &amp; Stockouts</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Level Shift Detection</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Gradual Secular Drift</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-primary uppercase w-12">Methods:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Standard Z-Score</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Modified Z-Score (MAD)</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">K-Nearest Neighbors (KNN)</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Masking Mitigation</span>
+                  </div>
+                </div>
+                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-4" type="button">
+                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
+                  </button>
+                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/anomaly-detection" rel="noopener" target="_blank">
+                    <span>GITHUB REPO</span>
+                    <span class="material-symbols-outlined text-[14px]">code</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
+                <div class="flex items-center justify-between pb-space-xs">
+                  <span class="font-code text-label-sm text-secondary">ANOMALY OBSERVABILITY</span>
+                  <span class="font-code text-label-sm text-primary font-semibold">MAD MITIGATION</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
+                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px]">
+                    MAD = median(|X_i - median(X)|) // Zero Masking
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface-variant text-[11px]">
+                    <span>Dataset: 2 Years Daily Sales</span>
+                    <span class="text-primary font-bold">4 PRODUCTS</span>
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface text-[11px] border-t border-secondary-fixed/40 pt-1">
+                    <span>Outliers: Spikes &amp; Shifts</span>
+                    <span class="text-primary">Multi-Method Verified</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-4">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: ANOMALY-RFC-04</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">show_chart</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Masking Mitigation</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Directly proves how extreme outlier spikes inflate standard deviation, creating false negatives. Implements MAD with a 50% breakdown point to resolve masking.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Robustness: 50% MAD breakdown</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">category</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Multi-Pattern Detection</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Distinguishes four distinct operational failures: single-day impulse spikes, consecutive zero-inventory stockouts, structural level shifts, and gradual secular drift.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Failure modes: 4 distinct</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">hub</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">KNN Distance Scoring</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Employs non-parametric k-nearest neighbors spatial distance scoring to detect local density anomalies without assuming normal Gaussian distributions.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">KNN metric: Euclidean distance</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">article</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Reproducible Reports</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Generates automated markdown diagnostics with annotated time-series charts visualizing signals against adaptive anomaly thresholds.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Reporting: Automated Markdown</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 5: MALL CUSTOMER SEGMENTATION -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="anomaly-clustering" id="mall-segmentation">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">05 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Unsupervised ML</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">Optimal k=5 Clusters</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>K-MEANS CLUSTERING</span>
+                <span>SILHOUETTE ANALYSIS</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+              <div class="lg:col-span-7 flex flex-col gap-space-xs">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                  <a class="hover:text-primary transition-colors" href="#breakdown-5">Mall Customer Segmentation System</a>
+                </h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                  Unsupervised behavioral clustering pipeline partitioning customer cohorts based on annual income and spending score metrics, mathematically validated via WCSS Elbow and Silhouette Score optimization.
+                </p>
+                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-secondary uppercase w-12">Workflow:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Jupyter Notebook</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Seaborn Density Plots</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Centroid Scatter Maps</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Demographic Profiling</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-space-xs">
+                    <span class="font-code text-label-sm text-primary uppercase w-12">Clustering:</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">K-Means++ Centroids</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">WCSS Elbow Method</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Silhouette Analysis</span>
+                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">5 Distinct Personas</span>
+                  </div>
+                </div>
+                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-5" type="button">
+                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
+                  </button>
+                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/mall-customer-segmentation" rel="noopener" target="_blank">
+                    <span>GITHUB REPO</span>
+                    <span class="material-symbols-outlined text-[14px]">code</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
+                <div class="flex items-center justify-between pb-space-xs">
+                  <span class="font-code text-label-sm text-secondary">CLUSTERING VALIDATION</span>
+                  <span class="font-code text-label-sm text-primary font-semibold">5 COHORTS</span>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
+                  <div class="flex items-center justify-between text-on-surface font-mono text-[11px]">
+                    <span>Optimal Cluster Count:</span>
+                    <span class="text-primary font-semibold">k = 5</span>
+                  </div>
+                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px]">
+                    Validation: WCSS Elbow &amp; Silhouette Peak
+                  </div>
+                  <div class="flex items-center justify-between text-on-surface-variant text-[11px] border-t border-secondary-fixed/40 pt-1">
+                    <span>Targeting: Commercial Personas</span>
+                    <span class="text-primary font-medium">High Separation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-5">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: CLUSTER-KMEANS-05</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">scatter_plot</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Centroid Initialization</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Deploys k-means++ initialization to place seeds proportionally to squared distance, avoiding convergence on suboptimal local minima.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Init method: K-Means++</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">insights</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Optimal-k Selection</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Cross-referenced within-cluster sum of squares (WCSS) curvature with silhouette coefficient plots to mathematically prove k=5 as optimal.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Optimal k: 5 clusters</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">groups</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Persona Profiling</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Maps multi-dimensional clusters into commercial personas: Affluent High-Spenders, Conservative Wealthy, Value Seekers, and Careful Savers.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Personas: 5 actionable cohorts</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]">auto_graph</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Visual Explainability</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Generates bivariate cluster boundary plots with highlighted centroid coordinates giving product teams immediate clarity on customer segment distribution.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Visuals: Seaborn &amp; Matplotlib</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>iv>
+
+      <!-- Systematic Architecture Footnote / Synthesis Callout -->
+      <section class="mt-space-xl p-space-lg bg-surface-container-low rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg border border-secondary-fixed">
+        <div class="flex flex-col gap-space-xs max-w-xl">
+          <div class="flex items-center gap-space-xs text-primary">
+            <span class="material-symbols-outlined text-[18px]">construction</span>
+            <span class="font-code text-label-sm uppercase font-semibold">Evaluation Infrastructure</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-on-surface">Deterministic System Principles</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">
+            Every system represented here rejects opaque nondeterminism. We treat models as probabilistic compute nodes bounded by strict schemas, type-safe execution fences, and continuous regression evaluations.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-space-sm w-full md:w-auto">
+          <a class="w-full sm:w-auto text-center px-space-md py-space-xs rounded bg-on-surface text-inverse-on-surface font-code text-label-md hover:bg-primary transition-colors" href="lab.html">
+            EXPLORE LAB EXPERIMENTS ↗
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer / Colophon -->
+  <footer class="w-full border-t border-secondary-fixed bg-surface-container-low">
+    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="about">
+      <div class="space-y-space-xs">
+        <p class="font-code text-label-md text-on-surface tracking-tight uppercase">Colophon &amp; Dispatches</p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+          Engineered by Henok for deterministic execution and technical rigor. Set in Newsreader, Geist, &amp; JetBrains Mono.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-space-md sm:gap-space-lg">
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">RSS FEED</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="docs/DESIGN.md">DESIGN SPEC</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://github.com/HenokInTheStars" target="_blank" rel="noopener">GITHUB</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="mailto:hello@example.com">CONTACT</a>
+      </div>
+    </div>
+    <div class="border-t border-secondary-fixed/50 py-space-md">
+      <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between text-on-surface-variant font-code text-label-sm">
+        <span>© 2026 Henok</span>
+        <span>PRECISION SYSTEMS ARCHITECTURE</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
