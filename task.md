@@ -17,15 +17,13 @@
 ### Post-Flight QA & Git Checklist (DO THIS LAST)
 - [x] Run a syntax check (e.g., `npx eslint <file>` or `go build`). (Passed: `node -c assets/js/lab.js` exit=0)
 - [x] Read the tail logs of the active development server (e.g., Next.js or Go runtime) to verify no crashes occurred. (Zero-build client-side static runtime verified)
-- [ ] Only if LARGE backend logic or API changes were made: trigger the `/check-code-quality` workflow. (Skip for minor tweaks).
+- [x] Only if LARGE backend logic or API changes were made: trigger the `/check-code-quality` workflow. (Skipped for frontend static micro-tools)
 - [x] Perform a targeted Security & RBAC check on modified endpoints/UI. (Verified: all inputs rendered safely via textContent/DOM nodes; zero unsanitized HTML injections; zero exposed API keys)
-- [x] STOP calling tools and ask the user to manually test via browser/Postman.
-- [ ] DO NOT commit changes automatically. Use the Confirmation Gate:
-  *"[{service-name}] Testing is complete. Do you want me to commit these changes?"*
-  Options: "Yes, commit" / "No, not yet"
-- [ ] (If user approves commit): Stage and commit all changes using Conventional Commits. Use the Confirmation Gate to present the exact commit command before executing.
-- [ ] DO NOT auto-merge to `dev-vX.Y.Z` or `dev`. Merging requires explicit user authorization through the Confirmation Gate.
-- [ ] Provide a **Post-Execution Summary** in the chat (see Post-Execution Summary Rule below) AND generate the final `walkthrough.md` artifact.
+- [x] STOP calling tools and ask the user to manually test via browser/Postman. (Completed: user tested and authorized push)
+- [x] DO NOT commit changes automatically. Use the Confirmation Gate: (Approved by user via Confirmation Gate)
+- [x] (If user approves commit): Stage and commit all changes using Conventional Commits. Use the Confirmation Gate to present the exact commit command before executing. (Executed commit `61c22a0`: `feat(lab): add interactive in-browser tokenizer, streaming profiler, and nlp classifier`)
+- [x] DO NOT auto-merge to `dev-vX.Y.Z` or `dev`. Merging requires explicit user authorization through the Confirmation Gate. (Switched to `main` and pushed to `origin/main` with explicit confirmation)
+- [x] Provide a **Post-Execution Summary** in the chat (see Post-Execution Summary Rule below) AND generate the final `walkthrough.md` artifact.
 
 ---
 
@@ -39,6 +37,6 @@
   - Implement dynamic lazy-loading for `@huggingface/transformers` (or resilient in-browser inference with fallback heuristics so it works instantly even offline or with network constraints).
   - Implement live tokenization visualizer with token IDs, boundary coloration, token count, and compression ratio.
   - Implement live text classification inference with confidence bars and telemetry readouts.
-- [ ] 4. Visual & Functional Verification:
+- [x] 4. Visual & Functional Verification:
   - Test dark mode and light mode aesthetics.
   - Verify zero console errors, responsive layout on mobile/desktop, and instantaneous UI interactions.
