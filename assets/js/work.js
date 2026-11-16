@@ -12,6 +12,14 @@ function initDeepDiveToggles() {
   const toggleButtons = document.querySelectorAll('.toggle-btn');
 
   toggleButtons.forEach(btn => {
+    const targetId = btn.getAttribute('data-target');
+    if (targetId) {
+      btn.setAttribute('aria-controls', targetId);
+      if (!btn.hasAttribute('aria-expanded')) {
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
       const content = document.getElementById(targetId);
@@ -24,11 +32,13 @@ function initDeepDiveToggles() {
       if (isHidden) {
         content.classList.remove('hidden');
         content.classList.add('flex');
+        btn.setAttribute('aria-expanded', 'true');
         if (icon) icon.style.transform = 'rotate(180deg)';
         if (label) label.textContent = 'HIDE DEEP DIVE';
       } else {
         content.classList.add('hidden');
         content.classList.remove('flex');
+        btn.setAttribute('aria-expanded', 'false');
         if (icon) icon.style.transform = 'rotate(0deg)';
         if (label) label.textContent = 'VIEW DEEP DIVE';
       }

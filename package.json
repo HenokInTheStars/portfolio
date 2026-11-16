@@ -1,0 +1,15 @@
+{
+  "name": "henok-portfolio",
+  "version": "1.0.0",
+  "description": "High-performance systems engineer portfolio with Technical Editorial design system",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --watch",
+    "validate:js": "node -c assets/js/config.js && node -c assets/js/main.js && node -c assets/js/lab.js && node -c assets/js/work.js && node -c assets/js/writing.js",
+    "validate:feeds": "python -c \"import xml.etree.ElementTree as ET; ET.parse('feed.xml'); ET.parse('sitemap.xml'); print('Feeds OK')\""
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

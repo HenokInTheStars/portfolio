@@ -1,6 +1,6 @@
-# Henok — AI & Web Systems Engineer Portfolio
+# Henok — Full-Stack Web &amp; AI Systems Engineer Portfolio
 
-A high-performance personal portfolio built with the **Technical Editorial** design system. Designed for a technical systems engineer shipping production AI systems, focusing on low-latency streaming architectures, sub-400ms TTFT, and rigorous evaluation pipelines.
+A high-performance personal portfolio built with the **Technical Editorial** design system. Showcasing modern full-stack web applications, zero-build frontend architectures, low-latency streaming interfaces, sub-100ms APIs, and applied AI pipelines.
 
 ---
 
@@ -8,20 +8,26 @@ A high-performance personal portfolio built with the **Technical Editorial** des
 
 ```
 portfolio/
-├── index.html              # Main index page (Hero, Telemetry, Selected Work, The Lab, Ask-AI Runtime)
-├── work.html               # Work & Systems (5 production case studies with expandable architectural deep dives)
-├── lab.html                # The Lab (5 experimental prototypes, interactive SSE token stream visualizer, table/grid views)
-├── writing.html            # Writing & Notes (Searchable essays directory with split-pane interactive reader)
+├── .github/
+│   └── workflows/
+│       └── ci.yml          # GitHub Actions CI/CD (Node syntax check, XML validation, Pages deployment)
+├── index.html              # Main index page (Hero, Telemetry, Selected Work, Systems Architecture Console, In-Page Contact)
+├── work.html               # Work & Systems (6 production case studies with expandable architectural deep dives)
+├── lab.html                # The Lab (In-browser tokenizer, Transformers.js spam classifier, streaming profiler)
+├── writing.html            # Writing & Notes (4 technical essays, deep-linked master-detail reader, newsletter dispatch)
+├── feed.xml                # RSS 2.0 technical dispatches feed
+├── sitemap.xml             # XML sitemap with canonical priorities
+├── robots.txt              # Standard crawler declarations
 ├── assets/
 │   ├── css/
 │   │   └── style.css       # Design tokens, CSS variables for Light & Dark mode, custom scrollbars, modal transitions
 │   ├── js/
 │   │   ├── config.js       # Tailwind CSS dynamic configuration & anti-FOUC theme initialization
-│   │   ├── main.js         # Shared functionality: Dark/Light mode toggle, ⌘K Command Palette, nav highlighting
-│   │   ├── work.js         # Interactive case study deep dive accordions and tag filter engine
-│   │   ├── lab.js          # Grid/Table view switcher, real-time tool search, and live SSE token stream simulator
-│   │   └── writing.js      # Essay search, semantic tag chips, active article reader switcher, and code copy
-│   └── screenshots/        # High-resolution reference mockups
+│   │   ├── main.js         # Dark/Light toggle, ⌘K Command Palette, universal contact modal, in-page contact dispatch
+│   │   ├── work.js         # Case study deep dive accordions and tag filter engine
+│   │   ├── lab.js          # Grid/Table view switcher, real-time search, Transformers.js classifier, stream profiler
+│   │   └── writing.js      # Essay search, tag chips, deep-linking reader engine, SVG diagrams, and code copy
+│   └── screenshots/        # High-resolution social cards and page previews
 │       ├── home.png
 │       ├── work.png
 │       ├── lab.png
@@ -34,7 +40,7 @@ portfolio/
 
 ## ⚡ Features & Capabilities
 
-1. **Zero-Build Architecture**: Runs natively in any modern browser without requiring `npm install` or bundlers.
+1. **Minimal Build**: Plain HTML and vanilla JS. The only build step compiles Tailwind CSS (`pnpm build:css`).
 2. **Dual-Theme Engineering (Light & Dark)**:
    - **Light Theme**: Warm alabaster paper base (`#FCF9F8`) with deep archival pine accent (`#005C55`).
    - **Dark Theme**: Deep carbon slate surfaces (`#0E0F11`) with phosphor teal indicators (`#2DD4BF`).
@@ -52,31 +58,23 @@ portfolio/
 
 ## 🚀 Preview Locally
 
-You can preview the portfolio using any static HTTP server:
+Build the CSS once (or keep it rebuilding while you edit), then serve the folder:
 
-### Option 1: Python
 ```bash
+pnpm install
+pnpm build:css        # or: pnpm watch:css
 python -m http.server 3000
 ```
-Then visit `http://localhost:3000`.
 
-### Option 2: Node / npx
-```bash
-npx serve .
-```
-
-### Option 3: VS Code / IDE Live Server
-Right-click `index.html` and select **Open with Live Server**.
+Then visit `http://localhost:3000`. `assets/css/tailwind.css` is generated and gitignored; without it the pages render unstyled.
 
 ---
 
-## 🌐 Deploy to GitHub Pages / Vercel
+## 🌐 Deploy (GitHub Pages)
 
-### GitHub Pages:
-1. Push this repository to GitHub (`HenokInTheStars/portfolio`).
-2. Go to **Settings** > **Pages**.
-3. Under **Branch**, select `main` and root `/`.
-4. Your site will be live immediately!
+Deployment is handled by [`.github/workflows/ci.yml`](.github/workflows/ci.yml). Every push validates JS and XML and builds the CSS. Pushes to `main` also bundle only the public files into `_site/` and deploy them.
 
-### Vercel / Netlify:
-Deploy instantly by linking your repository; no build command required.
+One-time setup:
+1. **Settings → Pages → Source**: choose **GitHub Actions**.
+2. **Settings → Pages → Custom domain**: enter `www.henoksolomon.com` and enable **Enforce HTTPS**. (With Actions deployments a `CNAME` file is ignored, so the domain lives in settings.)
+3. At your DNS provider, point `www` (CNAME) to `henokinthestars.github.io`, and add the GitHub Pages `A` records for the apex `henoksolomon.com`.

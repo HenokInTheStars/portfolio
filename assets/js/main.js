@@ -1,13 +1,137 @@
 /**
  * Technical Editorial - Main Site Interactions
- * Handles Dark/Light Mode, Command Palette (⌘K), and Navigation
+ * Handles dark/light mode, parallax, the contact modal and forms, and nav state.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+const CONTACT_EMAIL = 'hhhenoksolomon@gmail.com';
+// FormSubmit alias for the address above (keeps the raw address out of the endpoint URL).
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/654be654f596ab445f997f25b36c13fb';
+const SUBMIT_TIMEOUT_MS = 15000;
+
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const prefersReducedMotion = () => reducedMotionQuery.matches;
+const scrollBehavior = () => (prefersReducedMotion() ? 'auto' : 'smooth');
+
+function bootPortfolio() {
   initThemeToggle();
-  initCommandPalette();
+  syncPortfolioCounts();
+  initContactModal();
   highlightActiveNav();
-});
+  initParallax();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootPortfolio);
+} else {
+  bootPortfolio();
+}
+
+/* ==========================================================================
+   0. Parallax & Card Tilt (disabled when the visitor prefers reduced motion)
+   ========================================================================== */
+function initParallax() {
+  const parallaxElements = document.querySelectorAll('.parallax-el[data-speed]');
+  if (!parallaxElements.length) return;
+
+  let ticking = false;
+  let enabled = false;
+
+  function updateParallax() {
+    ticking = false;
+    if (!enabled) return;
+
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+
+    parallaxElements.forEach(el => {
+      const speed = parseFloat(el.getAttribute('data-speed')) || 0.15;
+      const rect = el.getBoundingClientRect();
+
+      // Only calculate if element is within or near the visible viewport
+      if (rect.bottom >= -200 && rect.top <= windowHeight + 200) {
+        let translateY;
+        if (el.closest('#parallax-bg-layer')) {
+          // Ambient background glow orbs drift continuously with page scroll
+          translateY = (scrollY * speed).toFixed(1);
+        } else {
+          // In-page cards displace based on scroll progress
+          const elementProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+          translateY = ((elementProgress - 0.5) * speed * 120).toFixed(1);
+        }
+
+        el.dataset.parallaxY = translateY;
+
+        // Apply transform if element is not currently tilted by mouse
+        if (!el.dataset.isTilting) {
+          el.style.transform = `translate3d(0, ${translateY}px, 0)`;
+        }
+      }
+    });
+  }
+
+  function onScroll() {
+    if (enabled && !ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  function applyMotionPreference() {
+    enabled = !prefersReducedMotion();
+    if (enabled) {
+      updateParallax();
+    } else {
+      parallaxElements.forEach(el => {
+        el.style.transform = '';
+        delete el.dataset.parallaxY;
+      });
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  reducedMotionQuery.addEventListener('change', applyMotionPreference);
+
+  applyMotionPreference();
+  initCardTiltParallax();
+}
+
+function initCardTiltParallax() {
+  const cards = document.querySelectorAll('#hero-pipeline-card, #selected-work article');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    let tiltRaf = null;
+
+    card.addEventListener('mousemove', (e) => {
+      if (prefersReducedMotion()) return;
+      card.dataset.isTilting = 'true';
+      if (tiltRaf) cancelAnimationFrame(tiltRaf);
+      tiltRaf = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (((y - centerY) / centerY) * -6).toFixed(2);
+        const rotateY = (((x - centerX) / centerX) * 6).toFixed(2);
+
+        const currentY = card.dataset.parallaxY || '0';
+
+        card.style.transform = `translate3d(0, ${currentY}px, 0) perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (tiltRaf) cancelAnimationFrame(tiltRaf);
+      delete card.dataset.isTilting;
+      const currentY = card.dataset.parallaxY;
+      card.style.transform = currentY ? `translate3d(0, ${currentY}px, 0)` : '';
+    });
+  });
+}
 
 /* ==========================================================================
    1. Theme Toggle System
@@ -21,6 +145,7 @@ function initThemeToggle() {
       if (icon) {
         icon.textContent = isDark ? 'light_mode' : 'contrast';
       }
+      btn.setAttribute('aria-pressed', String(isDark));
     });
   }
 
@@ -30,227 +155,475 @@ function initThemeToggle() {
   toggleButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      } catch (err) {
+        /* storage unavailable (private mode): theme still applies for this page */
+      }
       updateIcons(isDark);
     });
   });
 }
 
 /* ==========================================================================
-   2. Command Palette (⌘K) & Search System
+   2. Dynamic Portfolio Stats & Count Synchronization
    ========================================================================== */
-const SEARCH_INDEX = [
-  // Pages
-  { title: "Home // Index", category: "Navigation", url: "index.html", desc: "Hero, architecture overview, and telemetry" },
-  { title: "Work & Systems", category: "Navigation", url: "work.html", desc: "Production case studies, latency benchmarks, and RFCs" },
-  { title: "The Lab", category: "Navigation", url: "lab.html", desc: "Experimental sandboxes, prototypes, and streaming tools" },
-  { title: "Writing & Notes", category: "Navigation", url: "writing.html", desc: "Technical essays on UI latency, streaming, and compilers" },
-  { title: "About / Colophon", category: "Navigation", url: "index.html#about", desc: "Design rationale, colophon, and contact details" },
+function syncPortfolioCounts() {
+  // work.html renders .project-card elements; lab.html renders .tool-card elements.
+  // On other pages, fall back to the known totals.
+  const liveProjects = document.querySelectorAll('.project-card').length;
+  const liveExperiments = document.querySelectorAll('.tool-card').length;
 
-  // Projects
-  { title: "Smart Front Desk System", category: "Projects", url: "work.html#smart-front-desk", desc: "Asynchronous front desk automation, FastAPI, Pydantic V2, sub-100ms API latency" },
-  { title: "Ethiopian Airlines Flight Price Prediction Engine", category: "Projects", url: "work.html#flight-price", desc: "11-algorithm regression benchmark, LightGBM/XGBoost, interactive Streamlit app" },
-  { title: "SMS Spam Detection Engine", category: "Projects", url: "work.html#spam-detector", desc: "High-precision NLP classifier (98.21% accuracy, 99.24% precision) over 5,572 messages" },
-  { title: "Time-Series Anomaly Detection Suite", category: "Projects", url: "work.html#anomaly-detection", desc: "Statistical masking mitigation via Modified Z-Score (MAD) and KNN spatial outlier density" },
-  { title: "Mall Customer Segmentation System", category: "Projects", url: "work.html#mall-segmentation", desc: "Unsupervised K-Means clustering, WCSS Elbow & Silhouette score validation" },
-  { title: "Telco Customer Churn Prediction", category: "Projects", url: "https://github.com/HenokInTheStars/telco-customer-churn-prediction", desc: "Machine learning comparative classification for customer retention risk scoring" },
-  { title: "KeywordSense Conversational Agent", category: "Projects", url: "https://github.com/HenokInTheStars/keywordsense-chatbot", desc: "Keyword-based intent matching with TextBlob sentiment analysis fallback loop" },
+  const projectsCount = liveProjects > 0 ? liveProjects : 6;
+  const experimentsCount = liveExperiments > 0 ? liveExperiments : 5;
 
-  // Lab Experiments
-  { title: "Token Streaming Visualizer Sandbox", category: "Lab", url: "lab.html", desc: "Live SSE chunk latency and TTFT jitter inspector" },
-  { title: "Token Cost Realtime Estimator", category: "Lab", url: "lab.html", desc: "Buffer chunk estimator for Sonnet 3.5, GPT-4o, and DeepSeek" },
-  { title: "Markdown AST Diff Inspector", category: "Lab", url: "lab.html", desc: "Structural token tree diffing for LLM output drift" },
-  { title: "SchemaCanvas for JSON Spec", category: "Lab", url: "lab.html", desc: "Tactile node canvas for recursive JSON schema validation" },
+  document.querySelectorAll('[data-stat="projects-count"]').forEach(el => {
+    el.textContent = projectsCount;
+  });
 
-  // Writing
-  { title: "Designing for Streaming UI Latency & Perceptual Speed", category: "Writing", url: "writing.html", desc: "Buffer smoothing, ocular saccade pacing, and TTFT optimization" },
-  { title: "Reciprocal Rank Fusion in Regulated Search Environments", category: "Writing", url: "writing.html", desc: "Hybrid BM25 and vector embeddings in mission-critical applications" },
-  { title: "Zero-Runtime CSS: Compiling Design Tokens via AST Transforms", category: "Writing", url: "writing.html", desc: "Sub-millisecond PostCSS transforms without runtime overhead" }
-];
+  document.querySelectorAll('[data-stat="experiments-count"]').forEach(el => {
+    el.textContent = experimentsCount;
+  });
+}
 
-function initCommandPalette() {
-  // Inject Palette HTML into DOM if not present
-  if (!document.getElementById('command-palette-backdrop')) {
-    const paletteHtml = `
-      <div id="command-palette-backdrop" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-start justify-center pt-20 px-4">
-        <div id="command-palette-modal" class="w-full max-w-xl bg-surface-container-lowest border border-secondary-fixed rounded-xl shadow-2xl overflow-hidden flex flex-col scale-95 opacity-0 transition-all duration-150">
-          <!-- Search Input Bar -->
-          <div class="flex items-center px-4 py-3 border-b border-secondary-fixed gap-3 bg-surface-container-low">
-            <span class="material-symbols-outlined text-primary text-[20px]">search</span>
-            <input id="palette-search-input" type="text" placeholder="Search pages, projects, lab tools, or ask questions..." class="w-full bg-transparent border-none text-on-surface font-body-md text-body-md focus:outline-none placeholder:text-on-surface-variant/60" autocomplete="off" />
-            <span class="font-code text-label-sm text-on-surface-variant px-1.5 py-0.5 bg-surface-container rounded border border-secondary-fixed">ESC</span>
-          </div>
-          <!-- Results List -->
-          <div id="palette-results" class="max-h-80 overflow-y-auto p-2 divide-y divide-secondary-fixed/40">
-            <!-- Dynamic items will render here -->
-          </div>
-          <!-- Footer Navigation Bar -->
-          <div class="px-4 py-2 bg-surface-container-low border-t border-secondary-fixed flex items-center justify-between font-code text-label-sm text-on-surface-variant">
-            <div class="flex items-center gap-3">
-              <span><kbd class="px-1 py-0.5 bg-surface-container rounded">↑</kbd> <kbd class="px-1 py-0.5 bg-surface-container rounded">↓</kbd> to navigate</span>
-              <span><kbd class="px-1 py-0.5 bg-surface-container rounded">↵</kbd> to select</span>
+/* ==========================================================================
+   3. Contact: shared submission + status helpers
+   ========================================================================== */
+
+/**
+ * Sends a message through FormSubmit's AJAX endpoint.
+ * Resolves to { ok: true } only when FormSubmit confirms success.
+ */
+async function submitContactMessage({ name, email, topic, message, honey }) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(FORMSUBMIT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        topic,
+        message,
+        _honey: honey || '',
+        _subject: `[Portfolio Inquiry] ${topic} from ${name}`,
+        _template: 'table',
+        _replyto: email
+      }),
+      signal: controller.signal
+    });
+
+    let data = {};
+    try {
+      data = await response.json();
+    } catch (parseErr) {
+      /* non-JSON body: treat as failure below */
+    }
+
+    const confirmed = response.ok && (data.success === true || data.success === 'true');
+    return confirmed ? { ok: true } : { ok: false, reason: data.message || `HTTP ${response.status}` };
+  } catch (err) {
+    return { ok: false, reason: err.name === 'AbortError' ? 'timeout' : err.message };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function buildMailtoLink({ name, email, topic, message }) {
+  const subject = encodeURIComponent(`[Portfolio Inquiry] ${topic} from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`);
+  return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+const STATUS_BASE = 'empty:hidden p-3 rounded-lg font-code text-xs';
+const STATUS_STYLES = {
+  pending: 'bg-surface-container text-on-surface border border-secondary-fixed',
+  success: 'bg-primary/15 text-primary border border-primary/30 space-y-1',
+  error: 'bg-error/15 text-error border border-error/30 space-y-1'
+};
+
+function setStatus(box, kind, html) {
+  if (!box) return;
+  if (!kind) {
+    box.className = STATUS_BASE;
+    box.textContent = '';
+    return;
+  }
+  box.className = `${STATUS_BASE} ${STATUS_STYLES[kind]}`;
+  box.innerHTML = html;
+}
+
+function pendingStatusHtml() {
+  return `
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true"></span>
+      <span>Sending your message…</span>
+    </div>`;
+}
+
+function errorStatusHtml(fields) {
+  const mailto = escapeHtml(buildMailtoLink(fields));
+  return `
+    <div class="flex items-center gap-1.5 font-bold">
+      <span class="material-symbols-outlined text-[16px]" aria-hidden="true">error</span>
+      <span>Your message wasn't sent.</span>
+    </div>
+    <p class="font-body-md text-xs text-on-surface">
+      The form service didn't confirm delivery. Your text is still in the form, so you can try again, or
+      <a href="${mailto}" class="text-primary underline">send it from your email app</a>
+      (to ${escapeHtml(CONTACT_EMAIL)}).
+    </p>`;
+}
+
+function readContactFields(prefix) {
+  const value = (id) => {
+    const el = document.getElementById(`${prefix}-${id}`);
+    return el ? el.value.trim() : '';
+  };
+  return {
+    name: value('name'),
+    email: value('email'),
+    topic: value('topic'),
+    message: value('message'),
+    honey: value('honey')
+  };
+}
+
+async function copyEmail(button, iconEl, labelEl, idleLabel) {
+  try {
+    await navigator.clipboard.writeText(CONTACT_EMAIL);
+    if (iconEl) iconEl.textContent = 'check';
+    if (labelEl) labelEl.textContent = 'Copied';
+    button.classList.add('bg-primary/20', 'text-primary');
+    setTimeout(() => {
+      if (iconEl) iconEl.textContent = 'content_copy';
+      if (labelEl) labelEl.textContent = idleLabel;
+      button.classList.remove('bg-primary/20', 'text-primary');
+    }, 2000);
+  } catch (err) {
+    if (labelEl) labelEl.textContent = 'Press Ctrl+C';
+  }
+}
+
+/* ==========================================================================
+   4. Contact Modal (accessible dialog) & inline form
+   ========================================================================== */
+function initContactModal() {
+  if (!document.getElementById('contact-modal-backdrop')) {
+    const modalHtml = `
+      <div id="contact-modal-backdrop" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-describedby="contact-modal-desc"
+          class="w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto bg-surface-container-lowest border border-secondary-fixed rounded-2xl shadow-2xl flex flex-col scale-95 opacity-0 transition-all duration-200">
+
+          <div class="h-1 bg-primary w-full shrink-0" aria-hidden="true"></div>
+
+          <div class="p-space-md border-b border-secondary-fixed bg-surface-container-low flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-[20px]" aria-hidden="true">mail</span>
+              <div>
+                <h2 id="contact-modal-title" class="font-headline-md text-headline-md text-on-surface">Contact</h2>
+                <p id="contact-modal-desc" class="font-code text-[11px] text-on-surface-variant">Send me a message. It goes straight to my inbox.</p>
+              </div>
             </div>
-            <span class="text-primary font-medium">Technical Editorial // ⌘K</span>
+            <button id="contact-modal-close" type="button" aria-label="Close contact dialog"
+              class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
+            </button>
           </div>
+
+          <div class="px-space-md py-2.5 bg-surface-container-lowest border-b border-secondary-fixed/50 flex flex-wrap items-center justify-between gap-2 font-code text-label-sm">
+            <div class="flex items-center gap-1.5 text-on-surface-variant">
+              <span class="text-secondary text-[10px] uppercase">Email:</span>
+              <span class="text-on-surface font-medium select-all">${CONTACT_EMAIL}</span>
+            </div>
+            <button id="contact-copy-btn" type="button"
+              class="px-2 py-1 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1 text-[11px] cursor-pointer">
+              <span class="material-symbols-outlined text-[13px]" id="contact-copy-icon" aria-hidden="true">content_copy</span>
+              <span id="contact-copy-label">Copy Email</span>
+            </button>
+          </div>
+
+          <form id="contact-form" class="p-space-md space-y-3">
+            <div class="hidden" aria-hidden="true">
+              <label for="contact-honey">Leave this field empty</label>
+              <input id="contact-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label for="contact-name" class="font-code text-[11px] text-on-surface-variant uppercase">Your Name</label>
+                <input id="contact-name" name="name" type="text" required autocomplete="name" placeholder="Alex Turner"
+                  class="w-full bg-surface-container-low border border-secondary-fixed text-on-surface rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-secondary" />
+              </div>
+              <div class="space-y-1">
+                <label for="contact-email" class="font-code text-[11px] text-on-surface-variant uppercase">Your Email</label>
+                <input id="contact-email" name="email" type="email" required autocomplete="email" placeholder="alex@company.com"
+                  class="w-full bg-surface-container-low border border-secondary-fixed text-on-surface rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-secondary" />
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label for="contact-topic" class="font-code text-[11px] text-on-surface-variant uppercase">Inquiring About</label>
+              <select id="contact-topic" name="topic"
+                class="w-full bg-surface-container-low border border-secondary-fixed text-on-surface rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-colors cursor-pointer">
+                <option value="Full-Stack Web Development">Full-Stack Web Development</option>
+                <option value="Machine Learning Project">Machine Learning Project</option>
+                <option value="Full-Time or Contract Role">Full-Time or Contract Role</option>
+                <option value="Something Else">Something Else</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label for="contact-message" class="font-code text-[11px] text-on-surface-variant uppercase">Message</label>
+              <textarea id="contact-message" name="message" rows="4" required placeholder="Tell me about your project, role, or timeline..."
+                class="w-full bg-surface-container-low border border-secondary-fixed text-on-surface rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-colors placeholder:text-secondary resize-none"></textarea>
+            </div>
+
+            <div id="contact-status-box" role="status" aria-live="polite" class="${STATUS_BASE}"></div>
+
+            <div class="pt-1 flex items-center justify-between gap-3">
+              <span class="font-code text-[10px] text-on-surface-variant">Delivered by email via FormSubmit</span>
+              <button id="contact-submit-btn" type="submit"
+                class="min-h-[44px] px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-headline-md text-body-md hover:bg-primary/90 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">send</span>
+                <span id="contact-submit-label">Send Message</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     `;
-    document.body.insertAdjacentHTML('beforeend', paletteHtml);
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
   }
 
-  const backdrop = document.getElementById('command-palette-backdrop');
-  const modal = document.getElementById('command-palette-modal');
-  const input = document.getElementById('palette-search-input');
-  const resultsContainer = document.getElementById('palette-results');
-  let selectedIndex = 0;
-  let currentFilteredItems = [];
+  const backdrop = document.getElementById('contact-modal-backdrop');
+  const modal = document.getElementById('contact-modal');
+  const closeBtn = document.getElementById('contact-modal-close');
+  const copyBtn = document.getElementById('contact-copy-btn');
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('contact-submit-btn');
+  const submitLabel = document.getElementById('contact-submit-label');
+  const statusBox = document.getElementById('contact-status-box');
 
-  function openPalette() {
+  let lastFocused = null;
+
+  function getFocusable() {
+    return Array.from(
+      modal.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"]):not([tabindex="-1"]), select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(el => el.offsetParent !== null);
+  }
+
+  // Everything outside the dialog becomes inert while it is open.
+  function setBackgroundInert(isInert) {
+    Array.from(document.body.children).forEach(el => {
+      if (el === backdrop || el.tagName === 'SCRIPT') return;
+      if (isInert) {
+        el.setAttribute('inert', '');
+      } else {
+        el.removeAttribute('inert');
+      }
+    });
+  }
+
+  function openContactModal() {
+    if (!backdrop.classList.contains('hidden')) return;
+    lastFocused = document.activeElement;
     backdrop.classList.remove('hidden');
-    setTimeout(() => {
+    setBackgroundInert(true);
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
       modal.classList.remove('scale-95', 'opacity-0');
       modal.classList.add('scale-100', 'opacity-100');
-      input.focus();
-      renderResults(input.value);
-    }, 10);
+      const firstInput = document.getElementById('contact-name');
+      if (firstInput) firstInput.focus();
+    });
   }
 
-  function closePalette() {
+  function closeContactModal() {
+    if (backdrop.classList.contains('hidden')) return;
     modal.classList.remove('scale-100', 'opacity-100');
     modal.classList.add('scale-95', 'opacity-0');
+    setBackgroundInert(false);
+    document.body.style.overflow = '';
     setTimeout(() => {
       backdrop.classList.add('hidden');
-      input.value = '';
-    }, 150);
+      setStatus(statusBox, null);
+    }, prefersReducedMotion() ? 0 : 150);
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
   }
 
-  function renderResults(query = '') {
-    const q = query.toLowerCase().trim();
-    currentFilteredItems = SEARCH_INDEX.filter(item => {
-      if (!q) return true;
-      return item.title.toLowerCase().includes(q) ||
-             item.category.toLowerCase().includes(q) ||
-             item.desc.toLowerCase().includes(q);
-    });
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () =>
+      copyEmail(copyBtn, document.getElementById('contact-copy-icon'), document.getElementById('contact-copy-label'), 'Copy Email'));
+  }
 
-    if (currentFilteredItems.length === 0) {
-      // Suggest Ask AI answer if user asked a question
-      resultsContainer.innerHTML = `
-        <div class="p-4 text-center space-y-2">
-          <p class="font-body-md text-on-surface-variant">No exact matches for "${escapeHtml(query)}"</p>
-          <div class="p-3 bg-surface-container-low rounded-lg border border-secondary-fixed text-left font-body-md">
-            <div class="flex items-center gap-2 text-primary font-code text-label-sm mb-1">
-              <span class="material-symbols-outlined text-[16px]">smart_toy</span>
-              <span>Ask Henok's AI Portfolio Assistant:</span>
-            </div>
-            <p class="text-sm text-on-surface">"Henok is an AI & Web Systems Engineer focusing on sub-400ms TTFT, low-latency streaming architectures, and deterministic evaluations across production platforms."</p>
-            <a href="index.html#writing" onclick="closePalette()" class="inline-block mt-2 font-code text-label-sm text-primary hover:underline">Try interactive streaming query on Home →</a>
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fields = readContactFields('contact');
+      if (!fields.name || !fields.email || !fields.message) return;
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Sending…';
+      setStatus(statusBox, 'pending', pendingStatusHtml());
+
+      const result = await submitContactMessage(fields);
+
+      if (result.ok) {
+        setStatus(statusBox, 'success', `
+          <div class="flex items-center gap-1.5 font-bold">
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">check_circle</span>
+            <span>Message sent</span>
           </div>
-        </div>
-      `;
+          <p class="font-body-md text-xs text-on-surface leading-relaxed">Thanks, <strong>${escapeHtml(fields.name)}</strong>. I'll reply to <code>${escapeHtml(fields.email)}</code>.</p>
+        `);
+        form.reset();
+        submitLabel.textContent = 'Send Message';
+      } else {
+        console.warn('Contact form not delivered:', result.reason);
+        setStatus(statusBox, 'error', errorStatusHtml(fields));
+        submitLabel.textContent = 'Try again';
+      }
+      submitBtn.disabled = false;
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeContactModal);
+  if (backdrop) {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeContactModal();
+    });
+  }
+
+  // Escape closes; Tab / Shift+Tab stay inside the dialog.
+  document.addEventListener('keydown', (e) => {
+    if (!backdrop || backdrop.classList.contains('hidden')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeContactModal();
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  initInlineContactForm();
+  wireContactTriggers(openContactModal);
+
+  window.openContactModal = openContactModal;
+  window.closeContactModal = closeContactModal;
+}
+
+function initInlineContactForm() {
+  const inlineForm = document.getElementById('inline-contact-form');
+  if (!inlineForm) return;
+
+  const submitBtn = document.getElementById('inline-submit-btn');
+  const submitLabel = document.getElementById('inline-submit-label');
+  const statusBox = document.getElementById('inline-status-box');
+  const copyBtn = document.getElementById('inline-copy-email-btn');
+  const confirmationCard = document.getElementById('inline-confirmation-card');
+  const sendAnotherBtn = document.getElementById('inline-send-another-btn');
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () =>
+      copyEmail(copyBtn, document.getElementById('inline-copy-icon'), document.getElementById('inline-copy-label'), 'Copy'));
+  }
+
+  function showConfirmation({ name, email, topic }) {
+    document.getElementById('confirm-user-name').textContent = name;
+    document.getElementById('confirm-user-email').textContent = email;
+    document.getElementById('confirm-user-topic').textContent = topic.toLowerCase();
+
+    inlineForm.classList.add('hidden');
+    setStatus(statusBox, null);
+    confirmationCard.classList.remove('hidden');
+    confirmationCard.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
+    // Move focus so keyboard and screen-reader users land on the result.
+    confirmationCard.focus({ preventScroll: true });
+  }
+
+  if (sendAnotherBtn) {
+    sendAnotherBtn.addEventListener('click', () => {
+      confirmationCard.classList.add('hidden');
+      inlineForm.reset();
+      inlineForm.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitLabel.textContent = 'Send Message';
+      const nameInput = document.getElementById('inline-name');
+      if (nameInput) nameInput.focus();
+    });
+  }
+
+  inlineForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fields = readContactFields('inline');
+
+    if (!fields.name || !fields.email || !fields.message) {
+      setStatus(statusBox, 'error', 'Please fill in your name, email, and message.');
       return;
     }
 
-    selectedIndex = Math.min(selectedIndex, currentFilteredItems.length - 1);
-    selectedIndex = Math.max(0, selectedIndex);
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Sending…';
+    setStatus(statusBox, 'pending', pendingStatusHtml());
 
-    resultsContainer.innerHTML = currentFilteredItems.map((item, idx) => `
-      <a href="${item.url}" class="palette-item flex items-start justify-between p-2.5 rounded-lg transition-colors cursor-pointer ${idx === selectedIndex ? 'bg-surface-container-high' : 'hover:bg-surface-container'}" data-index="${idx}">
-        <div class="flex flex-col gap-0.5">
-          <div class="flex items-center gap-2">
-            <span class="font-headline-md text-body-md text-on-surface">${highlightMatch(item.title, q)}</span>
-            <span class="font-code text-[10px] px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant uppercase">${item.category}</span>
-          </div>
-          <span class="font-body-md text-xs text-on-surface-variant">${highlightMatch(item.desc, q)}</span>
-        </div>
-        <span class="material-symbols-outlined text-on-surface-variant text-[16px] mt-1">arrow_outward</span>
-      </a>
-    `).join('');
+    const result = await submitContactMessage(fields);
 
-    // Attach click listeners
-    resultsContainer.querySelectorAll('.palette-item').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        selectedIndex = parseInt(el.getAttribute('data-index'));
-        updateItemSelection();
-      });
-      el.addEventListener('click', () => {
-        closePalette();
-      });
-    });
-  }
-
-  function updateItemSelection() {
-    const items = resultsContainer.querySelectorAll('.palette-item');
-    items.forEach((item, idx) => {
-      if (idx === selectedIndex) {
-        item.classList.add('bg-surface-container-high');
-        item.classList.remove('hover:bg-surface-container');
-        item.scrollIntoView({ block: 'nearest' });
-      } else {
-        item.classList.remove('bg-surface-container-high');
-      }
-    });
-  }
-
-  // Keyboard Navigation & Shortcuts
-  document.addEventListener('keydown', (e) => {
-    // ⌘K or Ctrl+K
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      if (backdrop.classList.contains('hidden')) {
-        openPalette();
-      } else {
-        closePalette();
-      }
-    }
-    // Escape
-    if (e.key === 'Escape' && !backdrop.classList.contains('hidden')) {
-      e.preventDefault();
-      closePalette();
-    }
-    // Up / Down / Enter when palette is open
-    if (!backdrop.classList.contains('hidden')) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        selectedIndex = (selectedIndex + 1) % currentFilteredItems.length;
-        updateItemSelection();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        selectedIndex = (selectedIndex - 1 + currentFilteredItems.length) % currentFilteredItems.length;
-        updateItemSelection();
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (currentFilteredItems[selectedIndex]) {
-          window.location.href = currentFilteredItems[selectedIndex].url;
-          closePalette();
-        }
-      }
+    if (result.ok) {
+      showConfirmation(fields);
+    } else {
+      console.warn('Contact form not delivered:', result.reason);
+      setStatus(statusBox, 'error', errorStatusHtml(fields));
+      submitLabel.textContent = 'Try again';
+      submitBtn.disabled = false;
     }
   });
+}
 
-  input.addEventListener('input', (e) => {
-    selectedIndex = 0;
-    renderResults(e.target.value);
-  });
-
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) {
-      closePalette();
-    }
-  });
-
-  // Attach open buttons from navbar
-  const searchButtons = document.querySelectorAll('button[aria-label="Ask AI search"], button[aria-label="Search or ask assistant"], button:has(.material-symbols-outlined:contains("search")), [data-action="open-search"]');
-  searchButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+// Contact links scroll to the in-page form on the home page, and open the modal elsewhere.
+function wireContactTriggers(openContactModal) {
+  const path = window.location.pathname;
+  const isHome = path.endsWith('index.html') || path.endsWith('/') || path === '';
+  const contactTriggers = document.querySelectorAll(
+    `[data-action="contact"], a[href="#contact"], a[href="index.html#contact"], a[href*="mailto:${CONTACT_EMAIL}"]`
+  );
+  contactTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      const href = trigger.getAttribute('href');
+      const contactSection = document.getElementById('contact');
       e.preventDefault();
-      openPalette();
+      if (isHome && contactSection && (href === '#contact' || href === 'index.html#contact')) {
+        contactSection.scrollIntoView({ behavior: scrollBehavior() });
+        const nameInput = document.getElementById('inline-name');
+        if (nameInput && !nameInput.closest('.hidden')) nameInput.focus({ preventScroll: true });
+        return;
+      }
+      openContactModal();
     });
   });
 }
 
 /* ==========================================================================
-   3. Active Navigation Detection
+   5. Active Navigation Detection
    ========================================================================== */
 function highlightActiveNav() {
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
@@ -275,11 +648,10 @@ function highlightActiveNav() {
 
 /* Helpers */
 function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function highlightMatch(text, query) {
-  if (!query) return escapeHtml(text);
-  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return escapeHtml(text).replace(regex, '<span class="text-primary font-semibold">$1</span>');
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }

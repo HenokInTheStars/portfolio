@@ -3,23 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta name="description" content="Production web applications, streaming interfaces, and applied AI systems by Henok. Engineered for deterministic reliability and sub-second latency.">
+  <meta name="description" content="Web applications, responsive interfaces, and applied machine learning systems by Henok. Engineered for reliability, accessibility, and clear performance.">
   <meta name="author" content="Henok">
   <title>Work &amp; Systems // Henok</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Henok // Systems Architecture">
+  <meta property="og:title" content="Work &amp; Systems // Henok">
+  <meta property="og:description" content="Web applications, responsive interfaces, and applied machine learning systems engineered for reliability and clear performance.">
+  <meta property="og:url" content="https://www.henoksolomon.com/work.html">
+  <meta property="og:image" content="https://www.henoksolomon.com/assets/screenshots/work.png">
+
+  <!-- Twitter / X Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Work &amp; Systems // Henok">
+  <meta name="twitter:description" content="Web applications, responsive interfaces, and applied machine learning systems by Henok.">
+  <meta name="twitter:image" content="https://www.henoksolomon.com/assets/screenshots/work.png">
+
+  <!-- Canonical & RSS -->
+  <link rel="canonical" href="https://www.henoksolomon.com/work.html">
+  <link rel="alternate" type="application/rss+xml" title="Henok // Technical Dispatches" href="feed.xml">
 
   <!-- Typography & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
 
-  <!-- Core Stylesheet & Tokens -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Core Stylesheet, Compiled Tailwind & Tokens -->
+  <link rel="stylesheet" href="assets/css/style.css?v=3.5">
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=3.5">
 
-  <!-- Tailwind CDN & Dynamic Config -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/work.js" defer></script>
+  <!-- Dynamic Theme Initialization (Anti-FOUC) -->
+  <script src="assets/js/config.js?v=3.5"></script>
+  <script src="assets/js/main.js?v=3.5" defer></script>
+  <script src="assets/js/work.js?v=3.5" defer></script>
 </head>
 
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
@@ -33,29 +52,27 @@
     <div class="h-16 max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between">
       <!-- Brand Monogram -->
       <div class="flex items-center gap-space-lg">
-        <a aria-label="Henok Home Index" class="min-h-[44px] min-w-[44px] flex items-center font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
-          <span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span>
+        <a aria-label="Henok Home Index" class="min-h-[44px] flex items-center gap-2 font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
+          <img src="assets/logo.png" alt="Henok Emblem" class="w-6 h-6 object-contain logo-light dark:hidden" width="24" height="24">
+          <img src="assets/logo-dark.png" alt="Henok Emblem" class="w-6 h-6 object-contain logo-dark hidden dark:block" width="24" height="24">
+          <span><span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span></span>
         </a>
       </div>
 
       <!-- Navigation Links -->
       <nav aria-label="Primary navigation" class="flex items-center gap-space-xs sm:gap-space-sm">
         <a aria-current="page" class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded text-on-surface border-b-2 border-primary" href="work.html">Work</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#skills">Skills</a>
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="lab.html">Lab</a>
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">Writing</a>
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#about">About</a>
-        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#contact">Contact</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="#contact" data-action="contact">Contact</a>
       </nav>
 
       <!-- Global Actions -->
       <div class="flex items-center gap-space-xs sm:gap-space-sm">
-        <button aria-label="Search or ask assistant" class="min-h-[36px] px-space-sm py-1 bg-surface-container border border-secondary-fixed rounded text-on-surface hover:border-primary flex items-center gap-space-xs font-code text-label-sm transition-colors" type="button">
-          <span class="material-symbols-outlined text-primary text-[16px]">search</span>
-          <span class="hidden sm:inline">Search</span>
-          <span class="px-1 py-0.5 bg-surface-container-highest text-on-surface-variant rounded text-[10px]">⌘K</span>
-        </button>
         <button aria-label="Toggle color mode" data-action="toggle-theme" class="w-11 h-11 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary" type="button">
-          <span class="material-symbols-outlined text-[18px]">contrast</span>
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">contrast</span>
         </button>
       </div>
     </div>
@@ -72,30 +89,31 @@
             <span class="font-code text-label-sm tracking-wider uppercase bg-surface-container text-on-surface-variant px-space-sm py-0.5 rounded border border-secondary-fixed">
               SELECTED WORK
             </span>
-            <span class="font-code text-label-sm text-secondary">CASE STUDIES &amp; PRODUCTION SYSTEMS</span>
+            <span class="font-code text-label-sm text-secondary">CASE STUDIES &amp; APPLIED ENGINEERING</span>
           </div>
           <h1 class="font-display text-display text-on-surface tracking-tight mt-space-xs">Work &amp; Systems</h1>
           <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-space-xs">
-            Production web applications, streaming interfaces, and applied AI systems engineered for deterministic reliability, sub-second latency, and rigorous evaluation pipelines.
+            Web applications, responsive interfaces, and applied machine learning systems built with modern web technologies and practical models.
           </p>
         </div>
 
         <!-- Telemetry & Filter Bar -->
         <div class="mt-space-lg p-space-md bg-surface-container-low rounded-xl flex flex-wrap items-center justify-between gap-space-md shadow-sm border border-secondary-fixed/50">
           <div class="flex flex-wrap items-center gap-space-xs sm:gap-space-sm" id="tag-filters">
-            <button class="px-space-sm py-1 rounded bg-on-surface text-inverse-on-surface font-code text-label-sm filter-btn transition-colors" data-filter="all">ALL [5]</button>
+            <button class="px-space-sm py-1 rounded bg-on-surface text-inverse-on-surface font-code text-label-sm filter-btn transition-colors" data-filter="all">ALL [6]</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="web-architecture">WEB ARCHITECTURE</button>
             <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="fullstack-ai">FULL-STACK &amp; AI</button>
             <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="ml-regression">ML &amp; REGRESSION</button>
             <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="nlp-evals">NLP &amp; EVALS</button>
-            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="anomaly-clustering">ANOMALY &amp; CLUSTERING</button>
+            <button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant font-code text-label-sm filter-btn transition-colors" data-filter="anomaly-clustering">ANOMALY &amp; STATS</button>
           </div>
           <div class="flex items-center gap-space-lg font-code text-label-sm text-secondary">
             <div class="flex items-center gap-space-xs">
               <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span>5 PRODUCTION SYSTEMS</span>
+              <span>6 SELECTED PROJECTS</span>
             </div>
             <div class="hidden sm:flex items-center gap-space-xs">
-              <span class="material-symbols-outlined text-[16px] text-primary">bolt</span>
+              <span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">bolt</span>
               <span>p99 &lt; 95ms</span>
             </div>
           </div>
@@ -105,90 +123,96 @@
       <!-- Project Stream -->
       <div class="flex flex-col gap-space-xl" id="projects-container">
 
-        <!-- PROJECT 1: SMART FRONT DESK SYSTEM -->
-        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="fullstack-ai" id="smart-front-desk">
+        <!-- PROJECT 1: SMART FRONT DESK AUTOMATION PLATFORM -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="fullstack-ai web-architecture" id="smart-front-desk">
           <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
               <div class="flex items-center gap-space-sm">
                 <span class="font-code text-label-md text-primary font-bold">01 //</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Case Study</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">&lt; 95ms Latency</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-amber-500 border border-secondary-fixed font-medium">In progress · Full-Stack Web App</span>
               </div>
               <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
-                <span>STACK: FASTAPI / PYTHON</span>
-                <span>ASYNC EVENT QUEUE</span>
+                <span>FASTAPI / PYTHON / WEBSOCKET</span>
+                <span>STATEFUL REACTIVE UI</span>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-              <div class="lg:col-span-7 flex flex-col gap-space-xs">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  <a class="hover:text-primary transition-colors" href="#breakdown-1">Smart Front Desk System</a>
-                </h2>
-                <p class="font-body-md text-body-md text-on-surface-variant">
-                  Asynchronous full-stack automation platform streamlining visitor intake, check-in registration, lobby telemetry, and staff dispatching with sub-100ms API response latency.
-                </p>
-                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-secondary uppercase w-12">Web:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Modern Web UI</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Tailwind CSS</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">WebSocket Telemetry</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Stateful FSM</span>
-                  </div>
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-primary uppercase w-12">Backend:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">FastAPI / Python 3.11</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Pydantic V2 Schemas</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Async Event Workers</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Webhook Dispatch</span>
-                  </div>
+            <!-- Top: Screenshot / GIF Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/smart-front-desk.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">desktop_windows</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[Project Screenshot / Intake Workflow GIF]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/smart-front-desk.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                <span>IN PROGRESS</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                Smart Front Desk Automation Platform
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                Full-stack web application for visitor intake, registration forms, and real-time staff notifications.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    Paper logs and manual lobby reception in busy commercial spaces cause registration delays, unnotified hosts, and disorganized visitor records.
+                  </p>
                 </div>
-                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
-                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-1" type="button">
-                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
-                  </button>
-                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars" rel="noopener" target="_blank">
-                    <span>GITHUB</span>
-                    <span class="material-symbols-outlined text-[14px]">code</span>
-                  </a>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    A self-service kiosk UI with step-by-step visitor onboarding, backed by an async FastAPI service that validates submissions and broadcasts instant host notifications.
+                  </p>
                 </div>
               </div>
 
-              <!-- Telemetry Stream Diagram -->
-              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
-                <div class="flex items-center justify-between pb-space-xs">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-surface-variant"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-surface-variant"></span>
-                  </div>
-                  <span class="font-code text-label-sm text-secondary">INTAKE TELEMETRY</span>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
-                  <div class="flex items-center justify-between text-on-surface-variant">
-                    <span>SPAN: client-intake-handshake</span>
-                    <span class="text-primary font-semibold">14ms (OK)</span>
-                  </div>
-                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
-                    <div class="bg-primary h-full w-[20%]"></div>
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface-variant">
-                    <span>SPAN: pydantic-schema-guard</span>
-                    <span class="text-primary font-semibold">8ms (VALIDATED)</span>
-                  </div>
-                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
-                    <div class="bg-primary h-full w-[45%]"></div>
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface-variant">
-                    <span>SPAN: async-queue-dispatch</span>
-                    <span class="text-primary font-semibold">42ms (DELIVERED)</span>
-                  </div>
-                  <div class="w-full bg-surface-container-high h-2 rounded overflow-hidden">
-                    <div class="bg-primary h-full w-[85%]"></div>
-                  </div>
-                </div>
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">React</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Tailwind CSS</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">FastAPI (Python 3.11)</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Pydantic v2</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">WebSockets</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Async Task Workers</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Structured the visitor registration flow through a formal in-memory finite state machine (FSM) and strict Pydantic v2 schemas at the HTTP/WebSocket boundaries. This prevents half-completed or malformed submissions from propagating through the async notification worker, eliminating phantom alerts.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Currently in active development without a public repository. Validated through automated unit tests verifying schema adherence, idempotency on repeated check-ins, and mock WebSocket dispatches.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Implement hardware badge printing support and QR-code visitor pre-registration.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <!-- TODO: demo URL or remove -->
+                <!-- TODO: add public repo link or remove project -->
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-1" type="button" aria-expanded="false" aria-controls="breakdown-1">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
               </div>
             </div>
 
@@ -201,244 +225,141 @@
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">sync</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">sync</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Streaming &amp; Perception</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
                     Real-time receptionist dashboard with instant attendee notifications and live lobby queue state sync via event streaming.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Queue sync: &lt; 30ms</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Event-driven sync</div>
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">rule</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">rule</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Schema &amp; Validation</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
                     Strict Pydantic v2 schemas at every HTTP and WebSocket boundary, rejecting malformed registration fields before database transactions.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Schema pass: 100%</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Type-checked schemas</div>
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">verified_user</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Evals &amp; Reliability</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
                     Automated integration test harness verifying visitor session idempotency, webhook retry logic, and zero dropped notifications under concurrent check-ins.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Delivery rate: 99.98%</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Retry queue handling</div>
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">speed</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">speed</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Performance &amp; Footprint</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Asynchronous non-blocking Python backend achieving sub-95ms p99 endpoint latency with minimal server memory footprint.
+                    Asynchronous non-blocking Python backend handling concurrent check-in sessions with minimal server memory footprint.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">p99 latency: 92ms</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Async I/O non-blocking</div>
                 </div>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- PROJECT 2: ETHIOPIAN AIRLINES FLIGHT PRICE PREDICTION -->
-        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="ml-regression" id="flight-price">
-          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-              <div class="flex items-center gap-space-sm">
-                <span class="font-code text-label-md text-primary font-bold">02 //</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Machine Learning</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">11 Candidate Models</span>
-              </div>
-              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
-                <span>LIGHTGBM &amp; XGBOOST</span>
-                <span>STREAMLIT APP</span>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-              <div class="lg:col-span-7 flex flex-col gap-space-xs">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  <a class="hover:text-primary transition-colors" href="#breakdown-2">Ethiopian Airlines Flight Price Prediction Engine</a>
-                </h2>
-                <p class="font-body-md text-body-md text-on-surface-variant">
-                  Production regression pipeline and interactive Streamlit application predicting ticket fares (ETB) across domestic and international routes, rigorously evaluated across 11 algorithms.
-                </p>
-                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-secondary uppercase w-12">Web:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Streamlit App</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Real-Time Sliders</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Feature Importance Plots</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Sub-Second Serving</span>
-                  </div>
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-primary uppercase w-12">ML:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">LightGBM &amp; XGBoost</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Random Forest &amp; SVR</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Cyclic Time Encoding</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Stratified K-Fold CV</span>
-                  </div>
-                </div>
-                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
-                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-2" type="button">
-                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
-                  </button>
-                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/flight-price-prediction" rel="noopener" target="_blank">
-                    <span>GITHUB REPO</span>
-                    <span class="material-symbols-outlined text-[14px]">code</span>
-                  </a>
-                </div>
-              </div>
-
-              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
-                <div class="flex items-center justify-between pb-space-xs">
-                  <span class="font-code text-label-sm text-secondary">MODEL COMPARISON</span>
-                  <span class="font-code text-label-sm text-primary font-semibold">11 ALGORITHMS</span>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
-                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50">
-                    <span class="text-primary font-bold">Top Models:</span> LightGBM, XGBoost, Random Forest
-                  </div>
-                  <div class="flex items-center gap-2 text-on-surface-variant text-[11px]">
-                    <span class="material-symbols-outlined text-[14px] text-primary">tune</span>
-                    <span>Features: Route, Cabin, Timing, Aircraft Type</span>
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface text-[11px] pt-1 border-t border-secondary-fixed/40">
-                    <span>Inference: &lt; 12ms</span>
-                    <span class="text-primary font-medium">Streamlit Deployed</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Deep Dive Breakdown -->
-            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-2">
-              <div class="flex items-center justify-between pb-space-xs">
-                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
-                <span class="font-code text-label-sm text-secondary">SPECIFICATION: ETH-FLIGHT-02</span>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
-                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
-                  <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">account_tree</span>
-                    <h4 class="font-code text-label-md font-bold text-on-surface">Feature Engineering</h4>
-                  </div>
-                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Engineered cyclical trigonometric time encoding, route distance vectors, cabin class multipliers, and aircraft seat capacity tiers.
-                  </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Derived features: 18</div>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
-                  <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">compare</span>
-                    <h4 class="font-code text-label-md font-bold text-on-surface">Algorithm Benchmark</h4>
-                  </div>
-                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Systematic benchmarking across 11 algorithms: Linear, Ridge, Lasso, SVR, Decision Tree, Random Forest, Extra Trees, AdaBoost, Gradient Boosting, XGBoost, and LightGBM.
-                  </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Models benchmarked: 11</div>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
-                  <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">analytics</span>
-                    <h4 class="font-code text-label-md font-bold text-on-surface">Evals &amp; Residuals</h4>
-                  </div>
-                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Multi-metric cross-validation measuring R², MAE, RMSE, and residual homoscedasticity across peak vs off-peak flight trajectories.
-                  </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Split: 80/20 Stratified</div>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
-                  <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
-                    <h4 class="font-code text-label-md font-bold text-on-surface">Interactive Deployment</h4>
-                  </div>
-                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Serialized with pickle into an interactive Streamlit inference app with reactive form inputs and real-time fare predictions.
-                  </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Serving latency: &lt; 12ms</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- PROJECT 3: SMS SPAM DETECTION ENGINE -->
+        <!-- PROJECT 2: SMS SPAM DETECTION ENGINE -->
         <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="nlp-evals" id="spam-detector">
           <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
               <div class="flex items-center gap-space-sm">
-                <span class="font-code text-label-md text-primary font-bold">03 //</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">NLP Classification</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">98.21% Accuracy</span>
+                <span class="font-code text-label-md text-primary font-bold">02 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-primary border border-secondary-fixed font-medium">Open Source ML · NLP Classification</span>
               </div>
               <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
                 <span>TF-IDF + NAIVE BAYES</span>
-                <span>5,572 DATASET</span>
+                <span>80/20 STRATIFIED SPLIT</span>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-              <div class="lg:col-span-7 flex flex-col gap-space-xs">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  <a class="hover:text-primary transition-colors" href="#breakdown-3">SMS Spam Detection Engine</a>
-                </h2>
-                <p class="font-body-md text-body-md text-on-surface-variant">
-                  High-precision text classification pipeline trained on 5,572 labeled messages, engineered with near-zero false-positive rate (99.24% precision) to protect legitimate communications.
-                </p>
-                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-secondary uppercase w-12">Pipeline:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn Pipeline</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">TF-IDF Vectorization</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Token Preprocessing</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Sub-5ms Inference</span>
-                  </div>
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-primary uppercase w-12">Metrics:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">98.21% Accuracy</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">99.24% Precision</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">87.25% Recall</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">92.86% F1-Score</span>
-                  </div>
+            <!-- Top: Screenshot / Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/spam-detector.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">mark_email_read</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[Confusion Matrix &amp; Precision/Recall Curve Preview]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/spam-detector.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                <span>99.24% PRECISION</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                SMS Spam Detection Engine
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                High-precision text classification pipeline trained to detect SMS spam with near-zero false alarms on legitimate messages.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    SMS spam filters that prioritize catching every junk text often misclassify critical one-time passwords and personal messages as spam.
+                  </p>
                 </div>
-                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
-                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-3" type="button">
-                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
-                  </button>
-                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/Spam-Detector" rel="noopener" target="_blank">
-                    <span>GITHUB REPO</span>
-                    <span class="material-symbols-outlined text-[14px]">code</span>
-                  </a>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    An NLP classification pipeline combining tokenization, n-gram TF-IDF extraction, and Multinomial Naive Bayes, calibrated for high precision.
+                  </p>
                 </div>
               </div>
 
-              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
-                <div class="flex items-center justify-between pb-space-xs">
-                  <span class="font-code text-label-sm text-secondary">CLASSIFIER EVALUATION</span>
-                  <span class="font-code text-label-sm text-primary font-semibold">99.24% PRECISION</span>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
-                  <div class="flex items-center justify-between text-on-surface">
-                    <span>Dataset: 5,572 Messages</span>
-                    <span class="text-primary font-semibold">80/20 Stratified</span>
-                  </div>
-                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px] space-y-1">
-                    <div class="flex justify-between"><span>Accuracy:</span><span class="text-primary font-bold">98.21%</span></div>
-                    <div class="flex justify-between"><span>Precision (Spam):</span><span class="text-primary font-bold">99.24%</span></div>
-                    <div class="flex justify-between"><span>F1-Score:</span><span class="text-on-surface font-semibold">92.86%</span></div>
-                  </div>
-                  <div class="flex justify-between text-[11px] text-on-surface-variant border-t border-secondary-fixed/40 pt-1">
-                    <span>False Positives: Minimal</span>
-                    <span class="text-primary">Latency: 3.2ms</span>
-                  </div>
-                </div>
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Python</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">TF-IDF (3,000 features)</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">MultinomialNB (α=0.5)</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Pandas</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Jupyter Notebook</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Tuned the decision threshold and Laplace smoothing parameter (α=0.5) to enforce 99.24% precision at the cost of 87.25% recall. In user-facing SMS filtering, missing ~13% of spam is an acceptable tradeoff to protect legitimate personal and transactional messages from false positives.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Evaluated on an 80/20 stratified split of 5,572 labeled messages (about 13% spam): Accuracy 98.21%, Precision 99.24%, Recall 87.25%, F1-Score 92.86%.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Evaluate character-level n-grams and DistilBERT embeddings to improve recall on heavily obfuscated or misspelled spam words.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/Spam-Detector" rel="noopener" target="_blank">
+                  <span>GITHUB REPO</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">code</span>
+                </a>
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-3" type="button" aria-expanded="false" aria-controls="breakdown-3">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
               </div>
             </div>
 
@@ -451,7 +372,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">subtitles</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">subtitles</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Text Preprocessing</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -461,17 +382,17 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">calculate</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">calculate</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">TF-IDF Vectorization</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Sub-linear term frequency scaling and inverse document frequency penalization to isolate high-signal spam markers.
+                    Sub-linear term frequency scaling and unigram + bigram feature extraction isolating high-signal spam tokens.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Features: Sub-linear TF</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Features: 3,000 N-Grams</div>
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">verified</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">verified</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">High-Precision Tuning</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -481,27 +402,319 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">speed</span>
-                    <h4 class="font-code text-label-md font-bold text-on-surface">Inference Speed</h4>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">deployed_code</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Lightweight Deployment</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
-                    Compact model weights with under 2MB serialized memory footprint capable of processing 1,200+ texts per second on a single core.
+                    Serialized model pipeline ready for lightweight microservice integration without heavy deep-learning dependencies or GPU compute.
                   </p>
-                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Latency: 3.2ms</div>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Deployment: Scikit-Learn Pipeline</div>
                 </div>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- PROJECT 4: TIME-SERIES ANOMALY DETECTION SUITE -->
-        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="anomaly-clustering" id="anomaly-detection">
+        <!-- PROJECT 3: ETHIOPIAN AIRLINES FLIGHT FARE PREDICTOR -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="ml-regression" id="flight-price">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">03 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-primary border border-secondary-fixed font-medium">Machine Learning Project · Streamlit Web App</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>INTERACTIVE WEB DASHBOARD</span>
+                <span>11 MODELS BENCHMARKED</span>
+              </div>
+            </div>
+
+            <!-- Top: Screenshot / Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/flight-price.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">flight_takeoff</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[Streamlit App Dashboard &amp; Prediction Sliders Preview]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/flight-price.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                <span>STREAMLIT APP</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                Ethiopian Airlines Flight Fare Predictor
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                Interactive Streamlit web application predicting ticket prices (ETB) based on itinerary parameters and seasonal trends.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    Airline ticket pricing is notoriously volatile, making it difficult for travelers and travel planners to anticipate pricing peaks.
+                  </p>
+                </div>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    An end-to-end regression modeling pipeline deployed as an interactive Streamlit dashboard allowing users to simulate route and timing scenarios.
+                  </p>
+                </div>
+              </div>
+
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Python</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Streamlit</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">LightGBM</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">XGBoost</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Random Forest</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Benchmarked 11 distinct regression models (Linear, Ridge, Lasso, SVR, Decision Trees, Random Forest, AdaBoost, Gradient Boosting, XGBoost, Extra Trees, and LightGBM). Chose gradient-boosted trees (LightGBM) for deployment due to superior handling of categorical route features and rapid CPU-based inference inside the Streamlit container.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Extracted 18 derived features, including cyclical trigonometric time encodings, delivering interactive price feedback based on historical flight records.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Incorporate live flight scraping to track dynamic fuel surcharges and seat capacity changes.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/flight-price-prediction" rel="noopener" target="_blank">
+                  <span>GITHUB REPO</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">code</span>
+                </a>
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-2" type="button" aria-expanded="false" aria-controls="breakdown-2">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-2">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: ETH-FLIGHT-02</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">account_tree</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Feature Engineering</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Engineered cyclical trigonometric time encoding, route distance vectors, cabin class multipliers, and aircraft seat capacity tiers.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Derived features: 18</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">compare</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Algorithm Benchmark</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Systematic benchmarking across 11 algorithms: Linear, Ridge, Lasso, SVR, Decision Tree, Random Forest, Extra Trees, AdaBoost, Gradient Boosting, XGBoost, and LightGBM.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Models benchmarked: 11</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">analytics</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Evals &amp; Residuals</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Multi-metric cross-validation measuring R², MAE, RMSE, and residual homoscedasticity across peak vs off-peak flight trajectories.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Split: 80/20 Stratified</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">rocket_launch</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Interactive Deployment</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Serialized with pickle into an interactive Streamlit inference app with reactive form inputs and real-time fare predictions.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">UI: Streamlit Dashboard</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 4: TECHNICAL EDITORIAL DESIGN SYSTEM & PORTFOLIO ARCHITECTURE -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="web-architecture" id="design-system">
           <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
               <div class="flex items-center gap-space-sm">
                 <span class="font-code text-label-md text-primary font-bold">04 //</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Case Study</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">2-Year Dataset</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-primary border border-secondary-fixed font-medium">Personal Project · Frontend Architecture</span>
+              </div>
+              <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
+                <span>CSS DESIGN TOKENS</span>
+                <span>THEME PERSISTENCE</span>
+              </div>
+            </div>
+
+            <!-- Top: Screenshot / Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/portfolio-design.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">palette</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[Design Tokens &amp; Dual Theme Palette Preview]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/portfolio-design.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                <span>LIVE SYSTEM</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                Technical Editorial Design System &amp; Web Platform
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                Custom design token architecture and portfolio platform built with semantic HTML, Tailwind CSS custom properties, and theme persistence.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    Portfolios frequently rely on heavy frameworks for basic static content, resulting in layout shift (CLS), theme flashing on page refresh, and slow mobile paints.
+                  </p>
+                </div>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    A lightweight editorial website platform with custom CSS design tokens, persistent dual light/dark themes, and accessible typography.
+                  </p>
+                </div>
+              </div>
+
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">HTML5</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Tailwind CSS</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">CSS Custom Properties</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Vanilla JavaScript</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Newsreader &amp; Geist Fonts</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Injected an anti-FOUC initialization script directly into the document <code class="font-code text-xs">&lt;head&gt;</code> to evaluate localStorage and system color preferences before HTML parsing begins. This completely prevents white/dark theme flicker on page transitions without requiring heavy external theme libraries.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Zero layout shifts (CLS), clean keyboard navigation compliance, and fully decoupled design token variables for instant theme toggling.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Add automatic image format negotiation (serving AVIF/WebP) in the static server configuration.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/portfolio" rel="noopener" target="_blank">
+                  <span>GITHUB REPO</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">code</span>
+                </a>
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-design-system" type="button" aria-expanded="false" aria-controls="breakdown-design-system">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Deep Dive Breakdown -->
+            <div class="hidden flex-col gap-space-md pt-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl border border-secondary-fixed transition-all" id="breakdown-design-system">
+              <div class="flex items-center justify-between pb-space-xs">
+                <h3 class="font-headline-md text-headline-md text-on-surface">Architectural Breakdown &amp; Execution Model</h3>
+                <span class="font-code text-label-sm text-secondary">SPECIFICATION: DESIGN-SYS-02</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">palette</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">CSS Token Hierarchy</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Semantic design tokens powering warm alabaster light mode and carbon dark slate with zero runtime CSS-in-JS overhead.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Tokens: 54 CSS variables</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">toggle_on</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Theme Persistence</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Light and dark modes synchronize seamlessly between system preferences and manual user toggle, stored in localStorage.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Storage: localStorage + CSS vars</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">flash_on</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Anti-FOUC Engine</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Synchronous inline script executing in head before first paint, inspecting localStorage and system preference to eliminate theme flash.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Inline theme initialization</div>
+                </div>
+                <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
+                  <div class="flex items-center gap-space-xs text-primary">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">rocket_launch</span>
+                    <h4 class="font-code text-label-md font-bold text-on-surface">Static Deployment</h4>
+                  </div>
+                  <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
+                    Clean static structure hosted on standard web servers without heavyweight client-side runtime bloat or layout shifting.
+                  </p>
+                  <div class="font-code text-label-sm text-secondary mt-auto pt-space-xs">Deployment: Static HTML5 / CSS</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJECT 5: TIME-SERIES ANOMALY DETECTION SUITE -->
+        <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="anomaly-clustering" id="anomaly-detection">
+          <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+              <div class="flex items-center gap-space-sm">
+                <span class="font-code text-label-md text-primary font-bold">05 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-primary border border-secondary-fixed font-medium">Notebook / Case Study · Time-Series</span>
               </div>
               <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
                 <span>Z-SCORE &amp; MAD</span>
@@ -509,60 +722,83 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-              <div class="lg:col-span-7 flex flex-col gap-space-xs">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  <a class="hover:text-primary transition-colors" href="#breakdown-4">Time-Series Anomaly Detection Suite</a>
-                </h2>
-                <p class="font-body-md text-body-md text-on-surface-variant">
-                  Observability framework evaluating two years of continuous daily sales telemetry, resolving classical Z-score masking via Modified Z-Score (MAD) and KNN spatial outlier scoring.
-                </p>
-                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-secondary uppercase w-12">Analysis:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Time-Series Telemetry</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Point Spikes &amp; Stockouts</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Level Shift Detection</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Gradual Secular Drift</span>
-                  </div>
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-primary uppercase w-12">Methods:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Standard Z-Score</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Modified Z-Score (MAD)</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">K-Nearest Neighbors (KNN)</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Masking Mitigation</span>
-                  </div>
+            <!-- Top: Screenshot / Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/anomaly-detection.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">show_chart</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[Time-Series Anomaly Charts &amp; MAD Threshold Preview]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/anomaly-detection.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                <span>2-YEAR DATASET</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                Time-Series Anomaly Detection Suite
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                Statistical anomaly detection framework analyzing two years of daily sales data to diagnose outlier masking and level shifts.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    Standard Z-score thresholding fails when extreme spikes inflate standard deviation, creating false negatives (masking) on genuine operational anomalies.
+                  </p>
                 </div>
-                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
-                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-4" type="button">
-                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
-                  </button>
-                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/anomaly-detection" rel="noopener" target="_blank">
-                    <span>GITHUB REPO</span>
-                    <span class="material-symbols-outlined text-[14px]">code</span>
-                  </a>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    A statistical evaluation suite implementing Modified Z-Score with Median Absolute Deviation (MAD) and KNN spatial distance outlier scoring.
+                  </p>
                 </div>
               </div>
 
-              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
-                <div class="flex items-center justify-between pb-space-xs">
-                  <span class="font-code text-label-sm text-secondary">ANOMALY OBSERVABILITY</span>
-                  <span class="font-code text-label-sm text-primary font-semibold">MAD MITIGATION</span>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
-                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px]">
-                    MAD = median(|X_i - median(X)|) // Zero Masking
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface-variant text-[11px]">
-                    <span>Dataset: 2 Years Daily Sales</span>
-                    <span class="text-primary font-bold">4 PRODUCTS</span>
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface text-[11px] border-t border-secondary-fixed/40 pt-1">
-                    <span>Outliers: Spikes &amp; Shifts</span>
-                    <span class="text-primary">Multi-Method Verified</span>
-                  </div>
-                </div>
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Python</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Pandas</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">NumPy</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Matplotlib &amp; Seaborn</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Adopted Median Absolute Deviation (MAD) with a 50% breakdown point instead of mean/standard deviation. This guarantees robust detection even when up to 50% of the window is contaminated by sales spikes or zero-inventory stockout days.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Evaluated on 2 years of daily retail data across 4 product categories, successfully classifying point spikes, stockouts, level shifts, and gradual drift.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Implement streaming change-point detection (such as CUSUM) for automated operational alerts.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/anomaly-detection" rel="noopener" target="_blank">
+                  <span>GITHUB REPO</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">code</span>
+                </a>
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-4" type="button" aria-expanded="false" aria-controls="breakdown-4">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
               </div>
             </div>
 
@@ -575,7 +811,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">show_chart</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">show_chart</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Masking Mitigation</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -585,7 +821,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">category</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">category</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Multi-Pattern Detection</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -595,7 +831,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">hub</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">hub</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">KNN Distance Scoring</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -605,7 +841,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">article</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">article</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Reproducible Reports</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -618,14 +854,13 @@
           </div>
         </article>
 
-        <!-- PROJECT 5: MALL CUSTOMER SEGMENTATION -->
+        <!-- PROJECT 6: MALL CUSTOMER SEGMENTATION SYSTEM -->
         <article class="project-card flex flex-col bg-surface-container-lowest rounded-xl border border-secondary-fixed transition-colors overflow-hidden" data-category="anomaly-clustering" id="mall-segmentation">
           <div class="p-space-lg sm:p-margin flex flex-col gap-space-lg">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
               <div class="flex items-center gap-space-sm">
-                <span class="font-code text-label-md text-primary font-bold">05 //</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-on-surface-variant border border-secondary-fixed">Unsupervised ML</span>
-                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-primary-fixed text-on-primary-fixed">Optimal k=5 Clusters</span>
+                <span class="font-code text-label-md text-primary font-bold">06 //</span>
+                <span class="px-space-sm py-0.5 rounded font-code text-label-sm bg-surface-container text-primary border border-secondary-fixed font-medium">Notebook / ML Project · Unsupervised Clustering</span>
               </div>
               <div class="flex items-center gap-space-md font-code text-label-sm text-secondary">
                 <span>K-MEANS CLUSTERING</span>
@@ -633,60 +868,83 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-              <div class="lg:col-span-7 flex flex-col gap-space-xs">
-                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  <a class="hover:text-primary transition-colors" href="#breakdown-5">Mall Customer Segmentation System</a>
-                </h2>
-                <p class="font-body-md text-body-md text-on-surface-variant">
-                  Unsupervised behavioral clustering pipeline partitioning customer cohorts based on annual income and spending score metrics, mathematically validated via WCSS Elbow and Silhouette Score optimization.
-                </p>
-                <div class="mt-space-sm flex flex-col gap-space-xs font-code text-label-sm">
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-secondary uppercase w-12">Workflow:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Jupyter Notebook</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Seaborn Density Plots</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Centroid Scatter Maps</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface">Demographic Profiling</span>
-                  </div>
-                  <div class="flex flex-wrap items-center gap-space-xs">
-                    <span class="font-code text-label-sm text-primary uppercase w-12">Clustering:</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">K-Means++ Centroids</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">WCSS Elbow Method</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">Silhouette Analysis</span>
-                    <span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-medium">5 Distinct Personas</span>
-                  </div>
+            <!-- Top: Screenshot / Preview -->
+            <div class="relative w-full rounded-lg overflow-hidden bg-surface-container-high border border-secondary-fixed/60 flex flex-col items-center justify-center p-space-md aspect-video max-h-64">
+              <!-- TODO: add screenshot or GIF file [IMAGE FILES], e.g. assets/images/projects/mall-segmentation.png -->
+              <div class="flex flex-col items-center justify-center text-center p-space-md space-y-2">
+                <span class="material-symbols-outlined text-[48px] text-primary" aria-hidden="true">scatter_plot</span>
+                <span class="font-code text-xs text-on-surface-variant font-medium uppercase tracking-wider">[K-Means Cluster Scatter &amp; Silhouette Analysis Preview]</span>
+                <span class="font-code text-xs text-secondary">assets/images/projects/mall-segmentation.png</span>
+              </div>
+              <div class="absolute top-3 left-3 px-space-sm py-0.5 bg-on-surface text-inverse-on-surface rounded font-code text-label-sm flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+                <span>OPTIMAL k=5 CLUSTERS</span>
+              </div>
+            </div>
+
+            <!-- Case Study Body -->
+            <div class="flex flex-col gap-space-sm">
+              <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                Mall Customer Segmentation System
+              </h2>
+              
+              <!-- One-line summary -->
+              <p class="font-body-md text-base text-on-surface font-medium">
+                Unsupervised behavioral clustering pipeline grouping customers by income and spending habits using K-Means and Silhouette validation.
+              </p>
+
+              <!-- Problem & Built -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm pt-space-xs font-body-md text-sm">
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-secondary uppercase font-semibold block">The Problem</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    Treating a diverse customer base uniformly causes poorly targeted promotions and unoptimized promotional budgets.
+                  </p>
                 </div>
-                <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
-                  <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-5" type="button">
-                    <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon">expand_more</span>
-                  </button>
-                  <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/mall-customer-segmentation" rel="noopener" target="_blank">
-                    <span>GITHUB REPO</span>
-                    <span class="material-symbols-outlined text-[14px]">code</span>
-                  </a>
+                <div class="p-space-sm rounded-lg bg-surface-container-low border border-secondary-fixed/50 space-y-1">
+                  <span class="font-code text-xs text-primary uppercase font-semibold block">What I Built</span>
+                  <p class="text-on-surface-variant leading-relaxed">
+                    An unsupervised customer segmentation pipeline that clusters demographic spending data into actionable marketing personas.
+                  </p>
                 </div>
               </div>
 
-              <div class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative border border-secondary-fixed">
-                <div class="flex items-center justify-between pb-space-xs">
-                  <span class="font-code text-label-sm text-secondary">CLUSTERING VALIDATION</span>
-                  <span class="font-code text-label-sm text-primary font-semibold">5 COHORTS</span>
-                </div>
-                <div class="bg-surface-container-lowest p-space-md rounded border border-secondary-fixed flex flex-col justify-between min-h-[160px] font-code text-xs">
-                  <div class="flex items-center justify-between text-on-surface font-mono text-[11px]">
-                    <span>Optimal Cluster Count:</span>
-                    <span class="text-primary font-semibold">k = 5</span>
-                  </div>
-                  <div class="p-2 bg-surface-container rounded border border-secondary-fixed/50 font-mono text-[11px]">
-                    Validation: WCSS Elbow &amp; Silhouette Peak
-                  </div>
-                  <div class="flex items-center justify-between text-on-surface-variant text-[11px] border-t border-secondary-fixed/40 pt-1">
-                    <span>Targeting: Commercial Personas</span>
-                    <span class="text-primary font-medium">High Separation</span>
-                  </div>
-                </div>
+              <!-- My Stack -->
+              <div class="pt-space-xs flex flex-wrap items-center gap-1.5 font-code text-xs">
+                <span class="text-secondary uppercase text-xs font-semibold w-16">My Stack:</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Python</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Scikit-Learn</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Pandas</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Seaborn &amp; Matplotlib</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container text-on-surface">Jupyter Notebook</span>
+              </div>
+
+              <!-- Hard Decision & Tradeoff, Results, Next Steps -->
+              <div class="space-y-space-xs pt-space-xs font-body-md text-sm border-t border-secondary-fixed/50">
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">One Hard Technical Decision &amp; Why:</strong>
+                  Cross-validated the Within-Cluster Sum of Squares (WCSS) Elbow curve against Silhouette Coefficient analysis to mathematically justify k=5 clusters, avoiding arbitrary cohort counts.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">Results (Stated Honestly):</strong>
+                  Mapped distinct commercial personas (e.g. High-Income/High-Spenders vs Conservative Earners) with clear bivariate boundaries and centroid locations.
+                </p>
+                <p class="text-on-surface-variant">
+                  <strong class="text-on-surface font-semibold font-code text-xs uppercase">What I'd Improve Next:</strong>
+                  Incorporate Recency, Frequency, and Monetary (RFM) transaction metrics to model customer churn risk dynamically.
+                </p>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="mt-space-md flex flex-wrap items-center gap-space-sm">
+                <a class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-surface-container text-on-surface font-code text-label-md hover:bg-surface-variant transition-colors" href="https://github.com/HenokInTheStars/mall-customer-segmentation" rel="noopener" target="_blank">
+                  <span>GITHUB REPO</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">code</span>
+                </a>
+                <button class="toggle-btn inline-flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary text-on-primary font-code text-label-md hover:bg-primary/90 transition-colors" data-target="breakdown-5" type="button" aria-expanded="false" aria-controls="breakdown-5">
+                  <span class="toggle-label font-medium">VIEW DEEP DIVE</span>
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200 toggle-icon" aria-hidden="true">expand_more</span>
+                </button>
               </div>
             </div>
 
@@ -699,7 +957,7 @@
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">scatter_plot</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">scatter_plot</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Centroid Initialization</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -709,7 +967,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">insights</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">insights</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Optimal-k Selection</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -719,7 +977,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">groups</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">groups</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Persona Profiling</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -729,7 +987,7 @@
                 </div>
                 <div class="bg-surface-container-lowest p-space-md rounded-lg border border-secondary-fixed flex flex-col gap-space-xs">
                   <div class="flex items-center gap-space-xs text-primary">
-                    <span class="material-symbols-outlined text-[18px]">auto_graph</span>
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">auto_graph</span>
                     <h4 class="font-code text-label-md font-bold text-on-surface">Visual Explainability</h4>
                   </div>
                   <p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">
@@ -742,18 +1000,18 @@
           </div>
         </article>
 
-      </div>iv>
+      </div>
 
       <!-- Systematic Architecture Footnote / Synthesis Callout -->
       <section class="mt-space-xl p-space-lg bg-surface-container-low rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg border border-secondary-fixed">
         <div class="flex flex-col gap-space-xs max-w-xl">
           <div class="flex items-center gap-space-xs text-primary">
-            <span class="material-symbols-outlined text-[18px]">construction</span>
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">construction</span>
             <span class="font-code text-label-sm uppercase font-semibold">Evaluation Infrastructure</span>
           </div>
-          <h3 class="font-headline-md text-headline-md text-on-surface">Deterministic System Principles</h3>
+          <h3 class="font-headline-md text-headline-md text-on-surface">Engineering Principles</h3>
           <p class="font-body-md text-body-md text-on-surface-variant">
-            Every system represented here rejects opaque nondeterminism. We treat models as probabilistic compute nodes bounded by strict schemas, type-safe execution fences, and continuous regression evaluations.
+            Every system here is built around straightforward engineering principles: type-safe schemas at API boundaries, honest evaluations against known datasets, and responsive user interfaces that don't depend on unneeded runtime bloat.
           </p>
         </div>
         <div class="flex flex-col sm:flex-row items-center gap-space-sm w-full md:w-auto">
@@ -768,24 +1026,28 @@
 
   <!-- Footer / Colophon -->
   <footer class="w-full border-t border-secondary-fixed bg-surface-container-low">
-    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="about">
+    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="colophon">
       <div class="space-y-space-xs">
         <p class="font-code text-label-md text-on-surface tracking-tight uppercase">Colophon &amp; Dispatches</p>
         <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
-          Engineered by Henok for deterministic execution and technical rigor. Set in Newsreader, Geist, &amp; JetBrains Mono.
+          Crafted by Henok in Addis Ababa. Set in Newsreader, Geist, &amp; JetBrains Mono.
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-space-md sm:gap-space-lg">
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">RSS FEED</a>
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="docs/DESIGN.md">DESIGN SPEC</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="feed.xml">RSS FEED</a>
         <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://github.com/HenokInTheStars" target="_blank" rel="noopener">GITHUB</a>
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="mailto:hello@example.com">CONTACT</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://www.linkedin.com/in/henok-solomon-ai" target="_blank" rel="noopener">LINKEDIN</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded cursor-pointer" href="#contact" data-action="contact">CONTACT</a>
       </div>
     </div>
     <div class="border-t border-secondary-fixed/50 py-space-md">
       <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between text-on-surface-variant font-code text-label-sm">
-        <span>© 2026 Henok</span>
-        <span>PRECISION SYSTEMS ARCHITECTURE</span>
+        <span class="flex items-center gap-2">
+          <img src="assets/logo.png" alt="" class="w-4 h-4 object-contain logo-light dark:hidden" width="16" height="16">
+          <img src="assets/logo-dark.png" alt="" class="w-4 h-4 object-contain logo-dark hidden dark:block" width="16" height="16">
+          <span>© 2026 Henok</span>
+        </span>
+        <span>WEB &amp; MACHINE LEARNING ENGINEERING</span>
       </div>
     </div>
   </footer>

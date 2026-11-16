@@ -1,0 +1,90 @@
+name: CI & Deployment Pipeline
+
+on:
+  push:
+    branches: ["main", "feature/**", "bugfix/**"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate & Build Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify JavaScript Syntax
+        run: pnpm run validate:js
+
+      - name: Verify Feeds & SEO Metadata
+        run: |
+          python3 -c "import xml.etree.ElementTree as ET; ET.parse('feed.xml'); ET.parse('sitemap.xml'); print('✓ feed.xml and sitemap.xml are well-formed XML.')"
+          test -f robots.txt && echo "✓ robots.txt present."
+
+      - name: Build Tailwind CSS
+        run: |
+          pnpm run build:css
+          if [ ! -s assets/css/tailwind.css ]; then
+            echo "Error: assets/css/tailwind.css is empty after build"
+            exit 1
+          fi
+          echo "✓ tailwind.css built ($(wc -c < assets/css/tailwind.css) bytes)."
+
+      - name: Assemble Site Bundle
+        run: |
+          mkdir -p _site
+          for file in index.html work.html lab.html writing.html; do
+            if [ ! -f "$file" ]; then
+              echo "Error: Missing required document $file"
+              exit 1
+            fi
+          done
+          cp index.html work.html lab.html writing.html feed.xml sitemap.xml robots.txt _site/
+          cp -r assets _site/
+          rm -f _site/assets/css/input.css
+          [ -f resume.pdf ] && cp resume.pdf _site/ || echo "Note: resume.pdf not present yet."
+          echo "✓ Site bundle contents:" && find _site -type f | sort
+
+      - name: Upload Pages Artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

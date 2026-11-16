@@ -6,20 +6,39 @@
   <meta name="description" content="Essays and technical notes on frontend systems architecture, UI latency, and design systems engineering by Henok.">
   <meta name="author" content="Henok">
   <title>Writing &amp; Notes // Henok</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Henok // Systems Architecture">
+  <meta property="og:title" content="Writing &amp; Technical Dispatches // Henok">
+  <meta property="og:description" content="Essays and technical notes on frontend systems architecture, streaming latency, and design systems engineering by Henok.">
+  <meta property="og:url" content="https://www.henoksolomon.com/writing.html">
+  <meta property="og:image" content="https://www.henoksolomon.com/assets/screenshots/writing.png">
+
+  <!-- Twitter / X Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Writing &amp; Technical Dispatches // Henok">
+  <meta name="twitter:description" content="Essays on streaming UI latency, deterministic runtimes, and frame pacing.">
+  <meta name="twitter:image" content="https://www.henoksolomon.com/assets/screenshots/writing.png">
+
+  <!-- Canonical & RSS -->
+  <link rel="canonical" href="https://www.henoksolomon.com/writing.html">
+  <link rel="alternate" type="application/rss+xml" title="Henok Solomon // Technical Dispatches" href="feed.xml">
 
   <!-- Typography & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
 
-  <!-- Core Stylesheet & Tokens -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Core Stylesheet, Compiled Tailwind & Tokens -->
+  <link rel="stylesheet" href="assets/css/style.css?v=3.5">
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=3.5">
 
-  <!-- Tailwind CDN & Dynamic Config -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/writing.js" defer></script>
+  <!-- Dynamic Theme Initialization (Anti-FOUC) -->
+  <script src="assets/js/config.js?v=3.5"></script>
+  <script src="assets/js/main.js?v=3.5" defer></script>
+  <script src="assets/js/writing.js?v=3.5" defer></script>
 </head>
 
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
@@ -33,29 +52,27 @@
     <div class="h-16 max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between">
       <!-- Brand Monogram -->
       <div class="flex items-center gap-space-lg">
-        <a aria-label="Henok Home Index" class="min-h-[44px] min-w-[44px] flex items-center font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
-          <span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span>
+        <a aria-label="Henok Home Index" class="min-h-[44px] flex items-center gap-2 font-code text-label-md tracking-tight text-on-surface hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html">
+          <img src="assets/logo.png" alt="Henok Emblem" class="w-6 h-6 object-contain logo-light dark:hidden" width="24" height="24">
+          <img src="assets/logo-dark.png" alt="Henok Emblem" class="w-6 h-6 object-contain logo-dark hidden dark:block" width="24" height="24">
+          <span><span class="text-primary font-bold">[</span>Henok<span class="text-primary font-bold">]</span></span>
         </a>
       </div>
 
       <!-- Navigation Links -->
       <nav aria-label="Primary navigation" class="flex items-center gap-space-xs sm:gap-space-sm">
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="work.html">Work</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#skills">Skills</a>
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="lab.html">Lab</a>
         <a aria-current="page" class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded text-on-surface border-b-2 border-primary" href="writing.html">Writing</a>
         <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#about">About</a>
-        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="index.html#contact">Contact</a>
+        <a class="nav-link min-h-[44px] px-space-xs sm:px-space-sm flex items-center font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="#contact" data-action="contact">Contact</a>
       </nav>
 
       <!-- Global Actions -->
       <div class="flex items-center gap-space-xs sm:gap-space-sm">
-        <button aria-label="Search or ask assistant" class="min-h-[36px] px-space-sm py-1 bg-surface-container border border-secondary-fixed rounded text-on-surface hover:border-primary flex items-center gap-space-xs font-code text-label-sm transition-colors" type="button">
-          <span class="material-symbols-outlined text-primary text-[16px]">search</span>
-          <span class="hidden sm:inline">Search</span>
-          <span class="px-1 py-0.5 bg-surface-container-highest text-on-surface-variant rounded text-[10px]">⌘K</span>
-        </button>
         <button aria-label="Toggle color mode" data-action="toggle-theme" class="w-11 h-11 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary" type="button">
-          <span class="material-symbols-outlined text-[18px]">contrast</span>
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">contrast</span>
         </button>
       </div>
     </div>
@@ -81,12 +98,12 @@
             </div>
             <!-- Meta RSS Quick Action -->
             <div class="flex items-center gap-space-sm self-start md:self-end">
-              <a class="px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all duration-150 shadow-sm flex items-center gap-space-xs text-on-surface hover:text-primary border border-secondary-fixed/50" href="#">
-                <span class="material-symbols-outlined text-[16px] text-primary">rss_feed</span>
+              <a class="px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all duration-150 shadow-sm flex items-center gap-space-xs text-on-surface hover:text-primary border border-secondary-fixed/50" href="feed.xml" target="_blank" rel="noopener">
+                <span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">rss_feed</span>
                 <span class="font-code text-label-md tracking-wider uppercase">RSS Feed</span>
               </a>
               <div class="hidden sm:flex items-center px-space-sm py-space-xs bg-surface-container rounded-lg font-code text-label-sm text-on-surface-variant shadow-sm border border-secondary-fixed/50">
-                <span>INDEX: 18 ESSAYS</span>
+                <span id="essays-total-badge">INDEX: 4 ESSAYS</span>
               </div>
             </div>
           </div>
@@ -96,7 +113,7 @@
             <div class="flex flex-col md:flex-row items-stretch md:items-center gap-space-md">
               <!-- Live Filter Search Field -->
               <div class="relative flex-1">
-                <span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                <span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" aria-hidden="true">search</span>
                 <input class="w-full pl-11 pr-space-md py-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:bg-surface-container-lowest shadow-sm placeholder:text-on-surface-variant/60 border border-secondary-fixed/50" id="essay-search" placeholder="Search essays by keyword, concept, or architectural component..." type="text">
                 <span class="absolute right-space-md top-1/2 -translate-y-1/2 font-code text-label-sm text-on-surface-variant" id="search-count">4 shown</span>
               </div>
@@ -129,11 +146,11 @@
           <div class="lg:col-span-4 flex flex-col space-y-space-sm" id="essays-list">
             
             <!-- Post 1 (Active by default) -->
-            <article class="essay-card group relative p-space-md rounded-xl bg-surface-container-lowest shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="latency,frontend,ai-engineering" data-title="designing for streaming ui latency and perceptual speed">
+            <article id="streaming-latency" class="essay-card group relative p-space-md rounded-xl bg-surface-container-lowest shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="latency,frontend,ai-engineering" data-title="designing for streaming ui latency and perceptual speed" data-slug="streaming-latency">
               <div class="flex items-center justify-between text-on-surface-variant font-code text-label-sm mb-space-xs">
                 <span class="text-primary font-medium">2026.02.14</span>
                 <span class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span class="material-symbols-outlined text-[13px]" aria-hidden="true">schedule</span>
                   6 min read
                 </span>
               </div>
@@ -152,11 +169,11 @@
             </article>
 
             <!-- Post 2 -->
-            <article class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="ai-engineering,frontend" data-title="deterministic generation in stochastic runtimes">
+            <article id="deterministic-runtime" class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="ai-engineering,frontend" data-title="deterministic generation in stochastic runtimes" data-slug="deterministic-runtime">
               <div class="flex items-center justify-between text-on-surface-variant font-code text-label-sm mb-space-xs">
                 <span>2026.01.28</span>
                 <span class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span class="material-symbols-outlined text-[13px]" aria-hidden="true">schedule</span>
                   11 min read
                 </span>
               </div>
@@ -173,11 +190,11 @@
             </article>
 
             <!-- Post 3 -->
-            <article class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="design-systems,frontend" data-title="zero-runtime tokens: the death of css-in-js">
+            <article id="zero-runtime-tokens" class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="design-systems,frontend" data-title="zero-runtime tokens: the death of css-in-js" data-slug="zero-runtime-tokens">
               <div class="flex items-center justify-between text-on-surface-variant font-code text-label-sm mb-space-xs">
                 <span>2025.11.19</span>
                 <span class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span class="material-symbols-outlined text-[13px]" aria-hidden="true">schedule</span>
                   8 min read
                 </span>
               </div>
@@ -194,11 +211,11 @@
             </article>
 
             <!-- Post 4 -->
-            <article class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="latency,design-systems" data-title="the 16ms illusion: frame pacing in hyper-responsive workflows">
+            <article id="16ms-illusion" class="essay-card group relative p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer border border-secondary-fixed/50" data-tags="latency,design-systems" data-title="the 16ms illusion: frame pacing in hyper-responsive workflows" data-slug="16ms-illusion">
               <div class="flex items-center justify-between text-on-surface-variant font-code text-label-sm mb-space-xs">
                 <span>2025.09.04</span>
                 <span class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span class="material-symbols-outlined text-[13px]" aria-hidden="true">schedule</span>
                   5 min read
                 </span>
               </div>
@@ -222,15 +239,16 @@
             <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-md bg-surface-container-low/50 -mx-space-md -mt-space-md lg:-mx-space-xl lg:-mt-space-xl p-space-md lg:px-space-xl rounded-t-xl border-b border-secondary-fixed/50">
               <div class="flex items-center gap-space-xs text-on-surface-variant font-code text-label-sm">
                 <span class="text-primary font-bold">[READER]</span>
-                <span>INDEX_REF: #<span id="reader-article-id">041</span></span>
-                <span class="text-outline-variant">•</span>
+                <span class="text-outline-variant">/</span>
+                <span>REF #<span id="reader-article-id">041</span></span>
+                <span class="text-outline-variant">/</span>
                 <span class="text-primary" id="reader-article-date">PUBLISHED FEB 14, 2026</span>
-                <span class="text-outline-variant">•</span>
+                <span class="text-outline-variant">/</span>
                 <span id="reader-article-time">6 min read</span>
               </div>
               <div class="flex items-center gap-space-sm">
                 <span class="inline-flex items-center gap-1 px-space-xs py-1 rounded bg-surface-container-high text-on-surface font-code text-label-sm">
-                  <span class="material-symbols-outlined text-[14px]">auto_stories</span>
+                  <span class="material-symbols-outlined text-[14px]" aria-hidden="true">auto_stories</span>
                   <span>Active Essay</span>
                 </span>
               </div>
@@ -252,7 +270,7 @@
               <aside class="md:col-span-1 order-last md:order-first">
                 <div class="sticky top-24 space-y-space-xs bg-surface-container-low p-space-md rounded-lg shadow-sm border border-secondary-fixed/50">
                   <p class="font-code text-label-sm uppercase tracking-wider text-on-surface font-semibold mb-space-xs">Contents</p>
-                  <nav class="flex flex-col space-y-1 font-body-md text-label-md">
+                  <nav id="reader-toc-nav" class="flex flex-col space-y-1 font-body-md text-label-md">
                     <a class="text-primary font-medium hover:underline" href="#the-stream-problem">1. Ingestion Model</a>
                     <a class="text-on-surface-variant hover:text-on-surface" href="#perceptual-physics">2. Perceptual Physics</a>
                     <a class="text-on-surface-variant hover:text-on-surface" href="#code-implementation">3. Buffer Scheduler</a>
@@ -262,10 +280,10 @@
                   <div class="pt-space-md mt-space-md bg-surface-container-high/40 p-space-xs rounded">
                     <div class="font-code text-label-sm text-on-surface-variant flex items-center justify-between">
                       <span>BUDGET</span>
-                      <span class="text-primary font-bold">120ms TARGET</span>
+                      <span id="reader-budget-label" class="text-primary font-bold">120ms TARGET</span>
                     </div>
                     <div class="w-full bg-surface-container h-1.5 rounded-full mt-1 overflow-hidden">
-                      <div class="bg-primary h-full w-[82%] rounded-full"></div>
+                      <div id="reader-budget-bar" class="bg-primary h-full w-[82%] rounded-full transition-all duration-300"></div>
                     </div>
                   </div>
                 </div>
@@ -284,12 +302,12 @@
                 </section>
 
                 <!-- Rich Visual Illustration: Streaming Latency Pipeline -->
-                <div class="p-space-md bg-surface-container-low rounded-xl shadow-sm space-y-space-xs my-space-md border border-secondary-fixed/50">
+                <div id="reader-diagram-container" class="p-space-md bg-surface-container-low rounded-xl shadow-sm space-y-space-xs my-space-md border border-secondary-fixed/50">
                   <div class="flex items-center justify-between text-on-surface font-code text-label-sm">
-                    <span class="uppercase tracking-wider font-semibold">Fig 1. Stream Pacing vs. Human Ocular Saccade</span>
-                    <span class="text-primary">SVG Pipeline Model</span>
+                    <span id="reader-diagram-title" class="uppercase tracking-wider font-semibold">Fig 1. Stream Pacing vs. Human Ocular Saccade</span>
+                    <span id="reader-diagram-badge" class="text-primary">SVG Pipeline Model</span>
                   </div>
-                  <div class="w-full py-space-sm flex items-center justify-center">
+                  <div id="reader-diagram-svg" class="w-full py-space-sm flex items-center justify-center">
                     <svg class="w-full h-auto max-w-lg text-primary" fill="none" stroke="currentColor" viewBox="0 0 540 110">
                       <path d="M 20 55 L 520 55" opacity="0.3" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1.5"></path>
                       <circle class="fill-surface-container-high stroke-primary" cx="60" cy="55" r="14" stroke-width="2"></circle>
@@ -305,17 +323,17 @@
                       <text class="fill-on-surface-variant font-mono" font-size="8" stroke="none" text-anchor="middle" x="430" y="90">Cadenced Saccade</text>
                     </svg>
                   </div>
-                  <p class="font-code text-label-sm text-on-surface-variant text-center">
+                  <p id="reader-diagram-caption" class="font-code text-label-sm text-on-surface-variant text-center">
                     Buffer smoothing absorbs upstream model bursts, yielding an uninterrupted reading trajectory.
                   </p>
                 </div>
 
                 <!-- Callout Box -->
-                <div class="p-space-md rounded-lg bg-surface-container-low shadow-sm flex items-start gap-space-sm border border-secondary-fixed/50" id="perceptual-physics">
-                  <span class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5">info</span>
+                <div id="reader-callout-container" class="p-space-md rounded-lg bg-surface-container-low shadow-sm flex items-start gap-space-sm border border-secondary-fixed/50">
+                  <span id="reader-callout-icon" class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5" aria-hidden="true">info</span>
                   <div class="space-y-1">
-                    <span class="font-code text-label-sm uppercase font-bold text-primary tracking-wide">Note: Perceptual Physics</span>
-                    <p class="font-body-md text-body-md text-on-surface">
+                    <span id="reader-callout-title" class="font-code text-label-sm uppercase font-bold text-primary tracking-wide">Note: Perceptual Physics</span>
+                    <p id="reader-callout-text" class="font-body-md text-body-md text-on-surface">
                       Perceived latency matters more than total response duration. An interface that delivers immediate visual structure and cadenced text delivery feels 3× faster than an identical execution arriving in one massive dump after a 1.2s blank delay.
                     </p>
                   </div>
@@ -323,8 +341,8 @@
 
                 <!-- Code Section -->
                 <section class="space-y-space-xs pt-space-sm" id="code-implementation">
-                  <h2 class="font-headline-md text-headline-md text-on-surface">2. The Micro-Task Pacing Scheduler</h2>
-                  <p>
+                  <h2 class="font-headline-md text-headline-md text-on-surface" id="reader-sec2-title">2. The Micro-Task Pacing Scheduler</h2>
+                  <p id="reader-sec2-desc">
                     To decouple network socket arrival times from DOM reconciliation, we install a high-frequency dequeue worker using <code>requestAnimationFrame</code> linked to dynamic token spring curves:
                   </p>
                   <div class="rounded-xl overflow-hidden shadow-sm bg-surface-container-highest mt-space-sm border border-secondary-fixed/50">
@@ -333,15 +351,15 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-error/60"></span>
                         <span class="w-2.5 h-2.5 rounded-full bg-tertiary/60"></span>
                         <span class="w-2.5 h-2.5 rounded-full bg-primary/60"></span>
-                        <span class="ml-space-xs text-on-surface-variant font-medium">streamScheduler.ts</span>
+                        <span id="reader-code-filename" class="ml-space-xs text-on-surface-variant font-medium">streamScheduler.ts</span>
                       </div>
                       <button class="px-space-xs py-0.5 rounded hover:bg-surface-container-high transition-colors flex items-center gap-1 text-on-surface-variant hover:text-on-surface min-h-[44px]" id="copy-code-btn" type="button">
-                        <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                        <span class="material-symbols-outlined text-[14px]" aria-hidden="true">content_copy</span>
                         <span>Copy</span>
                       </button>
                     </div>
                     <div class="p-space-md overflow-x-auto text-on-surface font-code text-code bg-surface-container-lowest">
-                      <pre id="reader-code-content">export class StreamPacer {
+                      <pre id="reader-code-content" class="overflow-x-auto max-w-full whitespace-pre">export class StreamPacer {
   private queue: string[] = [];
   private isRunning: boolean = false;
 
@@ -370,11 +388,11 @@
                 </section>
 
                 <section class="space-y-space-xs pt-space-sm" id="layout-stability">
-                  <h2 class="font-headline-md text-headline-md text-on-surface">3. Content Shift &amp; Cumulative Layout Drift</h2>
-                  <p>
+                  <h2 class="font-headline-md text-headline-md text-on-surface" id="reader-sec3-title">3. Content Shift &amp; Cumulative Layout Drift</h2>
+                  <p id="reader-sec3-p1">
                     Streaming responses continuously push scroll containers down. If an interface renders code snippets or data-tables midway through streaming, syntax tokenization updates can trigger sudden 120px height collapses.
                   </p>
-                  <p>
+                  <p id="reader-sec3-p2">
                     By employing CSS <code>contain-intrinsic-size</code> alongside predictive scroll anchors, we maintain strict viewport coordinates regardless of upstream mutation volume.
                   </p>
                 </section>
@@ -385,7 +403,7 @@
                     <span class="font-bold uppercase tracking-wider">Footnotes &amp; Citations</span>
                     <span class="text-on-surface-variant">RFC-7231</span>
                   </div>
-                  <ol class="list-decimal list-inside text-on-surface-variant font-code text-label-sm space-y-1">
+                  <ol id="reader-footnotes-list" class="list-decimal list-inside text-on-surface-variant font-code text-label-sm space-y-1">
                     <li id="footnote-1">
                       Card, S. K., Moran, T. P., &amp; Newell, A. (1983). <span class="italic">The Psychology of Human-Computer Interaction</span>. L. Erlbaum Associates.
                     </li>
@@ -406,11 +424,14 @@
             <h3 class="font-headline-md text-headline-md text-on-surface">Dispatch Notifications</h3>
             <p class="font-body-md text-body-md text-on-surface-variant">Get notified when new essays on systems architecture and AI frontend tooling drop.</p>
           </div>
-          <div class="flex items-center gap-space-xs w-full sm:w-auto">
-            <input class="px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none shadow-sm flex-1 sm:w-64 placeholder:text-on-surface-variant/50 border border-secondary-fixed/50" placeholder="colleague@domain.com" type="email">
-            <button class="px-space-md py-space-xs rounded-lg bg-on-surface text-inverse-on-surface font-body-md text-body-md font-medium hover:bg-primary shadow-sm transition-colors flex-shrink-0" type="button">
-              Subscribe
-            </button>
+          <div class="w-full sm:w-auto">
+            <form id="newsletter-form" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-xs w-full sm:w-auto">
+              <input id="newsletter-email" required class="px-space-md py-space-xs rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary shadow-sm flex-1 sm:w-64 placeholder:text-on-surface-variant/50 border border-secondary-fixed/50" placeholder="colleague@domain.com" type="email">
+              <button class="px-space-md py-space-xs rounded-lg bg-on-surface text-inverse-on-surface font-body-md text-body-md font-medium hover:bg-primary shadow-sm transition-colors flex-shrink-0" type="submit">
+                Subscribe
+              </button>
+            </form>
+            <div id="newsletter-status" class="hidden text-label-sm font-code text-primary mt-space-xs"></div>
           </div>
         </div>
 
@@ -420,24 +441,28 @@
 
   <!-- Footer / Colophon -->
   <footer class="w-full border-t border-secondary-fixed bg-surface-container-low">
-    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="about">
+    <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin py-space-xl flex flex-col md:flex-row items-baseline justify-between gap-space-lg" id="colophon">
       <div class="space-y-space-xs">
         <p class="font-code text-label-md text-on-surface tracking-tight uppercase">Colophon &amp; Dispatches</p>
         <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
-          Engineered by Henok for deterministic execution and technical rigor. Set in Newsreader, Geist, &amp; JetBrains Mono.
+          Crafted by Henok in Addis Ababa. Set in Newsreader, Geist, &amp; JetBrains Mono.
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-space-md sm:gap-space-lg">
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="writing.html">RSS FEED</a>
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="docs/DESIGN.md">DESIGN SPEC</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="feed.xml" target="_blank" rel="noopener">RSS FEED</a>
         <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://github.com/HenokInTheStars" target="_blank" rel="noopener">GITHUB</a>
-        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="mailto:hello@example.com">CONTACT</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded" href="https://www.linkedin.com/in/henok-solomon-ai" target="_blank" rel="noopener">LINKEDIN</a>
+        <a class="min-h-[44px] flex items-center font-code text-label-md text-on-surface-variant hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded cursor-pointer" href="#contact" data-action="contact">CONTACT</a>
       </div>
     </div>
     <div class="border-t border-secondary-fixed/50 py-space-md">
       <div class="max-w-[1120px] mx-auto px-space-md lg:px-margin flex items-center justify-between text-on-surface-variant font-code text-label-sm">
-        <span>© 2026 Henok</span>
-        <span>PRECISION SYSTEMS ARCHITECTURE</span>
+        <span class="flex items-center gap-2">
+          <img src="assets/logo.png" alt="" class="w-4 h-4 object-contain logo-light dark:hidden" width="16" height="16">
+          <img src="assets/logo-dark.png" alt="" class="w-4 h-4 object-contain logo-dark hidden dark:block" width="16" height="16">
+          <span>© 2026 Henok</span>
+        </span>
+        <span>WEB &amp; MACHINE LEARNING ENGINEERING</span>
       </div>
     </div>
   </footer>

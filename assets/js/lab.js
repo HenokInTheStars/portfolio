@@ -260,6 +260,7 @@ function dispatchLiveTokenStream() {
   let currentIndex = 0;
   const latencies = [];
   const startTime = performance.now();
+  let lastTickTime = startTime;
   let firstTokenEmitted = false;
 
   activeStreamTimer = setInterval(() => {
@@ -283,15 +284,17 @@ function dispatchLiveTokenStream() {
     const currentToken = currentTokensList[currentIndex];
     const now = performance.now();
 
-    // First token arrival TTFT
+    // First token arrival TTFT (actual time from start to first token DOM insertion)
     if (!firstTokenEmitted) {
       firstTokenEmitted = true;
-      const initialTtft = Math.round(now - startTime + 95 + Math.random() * 40);
+      const initialTtft = Math.round(now - startTime);
       if (ttft) ttft.textContent = `TTFT: ${initialTtft}ms`;
     }
 
-    // Inter-token chunk latency delta
-    const delta = (14 + Math.random() * 16).toFixed(1);
+    // Inter-token chunk latency delta measured directly via performance.now()
+    const tickNow = performance.now();
+    const delta = Math.max(1, (tickNow - lastTickTime)).toFixed(1);
+    lastTickTime = tickNow;
     latencies.push(parseFloat(delta));
 
     // Append token to terminal
@@ -316,18 +319,31 @@ function dispatchLiveTokenStream() {
     if (variance) variance.textContent = `σ ${varianceVal}`;
     if (tokenProgress) tokenProgress.textContent = `${currentIndex + 1} / ${totalTokens} TOKENS`;
 
-    // Dynamic SVG Jitter Path plotting
-    if (pathLine && pathArea) {
-      const y1 = Math.floor(20 + Math.random() * 50);
-      const y2 = Math.floor(15 + Math.random() * 45);
-      const y3 = Math.floor(30 + Math.random() * 40);
-      const y4 = Math.floor(10 + Math.random() * 55);
+    // Dynamic SVG Jitter Path plotting based on actual measured latencies
+    if (pathLine && pathArea && latencies.length > 0) {
+      const recent = latencies.slice(-10);
+      const points = recent.map((lat, idx) => {
+        const x = Math.round((idx / Math.max(1, recent.length - 1)) * 400);
+        // Map delta (typically 30-60ms) into SVG Y viewport [15, 75]
+        const y = Math.max(15, Math.min(75, Math.round(75 - (lat - 20) * 1.2)));
+        return { x, y };
+      });
 
-      pathLine.setAttribute('d', `M 0,65 L 40,${y1} L 80,45 L 120,55 L 160,${y2} L 200,60 L 240,${y3} L 280,40 L 320,${y4} L 360,30 L 400,25`);
-      pathArea.setAttribute('d', `M 0,90 L 0,65 L 40,${y1} L 80,45 L 120,55 L 160,${y2} L 200,60 L 240,${y3} L 280,40 L 320,${y4} L 360,30 L 400,25 L 400,90 Z`);
+      if (points.length > 1) {
+        const lineD = points.reduce((acc, pt, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${pt.x},${pt.y}`, '');
+        const areaD = `${lineD} L ${points[points.length - 1].x},90 L ${points[0].x},90 Z`;
+        pathLine.setAttribute('d', lineD);
+        pathArea.setAttribute('d', areaD);
 
-      if (spark1) spark1.setAttribute('cy', y2.toString());
-      if (spark2) spark2.setAttribute('cy', y4.toString());
+        if (spark1 && points[Math.floor(points.length / 2)]) {
+          spark1.setAttribute('cx', points[Math.floor(points.length / 2)].x.toString());
+          spark1.setAttribute('cy', points[Math.floor(points.length / 2)].y.toString());
+        }
+        if (spark2 && points[points.length - 1]) {
+          spark2.setAttribute('cx', points[points.length - 1].x.toString());
+          spark2.setAttribute('cy', points[points.length - 1].y.toString());
+        }
+      }
     }
 
     currentIndex++;
@@ -539,7 +555,12 @@ function classifyMessage(text) {
   }
 
   if (latencyEl && !hfPipelineInstance) {
-    latencyEl.textContent = `~${elapsed}ms (V8 / WASM)`;
+    latencyEl.textContent = `~${elapsed}ms (Client Log-Odds / V8)`;
+  }
+
+  // If neural model is already initialized, execute in-browser inference
+  if (hfPipelineInstance) {
+    runHfInference(text);
   }
 }
 
@@ -576,21 +597,53 @@ async function loadHuggingFaceClassifier() {
     }
   } catch (err) {
     console.warn('Transformers.js CDN fetch fallback:', err);
-    if (hfText) hfText.textContent = 'WASM Fallback Active';
-    if (latencyEl) latencyEl.textContent = 'WASM Heuristics (Local)';
+    if (hfText) hfText.textContent = 'Client Engine Active';
+    if (latencyEl) latencyEl.textContent = 'Log-Odds (Local)';
   } finally {
     isHfLoading = false;
   }
 }
 
 async function runHfInference(text) {
-  if (!hfPipelineInstance || !text) return;
+  if (!hfPipelineInstance || !text || text.trim() === '') return;
   const latencyEl = document.getElementById('spam-latency');
+  const badge = document.getElementById('spam-label-badge');
+  const barHam = document.getElementById('spam-bar-ham');
+  const barSpam = document.getElementById('spam-bar-spam');
+  const triggersEl = document.getElementById('spam-triggers');
+
   const start = performance.now();
   try {
     const results = await hfPipelineInstance(text);
     const duration = Math.round(performance.now() - start);
-    if (latencyEl) latencyEl.textContent = `${duration}ms (HF DistilBERT)`;
+
+    if (results && results.length > 0) {
+      const pred = results[0];
+      // In SMS phishing context, urgent/suspicious patterns trigger negative classification
+      const isUrgent = pred.label.toUpperCase() === 'NEGATIVE';
+      const spamProb = isUrgent ? pred.score : (1 - pred.score);
+      const hamProb = 1 - spamProb;
+      const isSpam = spamProb >= 0.55;
+
+      if (badge) {
+        if (isSpam) {
+          badge.textContent = `HF SPAM (${(spamProb * 100).toFixed(1)}%)`;
+          badge.className = 'px-2 py-0.5 rounded font-bold text-xs bg-error/15 text-error border border-error/30 animate-pulse';
+        } else {
+          badge.textContent = `HF LEGITIMATE (${(hamProb * 100).toFixed(1)}%)`;
+          badge.className = 'px-2 py-0.5 rounded font-bold text-xs bg-primary/15 text-primary border border-primary/30';
+        }
+      }
+
+      if (barHam) barHam.style.width = `${(hamProb * 100).toFixed(1)}%`;
+      if (barSpam) barSpam.style.width = `${(spamProb * 100).toFixed(1)}%`;
+
+      if (triggersEl) {
+        triggersEl.textContent = `HF Classification: ${pred.label} (confidence: ${(pred.score * 100).toFixed(1)}%)`;
+      }
+    }
+
+    if (latencyEl) latencyEl.textContent = `${duration}ms (HF ONNX WebAssembly)`;
   } catch (e) {
     console.error('HF Inference error:', e);
   }

@@ -13,8 +13,9 @@
   }
 })();
 
-// 2. Tailwind CSS Configuration with CSS Variable Mapping
-tailwind.config = {
+// 2. Optional Tailwind Play CDN Configuration Fallback
+if (typeof tailwind !== 'undefined') {
+  tailwind.config = {
   darkMode: "class",
   theme: {
     extend: {
@@ -111,3 +112,4 @@ tailwind.config = {
     }
   }
 };
+}
