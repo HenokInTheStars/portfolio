@@ -21,62 +21,25 @@ const strip = TECH_STRIP.map((name) => ({ name, logo: LOGOS[name] }));
       <span class="label">One system, end to end</span>
     </div>
 
-    <div class="skills">
+    <ol class="skill-list">
       {
         SKILLS.map((s, i) => (
-          <article class="skill reveal" style={`--d:${(i * 0.08).toFixed(2)}s`}>
-            {s.icon === 'frontend' && (
-              <div class="skill-viz viz-fe" aria-hidden="true">
-                <div class="fe-card">
-                  <div class="fe-skel"><i class="sk-av" /><i class="sk-l1" /><i class="sk-l2" /><i class="sk-btn" /></div>
-                  <div class="fe-real">
-                    <span class="fe-av">ST</span>
-                    <span class="fe-t"><b>Selam checked in</b><small>Lobby A · just now</small></span>
-                    <span class="fe-btn">Notify</span>
-                  </div>
-                </div>
+          <li class="skill-row reveal" style={`--d:${(i * 0.08).toFixed(2)}s`}>
+            <span class="skill-num label">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="skill-title">{s.title}</h3>
+            <div class="skill-body">
+              <p>{s.text}</p>
+              <div class="skill-meta">
+                <span class="skill-tools">{s.tools.join(' · ')}</span>
+                <a class="skill-proof" href={`/work/${s.proof.slug}/`}>
+                  {s.proof.label} <span class="arrow" aria-hidden="true">→</span>
+                </a>
               </div>
-            )}
-            {s.icon === 'backend' && (
-              <div class="skill-viz viz-be" aria-hidden="true">
-                <span class="be-lane" />
-                <i class="pkt ok p1">{'{ }'}</i>
-                <i class="pkt bad p2">{'{ ? }'}</i>
-                <i class="pkt ok p3">{'{ }'}</i>
-                <span class="be-api"><b>API</b><small>schema</small></span>
-                <span class="be-422">422 ✗</span>
-                <span class="be-200">200 ✓</span>
-              </div>
-            )}
-            {s.icon === 'ml' && (
-              <div class="skill-viz viz-ml" aria-hidden="true">
-                <div class="ml-row ml-a">
-                  <span class="ml-msg">WIN a free phone! Reply YES</span>
-                  <span class="ml-bar"><i /></span>
-                  <span class="ml-verdict spam">spam · 0.96</span>
-                </div>
-                <div class="ml-row ml-b">
-                  <span class="ml-msg">Running late, start without me</span>
-                  <span class="ml-bar"><i /></span>
-                  <span class="ml-verdict ham">not spam · 0.03</span>
-                </div>
-              </div>
-            )}
-
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-            <ul class="tools">
-              {s.tools.map((t) => <li>{t}</li>)}
-            </ul>
-            <a class="proof" href={`/work/${s.proof.slug}/`}>
-              <span>Seen in <b>{s.proof.label}</b></span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </a>
-            {i < SKILLS.length - 1 && <span class="link" aria-hidden="true"><i /></span>}
-          </article>
+            </div>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 
   <div class="marquee" role="region" aria-label="Technologies I use">
@@ -100,19 +63,3 @@ const strip = TECH_STRIP.map((name) => ({ name, logo: LOGOS[name] }));
     </div>
   </div>
 </section>
-
-<script>
-  // Mini animations run only while their card is on screen, and replay from the start on hover.
-  const cards = document.querySelectorAll<HTMLElement>('#skills .skill');
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) e.target.classList.toggle('playing', e.isIntersecting);
-  }, { rootMargin: '0px 0px -10% 0px' });
-  cards.forEach((card) => {
-    io.observe(card);
-    card.addEventListener('pointerenter', () => {
-      card.querySelector('.skill-viz')?.getAnimations({ subtree: true }).forEach((a) => {
-        a.currentTime = 0;
-      });
-    });
-  });
-</script>

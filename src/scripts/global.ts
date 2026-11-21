@@ -41,7 +41,7 @@ function initMagnetic() {
 
 /* Cursor spotlight on project cards. */
 function initSpotlight() {
-  document.querySelectorAll<HTMLElement>('.card, .skill').forEach((card) => {
+  document.querySelectorAll<HTMLElement>('.card').forEach((card) => {
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${e.clientX - r.left}px`);
