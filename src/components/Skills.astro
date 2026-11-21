@@ -1,28 +1,68 @@
 ---
+import {
+  siReact, siTypescript, siJavascript, siTailwindcss, siFastapi, siPython, siPydantic,
+  siNodedotjs, siScikitlearn, siPandas, siNumpy, siStreamlit, siGit,
+} from 'simple-icons';
 import { SKILLS, TECH_STRIP } from '../data/site';
 
-const ICONS: Record<string, string> = {
-  frontend:
-    '<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M8 14l-2 2 2 2M16 14l2 2-2 2"/>',
-  backend:
-    '<rect x="4" y="3.5" width="16" height="7" rx="2"/><rect x="4" y="13.5" width="16" height="7" rx="2"/><path d="M8 7h.01M8 17h.01M12 7h4M12 17h4"/>',
-  ml: '<circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6.8l3.3 4M7 17.2l3.3-4M13.7 10.8 17 6.8M13.7 13.2l3.3 4"/>',
+type Icon = { path: string; hex: string };
+const LOGOS: Record<string, Icon | undefined> = {
+  React: siReact, TypeScript: siTypescript, JavaScript: siJavascript, 'Tailwind CSS': siTailwindcss,
+  FastAPI: siFastapi, Python: siPython, Pydantic: siPydantic, 'Node.js': siNodedotjs,
+  'scikit-learn': siScikitlearn, pandas: siPandas, NumPy: siNumpy, Streamlit: siStreamlit, Git: siGit,
 };
+const strip = TECH_STRIP.map((name) => ({ name, logo: LOGOS[name] }));
 ---
 
 <section class="block" id="skills" aria-labelledby="skills-h">
   <div class="wrap">
     <div class="sec-head reveal">
       <h2 id="skills-h">What I do</h2>
-      <span class="label">Frontend · Backend · Machine learning</span>
+      <span class="label">One system, end to end</span>
     </div>
+
     <div class="skills">
       {
         SKILLS.map((s, i) => (
           <article class="skill reveal" style={`--d:${(i * 0.08).toFixed(2)}s`}>
-            <span class="skill-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
-            </span>
+            {s.icon === 'frontend' && (
+              <div class="skill-viz viz-fe" aria-hidden="true">
+                <div class="fe-card">
+                  <div class="fe-skel"><i class="sk-av" /><i class="sk-l1" /><i class="sk-l2" /><i class="sk-btn" /></div>
+                  <div class="fe-real">
+                    <span class="fe-av">ST</span>
+                    <span class="fe-t"><b>Selam checked in</b><small>Lobby A · just now</small></span>
+                    <span class="fe-btn">Notify</span>
+                  </div>
+                </div>
+              </div>
+            )}
+            {s.icon === 'backend' && (
+              <div class="skill-viz viz-be" aria-hidden="true">
+                <span class="be-lane" />
+                <i class="pkt ok p1">{'{ }'}</i>
+                <i class="pkt bad p2">{'{ ? }'}</i>
+                <i class="pkt ok p3">{'{ }'}</i>
+                <span class="be-api"><b>API</b><small>schema</small></span>
+                <span class="be-422">422 ✗</span>
+                <span class="be-200">200 ✓</span>
+              </div>
+            )}
+            {s.icon === 'ml' && (
+              <div class="skill-viz viz-ml" aria-hidden="true">
+                <div class="ml-row ml-a">
+                  <span class="ml-msg">WIN a free phone! Reply YES</span>
+                  <span class="ml-bar"><i /></span>
+                  <span class="ml-verdict spam">spam · 0.96</span>
+                </div>
+                <div class="ml-row ml-b">
+                  <span class="ml-msg">Running late, start without me</span>
+                  <span class="ml-bar"><i /></span>
+                  <span class="ml-verdict ham">not spam · 0.03</span>
+                </div>
+              </div>
+            )}
+
             <h3>{s.title}</h3>
             <p>{s.text}</p>
             <ul class="tools">
@@ -32,15 +72,47 @@ const ICONS: Record<string, string> = {
               <span>Seen in <b>{s.proof.label}</b></span>
               <span class="arrow" aria-hidden="true">→</span>
             </a>
+            {i < SKILLS.length - 1 && <span class="link" aria-hidden="true"><i /></span>}
           </article>
         ))
       }
     </div>
   </div>
+
   <div class="marquee" role="region" aria-label="Technologies I use">
     <div class="marquee-track">
-      <ul>{TECH_STRIP.map((t) => <li>{t}</li>)}</ul>
-      <ul aria-hidden="true">{TECH_STRIP.map((t) => <li>{t}</li>)}</ul>
+      {
+        [0, 1].map((copy) => (
+          <ul aria-hidden={copy === 1 ? 'true' : undefined}>
+            {strip.map((t) => (
+              <li style={t.logo ? `--b:#${t.logo.hex}` : undefined}>
+                {t.logo ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d={t.logo.path} /></svg>
+                ) : (
+                  <span class="no-logo" aria-hidden="true" />
+                )}
+                {t.name}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
     </div>
   </div>
 </section>
+
+<script>
+  // Mini animations run only while their card is on screen, and replay from the start on hover.
+  const cards = document.querySelectorAll<HTMLElement>('#skills .skill');
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('playing', e.isIntersecting);
+  }, { rootMargin: '0px 0px -10% 0px' });
+  cards.forEach((card) => {
+    io.observe(card);
+    card.addEventListener('pointerenter', () => {
+      card.querySelector('.skill-viz')?.getAnimations({ subtree: true }).forEach((a) => {
+        a.currentTime = 0;
+      });
+    });
+  });
+</script>
