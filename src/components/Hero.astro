@@ -5,6 +5,27 @@ import { MAIN_TOOLS, ROTATING_WORDS } from '../data/site';
 import { HAS_RESUME, RESUME_PATH } from '../data/resume';
 
 const fan = FAN_ORDER.map((slug) => getProject(slug)!);
+
+// A few stars around the fan, placed deterministically so every build looks the same.
+const rnd = (i: number) => {
+  const x = Math.sin(i * 73.13 + 1.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+const stars = Array.from({ length: 18 }, (_, i) => {
+  const angle = rnd(i) * Math.PI * 2;
+  const radius = 34 + rnd(i + 40) * 16; // % from centre: keeps stars around the cards, not under them
+  const spark = i % 6 === 0;
+  return {
+    spark,
+    style: [
+      `left:${(50 + Math.cos(angle) * radius).toFixed(1)}%`,
+      `top:${(50 + Math.sin(angle) * radius * 0.9).toFixed(1)}%`,
+      `--s:${spark ? (10 + rnd(i + 80) * 6).toFixed(0) : (2 + rnd(i + 80) * 2.5).toFixed(1)}px`,
+      `--tw:${(2.4 + rnd(i + 120) * 3).toFixed(1)}s`,
+      `--td:${(-rnd(i + 160) * 4).toFixed(1)}s`,
+    ].join(';'),
+  };
+});
 const spoken = `I build web apps that ${ROTATING_WORDS.slice(0, -1).map((w) => w.replace('.', '')).join(', ')}, and that ${ROTATING_WORDS.at(-1)}`;
 ---
 
@@ -40,6 +61,9 @@ const spoken = `I build web apps that ${ROTATING_WORDS.slice(0, -1).map((w) => w
   </div>
 
   <div class="fan" role="group" aria-label="Featured projects">
+    <div class="fan-sky" aria-hidden="true">
+      {stars.map((s) => <i class:list={{ spark: s.spark }} style={s.style}></i>)}
+    </div>
     {
       fan.map((p, i) => (
         <a class={`fan-card fan-${i}`} href={`/work/${p.slug}/`} data-project={p.slug} aria-label={`${p.title} case study`}>
