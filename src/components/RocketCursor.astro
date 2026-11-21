@@ -1,0 +1,170 @@
+---
+import logo from '../assets/logo.png';
+import logoDark from '../assets/logo-dark.png';
+---
+
+<!-- Custom pointer: the rocket logo. Mouse only; touch, text fields and the threshold chart keep native cursors. -->
+<div class="rc" id="rocket-cursor" aria-hidden="true">
+  <span class="rc-flame"></span>
+  <img class="rc-light" src={logo.src} width="139" height="154" alt="" />
+  <img class="rc-dark" src={logoDark.src} width="139" height="154" alt="" />
+</div>
+
+<style is:global>
+  html.rocket-cursor,
+  html.rocket-cursor * {
+    cursor: none !important;
+  }
+  html.rocket-cursor :is(input, textarea, select, [contenteditable]) {
+    cursor: text !important;
+  }
+  html.rocket-cursor select {
+    cursor: pointer !important;
+  }
+  html.rocket-cursor .strip-wrap canvas {
+    cursor: ew-resize !important;
+  }
+
+  .rc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 24px;
+    margin-left: -12px; /* nose tip sits exactly on the pointer */
+    pointer-events: none;
+    transform-origin: 50% 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+    will-change: transform;
+  }
+  .rc.on {
+    opacity: 1;
+  }
+  /* A thin halo in the opposite tone keeps the rocket visible on any background, including teal buttons. */
+  .rc img {
+    position: relative;
+    display: block;
+    width: 24px;
+    height: auto;
+  }
+  .rc .rc-light {
+    filter: drop-shadow(0 0 0.6px #fff) drop-shadow(0 0 0.6px #fff) drop-shadow(0 0 1px #fff) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+  .rc .rc-dark {
+    filter: drop-shadow(0 0 0.6px #000) drop-shadow(0 0 0.6px #000) drop-shadow(0 0 1px #000) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  }
+  .rc .rc-dark {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .rc .rc-light {
+      display: none;
+    }
+    :root:not([data-theme='light']) .rc .rc-dark {
+      display: block;
+    }
+  }
+  :root[data-theme='dark'] .rc .rc-light,
+  .rc.over-dark .rc-light {
+    display: none;
+  }
+  :root[data-theme='dark'] .rc .rc-dark,
+  .rc.over-dark .rc-dark {
+    display: block;
+  }
+
+  .rc-flame {
+    position: absolute;
+    left: 50%;
+    top: 84%;
+    width: 7px;
+    height: 12px;
+    margin-left: -3.5px;
+    border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+    background: linear-gradient(var(--flame-a), var(--flame-b) 60%, transparent);
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .rc.hot .rc-flame {
+    opacity: 1;
+    transform: scaleY(1);
+    animation: flicker 0.1s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rc.hot .rc-flame {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { finePointer, prefersReducedMotion } from '../scripts/motion';
+
+  const el = document.getElementById('rocket-cursor');
+  if (el && finePointer()) {
+    document.documentElement.classList.add('rocket-cursor');
+
+    const NATIVE = 'input, textarea, select, [contenteditable], .strip-wrap canvas';
+    const HOT = 'a, button, [role="button"], label, summary, .card, .fan-card, .row, .skill-row';
+    const DARK_SURFACE = '.space, .sky, .contact-card';
+
+    let x = -100;
+    let y = -100;
+    let prevX = x;
+    let tilt = 0;
+    let scale = 1;
+    let pressed = false;
+    let hot = false;
+    let raf = 0;
+
+    const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+
+    const tick = () => {
+      const vx = x - prevX;
+      prevX = x;
+      // Lean into horizontal movement, settle back upright when still.
+      const targetTilt = prefersReducedMotion() ? 0 : clamp(vx * 2.2, -38, 38);
+      tilt += (targetTilt - tilt) * 0.18;
+      const targetScale = (pressed ? 0.82 : 1) * (hot ? 1.12 : 1);
+      scale += (targetScale - scale) * 0.25;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${tilt.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      const settled = Math.abs(tilt) < 0.1 && vx === 0 && Math.abs(scale - targetScale) < 0.005;
+      raf = settled ? 0 : requestAnimationFrame(tick);
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        if (e.pointerType !== 'mouse') {
+          el.classList.remove('on');
+          return;
+        }
+        x = e.clientX;
+        y = e.clientY;
+        const target = e.target instanceof Element ? e.target : null;
+        el.classList.toggle('on', !target?.closest(NATIVE));
+        hot = !!target?.closest(HOT);
+        el.classList.toggle('hot', hot);
+        el.classList.toggle('over-dark', !!target?.closest(DARK_SURFACE));
+        wake();
+      },
+      { passive: true },
+    );
+    window.addEventListener('pointerdown', () => {
+      pressed = true;
+      wake();
+    });
+    window.addEventListener('pointerup', () => {
+      pressed = false;
+      wake();
+    });
+    document.documentElement.addEventListener('mouseleave', () => el.classList.remove('on'));
+    window.addEventListener('blur', () => el.classList.remove('on'));
+  }
+</script>
