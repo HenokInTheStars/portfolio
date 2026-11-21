@@ -1,0 +1,151 @@
+<!--
+  Custom pointer: a teal dot exactly at the pointer and a ring that eases behind it.
+  Mouse only; touch devices, text fields and the threshold chart keep native cursors.
+-->
+<div class="cur" id="cursor" aria-hidden="true">
+  <span class="cur-ring" id="cursor-ring"></span>
+  <span class="cur-dot" id="cursor-dot"></span>
+</div>
+
+<style is:global>
+  html.custom-cursor,
+  html.custom-cursor * {
+    cursor: none !important;
+  }
+  html.custom-cursor :is(input, textarea, [contenteditable]) {
+    cursor: text !important;
+  }
+  html.custom-cursor select {
+    cursor: pointer !important;
+  }
+  html.custom-cursor .strip-wrap canvas {
+    cursor: ew-resize !important;
+  }
+
+  .cur {
+    --cur: var(--accent);
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .cur.on {
+    opacity: 1;
+  }
+  .cur.over-dark {
+    --cur: var(--space-glow);
+  }
+  .cur-dot,
+  .cur-ring {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    will-change: transform;
+  }
+  .cur-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--cur);
+  }
+  .cur-ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border: 1.5px solid color-mix(in srgb, var(--cur) 60%, transparent);
+    background: color-mix(in srgb, var(--cur) 0%, transparent);
+    /* halo in the page colour: invisible on plain backgrounds, outlines the ring over teal buttons */
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--bg) 85%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--bg) 85%, transparent);
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .cur.hot .cur-ring {
+    border-color: color-mix(in srgb, var(--cur) 75%, transparent);
+    background: color-mix(in srgb, var(--bg) 14%, transparent);
+  }
+  .cur.over-dark .cur-ring {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<script>
+  import { finePointer, prefersReducedMotion } from '../scripts/motion';
+
+  const root = document.getElementById('cursor');
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+
+  if (root && dot && ring && finePointer()) {
+    document.documentElement.classList.add('custom-cursor');
+
+    const NATIVE = 'input, textarea, select, [contenteditable], .strip-wrap canvas';
+    const HOT = 'a, button, [role="button"], label, summary, .card, .fan-card, .row, .skill-row';
+    const DARK_SURFACE = '.space, .sky, .contact-card';
+
+    let x = -100;
+    let y = -100;
+    let rx = x;
+    let ry = y;
+    let ringScale = 1;
+    let dotScale = 1;
+    let hot = false;
+    let pressed = false;
+    let raf = 0;
+
+    const tick = () => {
+      // The ring eases toward the pointer; the dot is always exact.
+      const k = prefersReducedMotion() ? 1 : 0.2;
+      rx += (x - rx) * k;
+      ry += (y - ry) * k;
+      const targetRing = (hot ? 1.6 : 1) * (pressed ? 0.75 : 1);
+      const targetDot = hot ? 0 : pressed ? 0.6 : 1;
+      ringScale += (targetRing - ringScale) * 0.22;
+      dotScale += (targetDot - dotScale) * 0.3;
+      dot.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${dotScale.toFixed(3)})`;
+      ring.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0) scale(${ringScale.toFixed(3)})`;
+      const settled =
+        Math.abs(x - rx) < 0.1 && Math.abs(y - ry) < 0.1 &&
+        Math.abs(targetRing - ringScale) < 0.005 && Math.abs(targetDot - dotScale) < 0.005;
+      raf = settled ? 0 : requestAnimationFrame(tick);
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener(
+      'pointermove',
+      (e) => {
+        if (e.pointerType !== 'mouse') {
+          root.classList.remove('on');
+          return;
+        }
+        const first = !root.classList.contains('on') && x < 0;
+        x = e.clientX;
+        y = e.clientY;
+        if (first) {
+          rx = x;
+          ry = y;
+        }
+        const target = e.target instanceof Element ? e.target : null;
+        root.classList.toggle('on', !target?.closest(NATIVE));
+        hot = !!target?.closest(HOT);
+        root.classList.toggle('hot', hot);
+        root.classList.toggle('over-dark', !!target?.closest(DARK_SURFACE));
+        wake();
+      },
+      { passive: true },
+    );
+    window.addEventListener('pointerdown', () => {
+      pressed = true;
+      wake();
+    });
+    window.addEventListener('pointerup', () => {
+      pressed = false;
+      wake();
+    });
+    document.documentElement.addEventListener('mouseleave', () => root.classList.remove('on'));
+    window.addEventListener('blur', () => root.classList.remove('on'));
+  }
+</script>
