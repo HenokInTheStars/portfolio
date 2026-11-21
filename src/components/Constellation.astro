@@ -1,0 +1,81 @@
+---
+/**
+ * The rocket logo drawn as a constellation. Star positions were traced from
+ * src/assets/logo.png (139 × 154 px) and are in that image's pixel space.
+ */
+const STARS: Record<string, [number, number]> = {
+  A: [70, 9], // nose
+  B: [40, 39], C: [100, 39], // shoulders
+  V: [40, 64], W: [100, 64], // fin roots
+  D: [40, 117], E: [100, 117], // wall feet
+  F: [70, 48], G: [53, 64], H: [87, 64], // inner chevron
+  J: [10, 90], K: [10, 117], L: [24, 105], // left fin
+  M: [130, 90], N: [130, 117], O: [116, 105], // right fin
+  P: [70, 75], Q: [50, 93], R: [50, 123], T: [90, 123], U: [90, 93], // body
+  Z: [70, 144], // tail
+};
+const BIG: Record<string, number> = { A: 2.4, Z: 2.1, J: 1.9, M: 1.9, F: 1.7, P: 1.7 };
+const EDGES = ['AB', 'AC', 'BV', 'CW', 'VD', 'WE', 'VJ', 'WM', 'JK', 'MN', 'KL', 'NO', 'LD', 'OE', 'FG', 'FH', 'PQ', 'PU', 'QR', 'UT', 'RZ', 'TZ'];
+
+const rnd = (i: number) => {
+  const x = Math.sin(i * 12.9898 + 4.1) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+const background = Array.from({ length: 70 }, (_, i) => ({
+  cx: (-10 + rnd(i) * 160).toFixed(1),
+  cy: (-20 + rnd(i + 99) * 200).toFixed(1),
+  r: (0.25 + rnd(i + 199) ** 3 * 0.7).toFixed(2),
+  style: `--tw:${(2.5 + rnd(i + 299) * 3).toFixed(1)}s;--td:${(-rnd(i + 399) * 4).toFixed(1)}s`,
+}));
+const lines = EDGES.map(([a, b], i) => ({ a: STARS[a], b: STARS[b], i }));
+const stars = Object.entries(STARS).map(([k, [x, y]], i) => ({
+  x,
+  y,
+  r: BIG[k] ?? 1.3,
+  style: `--i:${i};--tw:${(2.4 + rnd(i + 500) * 2.5).toFixed(1)}s;--td:${(-rnd(i + 600) * 3).toFixed(1)}s`,
+}));
+---
+
+<figure class="sky" id="sky">
+  <svg viewBox="-10 -20 160 200" role="img" aria-label={`Henok's rocket logo drawn as a constellation of ${stars.length} stars`}>
+    <g class="sky-bg" id="sky-bg">
+      {background.map((s) => <circle cx={s.cx} cy={s.cy} r={s.r} style={s.style} />)}
+    </g>
+    <g class="sky-fig" id="sky-fig">
+      {lines.map(({ a, b, i }) => <line class="cst-line" pathLength="1" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} style={`--i:${i}`} />)}
+      {
+        stars.map((s) => (
+          <g class="cst-star" style={s.style}>
+            <circle class="cst-halo" cx={s.x} cy={s.y} r={(s.r * 2.6).toFixed(1)} />
+            <circle class="cst-core" cx={s.x} cy={s.y} r={s.r} />
+          </g>
+        ))
+      }
+    </g>
+  </svg>
+  <figcaption><span class="label">Constellation</span><span>Henok in the Stars</span></figcaption>
+</figure>
+
+<script>
+  import { finePointer, prefersReducedMotion } from '../scripts/motion';
+
+  // Background stars drift slower than the figure, for a hint of depth.
+  const sky = document.getElementById('sky');
+  const bg = document.getElementById('sky-bg');
+  const fig = document.getElementById('sky-fig');
+  if (sky && bg && fig && finePointer()) {
+    sky.addEventListener('pointermove', (e) => {
+      if (prefersReducedMotion()) return;
+      const r = sky.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5;
+      const dy = (e.clientY - r.top) / r.height - 0.5;
+      bg.style.transform = `translate(${(dx * -4).toFixed(2)}px, ${(dy * -4).toFixed(2)}px)`;
+      fig.style.transform = `translate(${(dx * 3).toFixed(2)}px, ${(dy * 3).toFixed(2)}px)`;
+    });
+    sky.addEventListener('pointerleave', () => {
+      bg.style.transform = '';
+      fig.style.transform = '';
+    });
+  }
+</script>

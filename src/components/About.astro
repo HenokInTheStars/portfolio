@@ -1,0 +1,55 @@
+---
+import Constellation from './Constellation.astro';
+import { EDUCATION, TIMELINE } from '../data/site';
+
+const entries = EDUCATION ? [...TIMELINE, EDUCATION] : TIMELINE;
+---
+
+<section class="block" id="about" aria-labelledby="about-h">
+  <div class="wrap about">
+    <div class="reveal">
+      <Constellation />
+      <span class="label">About</span>
+      <h2 id="about-h" class="about-title">Small, careful software.</h2>
+    </div>
+    <div class="reveal" style="--d:.08s">
+      <p>
+        I build <strong>responsive web apps with clean APIs</strong>, and I reach for machine learning only when it solves a real
+        problem better than plain code would.
+      </p>
+      <p>
+        I care about the decisions behind the code: what to validate at the API boundary, which metric matters to the person using
+        the product, and when a simpler model is the better one.
+      </p>
+      <dl class="facts">
+        <div><dt class="label">Based in</dt><dd>Addis Ababa (UTC+3)</dd></div>
+        <div><dt class="label">Focus</dt><dd>Full-stack web + ML</dd></div>
+        <div><dt class="label">Open to</dt><dd>Remote, full-time, contract</dd></div>
+      </dl>
+      <ol class="timeline">
+        {
+          entries.map((t) => (
+            <li>
+              <span class="label">{t.when}</span>
+              <strong>{t.title}</strong>
+              <span class="t-sub">{t.sub}</span>
+              {t.text && <p>{t.text}</p>}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-title {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 10px 0 0;
+    text-wrap: balance;
+  }
+</style>

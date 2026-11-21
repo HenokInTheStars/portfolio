@@ -1,0 +1,131 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+import ThresholdDemo from '../../components/ThresholdDemo.tsx';
+import { PROJECTS, type Project } from '../../data/projects';
+import { SITE } from '../../data/site';
+
+export const getStaticPaths = (() =>
+  PROJECTS.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: PROJECTS[(i + 1) % PROJECTS.length] },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+  next: Project;
+}
+const { project: p, next } = Astro.props;
+---
+
+<Base title={`${p.title} · ${SITE.name}`} description={p.lede}>
+  <article class="detail">
+    <div class="wrap">
+      <a class="back" href="/#work" id="back-link"><span class="arrow" aria-hidden="true">←</span> All work</a>
+      <p class:list={['label', 'd-kicker', { 'tag-progress': p.inProgress }]}>{p.year} · {p.category}</p>
+      <h1 class="d-title">{p.title}</h1>
+      <p class="d-lede">{p.lede}</p>
+      <div class="d-cover"><ProjectCover kind={p.cover} /></div>
+
+      {
+        p.metrics.length > 0 && (
+          <div class="metrics">
+            {p.metrics.map((m) => (
+              <div class="metric">
+                <div class="num">
+                  <span class="count" data-to={m.value} data-dec={m.decimals}>{m.value.toFixed(m.decimals)}</span>
+                  <em>{m.suffix}</em>
+                </div>
+                <span class="label">{m.label}</span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      {p.demo === 'threshold' && <ThresholdDemo client:visible />}
+
+      <div class="d-body">
+        <dl class="d-meta">
+          <div><dt class="label">Year</dt><dd>{p.year}</dd></div>
+          <div><dt class="label">Status</dt><dd>{p.inProgress ? 'In development' : 'Shipped'}</dd></div>
+          <div><dt class="label">Stack</dt><dd>{p.stack.join(', ')}</dd></div>
+          {
+            p.repo && (
+              <div>
+                <dt class="label">Code</dt>
+                <dd><a href={p.repo} target="_blank" rel="noopener">View on GitHub ↗</a></dd>
+              </div>
+            )
+          }
+        </dl>
+        <div class="d-content">
+          <section><h2>The problem</h2><p>{p.problem}</p></section>
+          <section><h2>What I built</h2><p>{p.built}</p></section>
+          <section class="decision"><h2>Key decision</h2><p>{p.decision}</p></section>
+          <section><h2>Results</h2><p>{p.results}</p></section>
+          <section><h2>What I'd do next</h2><p>{p.next}</p></section>
+        </div>
+      </div>
+
+      <a class="next-link" href={`/work/${next.slug}/`}>
+        <span><span class="label">Next project</span><strong>{next.title}</strong></span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .d-content h2 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+</style>
+
+<script>
+  import { prefersReducedMotion } from '../../scripts/motion';
+
+  // Metrics count up from zero once they scroll into view.
+  // The real values stay in the HTML until then, so the page is correct at rest.
+  if (!prefersReducedMotion()) {
+    const counters = Array.from(document.querySelectorAll<HTMLElement>('.count'));
+    const run = (el: HTMLElement, i: number) => {
+      const to = Number(el.dataset.to);
+      const dec = Number(el.dataset.dec);
+      const start = performance.now() + i * 90;
+      const dur = 1100;
+      const step = (t: number) => {
+        const k = Math.min(1, Math.max(0, (t - start) / dur));
+        el.textContent = (to * (1 - Math.pow(1 - k, 4))).toFixed(dec);
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      counters.forEach(run);
+    });
+    counters.forEach((el) => io.observe(el));
+  }
+
+  // "All work" goes back in history when we came from the home page,
+  // so the browser restores the scroll position and the card morphs back.
+  const back = document.getElementById('back-link');
+  back?.addEventListener('click', (e) => {
+    try {
+      const ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref && ref.origin === location.origin && ref.pathname === '/' && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    } catch {
+      /* fall through to the normal link */
+    }
+  });
+</script>

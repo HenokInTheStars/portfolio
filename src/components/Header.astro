@@ -1,0 +1,88 @@
+---
+import logo from '../assets/logo.png';
+import logoDark from '../assets/logo-dark.png';
+import { SITE } from '../data/site';
+import { HAS_RESUME, RESUME_PATH } from '../data/resume';
+
+interface Props {
+  isHome?: boolean;
+}
+const { isHome = false } = Astro.props;
+const at = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
+---
+
+<header class="site-header" id="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label={`${SITE.name}, home`}>
+      <img class="brand-logo on-light" src={logo.src} width="139" height="154" alt="" />
+      <img class="brand-logo on-dark" src={logoDark.src} width="139" height="154" alt="" />
+      <span>{SITE.name}</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href={at('work')} class="hide-xs">Work</a>
+      <a href={at('about')} class="hide-sm">About</a>
+      <a href="#contact">Contact</a>
+      {HAS_RESUME && <a class="nav-cta" href={RESUME_PATH} target="_blank" rel="noopener">Résumé</a>}
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch to dark theme">
+        <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  import { EASE, canViewTransition } from '../scripts/motion';
+
+  const header = document.getElementById('site-header')!;
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-btn')!;
+  const icon = document.getElementById('theme-icon')!;
+  const SUN =
+    '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>';
+  const MOON = '<path d="M20.2 14.6A8.5 8.5 0 0 1 9.4 3.8a8.5 8.5 0 1 0 10.8 10.8z"/>';
+  const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : darkQuery.matches);
+
+  function paint() {
+    const dark = isDark();
+    icon.innerHTML = dark ? SUN : MOON;
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  paint();
+  darkQuery.addEventListener('change', paint);
+
+  // New theme spreads out in a circle from the button.
+  btn.addEventListener('click', (e) => {
+    const next = isDark() ? 'light' : 'dark';
+    const apply = () => {
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* storage unavailable: theme still applies to this page */
+      }
+      paint();
+    };
+    if (!canViewTransition()) {
+      apply();
+      return;
+    }
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX || r.left + r.width / 2;
+    const y = e.clientY || r.top + r.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.classList.add('theme-vt');
+    const t = document.startViewTransition(apply);
+    t.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 700, easing: EASE, pseudoElement: '::view-transition-new(root)' },
+      );
+    });
+    t.finished.finally(() => root.classList.remove('theme-vt'));
+  });
+</script>

@@ -1,0 +1,122 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/inter';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  isHome?: boolean;
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title = SITE.title, description = SITE.description, isHome = false, image = '/og.png', noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  jobTitle: 'Full-stack developer',
+  url: Astro.site?.toString(),
+  address: { '@type': 'PostalAddress', addressLocality: 'Addis Ababa', addressCountry: 'ET' },
+  sameAs: [SITE.github, SITE.linkedin],
+  knowsAbout: ['React', 'TypeScript', 'FastAPI', 'Python', 'Machine learning', 'scikit-learn'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#f5f7f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#080c0c" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Apply the saved theme before first paint -->
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+
+    <!--
+      Card -> case-study morph across pages (cross-document view transitions).
+      The clicked card's cover and title get the same transition names as the case-study page,
+      so the browser morphs one into the other. Browsers without support just navigate.
+    -->
+    <script is:inline>
+      (() => {
+        let clicked = null;
+        const setNames = (root, on) => {
+          const cover = root.querySelector('[data-vt="cover"]');
+          const title = root.querySelector('[data-vt="title"]');
+          if (cover) cover.style.viewTransitionName = on ? 'case-cover' : '';
+          if (title) title.style.viewTransitionName = on ? 'case-title' : '';
+        };
+        const inView = (el) => {
+          const r = el.getBoundingClientRect();
+          return r.bottom > 0 && r.top < innerHeight;
+        };
+        addEventListener('click', (e) => {
+          const t = e.target;
+          clicked = (t instanceof Element && t.closest('a[data-project]')) || null;
+        }, true);
+        addEventListener('pageswap', (e) => {
+          if (!e.viewTransition || !clicked) return;
+          const el = clicked;
+          setNames(el, true);
+          e.viewTransition.finished.finally(() => setNames(el, false));
+        });
+        addEventListener('pagereveal', (e) => {
+          if (!e.viewTransition || /\/work\//.test(location.pathname)) return;
+          const from = window.navigation && navigation.activation && navigation.activation.from;
+          const m = from && new URL(from.url).pathname.match(/\/work\/([^/]+)/);
+          if (!m) return;
+          const el = [...document.querySelectorAll('a[data-project="' + m[1] + '"]')].find(inView);
+          if (!el) return;
+          setNames(el, true);
+          e.viewTransition.finished.finally(() => setNames(el, false));
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header isHome={isHome} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/global';
+    </script>
+  </body>
+</html>

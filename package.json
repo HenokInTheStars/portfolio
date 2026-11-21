@@ -1,15 +1,33 @@
 {
   "name": "henok-portfolio",
-  "version": "1.0.0",
-  "description": "High-performance systems engineer portfolio with Technical Editorial design system",
+  "version": "2.0.0",
+  "description": "Henok Solomon's portfolio: full-stack web development and applied machine learning.",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --minify",
-    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --watch",
-    "validate:js": "node -c assets/js/config.js && node -c assets/js/main.js && node -c assets/js/lab.js && node -c assets/js/work.js && node -c assets/js/writing.js",
-    "validate:feeds": "python -c \"import xml.etree.ElementTree as ET; ET.parse('feed.xml'); ET.parse('sitemap.xml'); print('Feeds OK')\""
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/bricolage-grotesque": "^5.1.0",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource/jetbrains-mono": "^5.1.0",
+    "astro": "^5.7.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.17"
+    "@astrojs/check": "^0.9.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=20.19"
   }
 }
