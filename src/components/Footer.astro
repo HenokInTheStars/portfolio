@@ -1,0 +1,335 @@
+---
+import logo from '../assets/logo.png';
+import { SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="space" id="contact" aria-labelledby="contact-h">
+  <div class="space-bg" aria-hidden="true"><canvas class="stars" id="stars"></canvas></div>
+  <div class="wrap space-inner">
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <p class="label space-kicker">Contact</p>
+        <h2 class="space-line" id="contact-h">Let's build something worth launching.</h2>
+        <p class="contact-sub">Tell me about a role, a project, or just say hi. I'm in Addis Ababa (UTC+3) and open to remote work.</p>
+        <div class="contact-mail">
+          <a class="mail-link" id="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <button class="copy-btn" id="copy-btn" type="button">Copy</button>
+          <span class="sr-only" id="copy-status" role="status" aria-live="polite"></span>
+        </div>
+        <div class="contact-links">
+          <a href={SITE.github} target="_blank" rel="noopener">GitHub ↗</a>
+          <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <div class="launch-wrap">
+        <!-- Without JavaScript the form posts straight to FormSubmit; with JS it sends via fetch and checks the result. -->
+        <form class="launch-form" id="launch-form" action={`https://formsubmit.co/${SITE.formId}`} method="POST">
+          <input type="hidden" name="_subject" value="[Portfolio] New message" />
+          <input type="hidden" name="_template" value="table" />
+          <div class="honey" aria-hidden="true">
+            <label for="f-honey">Leave this field empty</label>
+            <input id="f-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name" class="label">Your name</label>
+              <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Alex Turner" />
+            </div>
+            <div class="field">
+              <label for="f-email" class="label">Your email</label>
+              <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="alex@company.com" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-message" class="label">Message</label>
+            <textarea id="f-message" name="message" rows="3" required placeholder="Tell me about the role, project or idea."></textarea>
+          </div>
+
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+
+          <div class="launch-row">
+            <span class="launch-note">Goes straight to my inbox.</span>
+            <button class="launch-btn" id="launch-btn" type="submit">
+              <span class="rocket" aria-hidden="true">
+                <img src={logo.src} width="139" height="154" alt="" />
+                <span class="flame"></span>
+              </span>
+              <span id="launch-label">Launch message</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="launched" id="launched" tabindex="-1" hidden>
+          <p class="label space-kicker">Message launched</p>
+          <p class="launched-title">Thanks, <span id="launched-name"></span>.</p>
+          <p class="contact-sub">Your message reached my inbox. I'll reply to <span class="mono-em" id="launched-email"></span>.</p>
+          <button class="copy-btn" id="send-another" type="button">Send another</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="giant-box"><p class="giant" id="giant" aria-hidden="true">{SITE.name}</p></div>
+    <div class="space-bottom">
+      <span>© {year} {SITE.name} · Addis Ababa</span>
+      <nav class="space-links" aria-label="Footer">
+        <a href={SITE.github} target="_blank" rel="noopener">{SITE.githubLabel}</a>
+        <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <button class="top-link" id="top-link" type="button">Back to top ↑</button>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { EASE, prefersReducedMotion } from '../scripts/motion';
+
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/654be654f596ab445f997f25b36c13fb';
+  const CONTACT_EMAIL = 'hhhenoksolomon@gmail.com';
+
+  /* ---------- Giant name: scale the font so the name spans the full content width ---------- */
+  const giant = document.getElementById('giant')!;
+  const giantBox = document.getElementById('giant-box')!;
+  // Also capped by screen height, so the whole footer fits in one screen.
+  const fitGiant = () => {
+    const avail = giantBox.clientWidth;
+    if (!avail) return;
+    giant.style.fontSize = '100px';
+    const byWidth = ((100 * avail) / giant.scrollWidth) * 0.995;
+    const byHeight = window.innerHeight * 0.16;
+    giant.style.fontSize = `${Math.min(byWidth, byHeight)}px`;
+  };
+  document.fonts.ready.then(fitGiant);
+  new ResizeObserver(fitGiant).observe(giantBox);
+  window.addEventListener('resize', fitGiant);
+
+  /* ---------- Starfield: twinkling stars and an occasional shooting star, only while visible ---------- */
+  const footer = document.getElementById('contact')!;
+  const canvas = document.getElementById('stars') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  type Star = { x: number; y: number; r: number; ph: number; sp: number };
+  let stars: Star[] = [];
+  let w = 0;
+  let h = 0;
+  let visible = false;
+  let shoot: { x: number; y: number; start: number } | null = null;
+  let nextShoot = 0;
+  const rnd = (i: number) => {
+    const x = Math.sin(i * 45.164 + 7.7) * 24634.6345;
+    return x - Math.floor(x);
+  };
+
+  function seed() {
+    const r = canvas.getBoundingClientRect();
+    w = r.width;
+    h = r.height;
+    if (!w || !h) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = Array.from({ length: Math.round((w * h) / 5200) }, (_, i) => ({
+      x: rnd(i + 1) * w,
+      y: rnd(i + 2001) * h,
+      r: 0.35 + Math.pow(rnd(i + 4001), 3) * 1.4,
+      ph: rnd(i + 6001) * Math.PI * 2,
+      sp: 0.5 + rnd(i + 8001) * 1.6,
+    }));
+    draw(performance.now());
+  }
+
+  function draw(t: number) {
+    if (!w) return;
+    const still = prefersReducedMotion();
+    const fg = getComputedStyle(document.documentElement).getPropertyValue('--space-fg').trim();
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = fg;
+    for (const s of stars) {
+      ctx.globalAlpha = still ? 0.55 : 0.2 + 0.6 * (0.5 + 0.5 * Math.sin((t / 1000) * s.sp + s.ph));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (!still) {
+      if (!shoot && t > nextShoot) {
+        shoot = { x: w * (0.35 + Math.random() * 0.6), y: h * Math.random() * 0.35, start: t };
+        nextShoot = t + 5000 + Math.random() * 6000;
+      }
+      if (shoot) {
+        const p = (t - shoot.start) / 900;
+        if (p >= 1) {
+          shoot = null;
+        } else {
+          const hx = shoot.x - p * 280;
+          const hy = shoot.y + p * 120;
+          const g = ctx.createLinearGradient(hx, hy, hx + 90, hy - 39);
+          g.addColorStop(0, fg);
+          g.addColorStop(1, 'transparent');
+          ctx.globalAlpha = Math.sin(p * Math.PI);
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          ctx.moveTo(hx, hy);
+          ctx.lineTo(hx + 90, hy - 39);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    if (visible && !still) requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(seed).observe(footer);
+  new IntersectionObserver(([entry]) => {
+    const was = visible;
+    visible = entry.isIntersecting;
+    if (visible && !was) {
+      nextShoot = performance.now() + 1200;
+      requestAnimationFrame(draw);
+    }
+  }).observe(footer);
+
+  /* ---------- Back to top ---------- */
+  document.getElementById('top-link')!.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- Copy email ---------- */
+  const copyBtn = document.getElementById('copy-btn')!;
+  const emailEl = document.getElementById('email')!;
+  const copyStatus = document.getElementById('copy-status')!;
+  const copied = (msg: string) => {
+    copyBtn.textContent = msg;
+    copyStatus.textContent = msg;
+    window.setTimeout(() => (copyBtn.textContent = 'Copy'), 1800);
+  };
+  copyBtn.addEventListener('click', () => {
+    const select = () => {
+      const range = document.createRange();
+      range.selectNodeContents(emailEl);
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+      copied('Press Ctrl+C');
+    };
+    if (!navigator.clipboard) return select();
+    navigator.clipboard.writeText(CONTACT_EMAIL).then(() => copied('Copied'), select);
+  });
+
+  /* ---------- Launch-message form ---------- */
+  const form = document.getElementById('launch-form') as HTMLFormElement;
+  const btn = document.getElementById('launch-btn') as HTMLButtonElement;
+  const label = document.getElementById('launch-label')!;
+  const status = document.getElementById('form-status')!;
+  const launched = document.getElementById('launched')!;
+  const message = document.getElementById('f-message') as HTMLTextAreaElement;
+  const rocket = btn.querySelector<HTMLElement>('.rocket')!;
+
+  const escapeHtml = (s: string) =>
+    s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  async function send(fields: Record<string, string>) {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...fields,
+          _subject: `[Portfolio] Message from ${fields.name}`,
+          _template: 'table',
+          _replyto: fields.email,
+        }),
+        signal: controller.signal,
+      });
+      const data = await res.json().catch(() => ({}));
+      return res.ok && (data.success === true || data.success === 'true');
+    } catch {
+      return false;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
+  function liftOff(): Promise<void> {
+    if (prefersReducedMotion()) return Promise.resolve();
+    const fly = rocket.animate(
+      [
+        { transform: 'translateY(0)', opacity: 1 },
+        { transform: 'translateY(4px)', opacity: 1, offset: 0.12 },
+        { transform: 'translateY(-60vh)', opacity: 1, offset: 0.85 },
+        { transform: 'translateY(-80vh)', opacity: 0 },
+      ],
+      { duration: 1200, easing: 'cubic-bezier(.55, 0, .8, .2)', fill: 'forwards' },
+    );
+    return fly.finished.then(() => {
+      fly.cancel();
+    });
+  }
+
+  function showLaunched(name: string, email: string) {
+    document.getElementById('launched-name')!.textContent = name;
+    document.getElementById('launched-email')!.textContent = email;
+    form.hidden = true;
+    launched.hidden = false;
+    if (!prefersReducedMotion()) {
+      launched.animate(
+        [
+          { opacity: 0, transform: 'translateY(16px)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 700, easing: EASE },
+      );
+    }
+    launched.focus({ preventScroll: true });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const fields = {
+      name: String(data.get('name') ?? '').trim(),
+      email: String(data.get('email') ?? '').trim(),
+      message: String(data.get('message') ?? '').trim(),
+      _honey: String(data.get('_honey') ?? ''),
+    };
+
+    btn.disabled = true;
+    btn.classList.add('igniting');
+    label.textContent = 'Sending…';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    const ok = await send(fields);
+    btn.classList.remove('igniting');
+
+    if (ok) {
+      label.textContent = 'Launched';
+      await liftOff();
+      showLaunched(fields.name, fields.email);
+      return;
+    }
+
+    const subject = encodeURIComponent(`[Portfolio] Message from ${fields.name}`);
+    const body = encodeURIComponent(`${fields.message}\n\n${fields.name} (${fields.email})`);
+    status.className = 'form-status error';
+    status.innerHTML = `Your message wasn't sent. The form service didn't confirm delivery, so your text is still here. Try again, or
+      <a href="mailto:${CONTACT_EMAIL}?subject=${subject}&amp;body=${body}">send it from your email app</a> (${escapeHtml(CONTACT_EMAIL)}).`;
+    label.textContent = 'Try again';
+    btn.disabled = false;
+  });
+
+  document.getElementById('send-another')!.addEventListener('click', () => {
+    form.reset();
+    label.textContent = 'Launch message';
+    btn.disabled = false;
+    launched.hidden = true;
+    form.hidden = false;
+    (document.getElementById('f-name') as HTMLInputElement).focus();
+  });
+</script>

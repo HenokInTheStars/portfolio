@@ -1,0 +1,121 @@
+---
+import ProjectCover from './ProjectCover.astro';
+import { FAN_ORDER, getProject } from '../data/projects';
+import { MAIN_TOOLS, ROTATING_WORDS } from '../data/site';
+import { HAS_RESUME, RESUME_PATH } from '../data/resume';
+
+const fan = FAN_ORDER.map((slug) => getProject(slug)!);
+const spoken = `I build web apps that ${ROTATING_WORDS.slice(0, -1).map((w) => w.replace('.', '')).join(', ')}, and that ${ROTATING_WORDS.at(-1)}`;
+---
+
+<div class="wrap hero" id="top">
+  <div class="hero-text">
+    <h1 class="headline">
+      <span class="sr-only">{spoken}</span>
+      <span class="line" aria-hidden="true"><span>I build web apps</span></span>
+      <span class="line" aria-hidden="true"><span>that <span class="rot" id="rot" data-words={JSON.stringify(ROTATING_WORDS)}><span class="rot-word">{ROTATING_WORDS[0]}</span></span></span></span>
+    </h1>
+
+    <p class="hero-lede">
+      I'm <strong>Henok Solomon</strong>, a full-stack developer in Addis Ababa. I work in React, TypeScript and FastAPI,
+      and add machine learning where it actually helps.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary magnetic" href="#work">See my work <span class="arrow" aria-hidden="true">→</span></a>
+      {
+        HAS_RESUME ? (
+          <a class="btn btn-ghost magnetic" href={RESUME_PATH} target="_blank" rel="noopener">
+            Download résumé <span class="arrow" aria-hidden="true">↓</span>
+          </a>
+        ) : (
+          <a class="btn btn-ghost magnetic" href="#contact">Get in touch</a>
+        )
+      }
+    </div>
+
+    <ul class="stack" aria-label="Main tools">
+      {MAIN_TOOLS.map((t) => <li>{t}</li>)}
+    </ul>
+  </div>
+
+  <div class="fan" role="group" aria-label="Featured projects">
+    {
+      fan.map((p, i) => (
+        <a class={`fan-card fan-${i}`} href={`/work/${p.slug}/`} data-project={p.slug} aria-label={`${p.title} case study`}>
+          <div class="fan-float">
+            <div class="fan-inner">
+              <ProjectCover kind={p.cover} vt />
+              <div class="fan-cap">
+                <span class="fan-title" data-vt="title">{p.title}</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import { EASE, prefersReducedMotion } from '../scripts/motion';
+
+  // Rotating last word: old letters slide up and out, new letters rise in one by one.
+  const rot = document.getElementById('rot');
+  if (rot) {
+    const words: string[] = JSON.parse(rot.dataset.words ?? '[]');
+    let index = 0;
+    let current = rot.querySelector<HTMLElement>('.rot-word')!;
+
+    const build = (text: string) => {
+      const w = document.createElement('span');
+      w.className = 'rot-word';
+      for (const c of text) {
+        const s = document.createElement('span');
+        s.className = 'ch';
+        s.textContent = c === ' ' ? ' ' : c;
+        w.appendChild(s);
+      }
+      return w;
+    };
+    const fit = () => {
+      rot.style.width = `${current.getBoundingClientRect().width}px`;
+    };
+
+    const first = build(words[0]);
+    current.replaceWith(first);
+    current = first;
+    document.fonts.ready.then(fit);
+    window.addEventListener('resize', fit);
+
+    const swap = () => {
+      if (document.hidden || prefersReducedMotion()) return;
+      index = (index + 1) % words.length;
+      const old = current;
+      const next = build(words[index]);
+      old.classList.add('leaving');
+      rot.appendChild(next);
+      current = next;
+      rot.style.width = `${next.getBoundingClientRect().width}px`;
+      Array.from(old.children).forEach((c, i) =>
+        c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-110%)' }], {
+          duration: 460,
+          delay: i * 16,
+          easing: 'cubic-bezier(.55, 0, .75, .2)',
+          fill: 'forwards',
+        }),
+      );
+      Array.from(next.children).forEach((c, i) =>
+        c.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], {
+          duration: 720,
+          delay: 180 + i * 30,
+          easing: EASE,
+          fill: 'backwards',
+        }),
+      );
+      window.setTimeout(() => old.remove(), 1100);
+    };
+    window.setInterval(swap, 2800);
+  }
+</script>

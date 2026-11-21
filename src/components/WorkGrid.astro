@@ -1,0 +1,45 @@
+---
+import ProjectCover from './ProjectCover.astro';
+import { PROJECTS } from '../data/projects';
+
+const years = PROJECTS.map((p) => Number(p.year));
+const span = `${Math.min(...years)}–${Math.max(...years)}`;
+---
+
+<section class="block" id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 id="work-h">Selected work</h2>
+      <span class="label">{PROJECTS.length} projects · {span}</span>
+    </div>
+    <div class="work-grid">
+      {
+        PROJECTS.map((p, i) => (
+          <a
+            class:list={['card', 'reveal', { feature: p.feature }]}
+            href={`/work/${p.slug}/`}
+            data-project={p.slug}
+            style={`--d:${(i * 0.08).toFixed(2)}s`}
+          >
+            <ProjectCover kind={p.cover} vt />
+            <div class="card-body">
+              <span class:list={['label', { 'tag-progress': p.inProgress }]}>
+                {p.year} · {p.category}
+              </span>
+              <h3 class="card-title" data-vt="title">{p.title}</h3>
+              <p>{p.lede}</p>
+              <div class="card-foot">
+                <div class="chips">
+                  {p.stack.slice(0, p.feature ? 5 : 3).map((s) => <span>{s}</span>)}
+                </div>
+                <span class="read">
+                  Case study <span class="arrow" aria-hidden="true">→</span>
+                </span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

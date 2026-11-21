@@ -1,0 +1,46 @@
+---
+import { SKILLS, TECH_STRIP } from '../data/site';
+
+const ICONS: Record<string, string> = {
+  frontend:
+    '<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M8 14l-2 2 2 2M16 14l2 2-2 2"/>',
+  backend:
+    '<rect x="4" y="3.5" width="16" height="7" rx="2"/><rect x="4" y="13.5" width="16" height="7" rx="2"/><path d="M8 7h.01M8 17h.01M12 7h4M12 17h4"/>',
+  ml: '<circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6.8l3.3 4M7 17.2l3.3-4M13.7 10.8 17 6.8M13.7 13.2l3.3 4"/>',
+};
+---
+
+<section class="block" id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 id="skills-h">What I do</h2>
+      <span class="label">Frontend · Backend · Machine learning</span>
+    </div>
+    <div class="skills">
+      {
+        SKILLS.map((s, i) => (
+          <article class="skill reveal" style={`--d:${(i * 0.08).toFixed(2)}s`}>
+            <span class="skill-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[s.icon]} />
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <ul class="tools">
+              {s.tools.map((t) => <li>{t}</li>)}
+            </ul>
+            <a class="proof" href={`/work/${s.proof.slug}/`}>
+              <span>Seen in <b>{s.proof.label}</b></span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+  <div class="marquee" role="region" aria-label="Technologies I use">
+    <div class="marquee-track">
+      <ul>{TECH_STRIP.map((t) => <li>{t}</li>)}</ul>
+      <ul aria-hidden="true">{TECH_STRIP.map((t) => <li>{t}</li>)}</ul>
+    </div>
+  </div>
+</section>

@@ -1,82 +1,49 @@
-# Henok — AI & Web Systems Engineer Portfolio
+# Henok Solomon · Portfolio
 
-A high-performance personal portfolio built with the **Technical Editorial** design system. Designed for a technical systems engineer shipping production AI systems, focusing on low-latency streaming architectures, sub-400ms TTFT, and rigorous evaluation pipelines.
+Personal site of Henok Solomon, a full-stack developer in Addis Ababa: web apps with React, TypeScript and FastAPI, plus machine learning where it helps.
 
----
+Live at **https://www.henoksolomon.com**
 
-## 🗂 Project Architecture
+## Stack
 
-```
-portfolio/
-├── index.html              # Main index page (Hero, Telemetry, Selected Work, The Lab, Ask-AI Runtime)
-├── work.html               # Work & Systems (5 production case studies with expandable architectural deep dives)
-├── lab.html                # The Lab (5 experimental prototypes, interactive SSE token stream visualizer, table/grid views)
-├── writing.html            # Writing & Notes (Searchable essays directory with split-pane interactive reader)
-├── assets/
-│   ├── css/
-│   │   └── style.css       # Design tokens, CSS variables for Light & Dark mode, custom scrollbars, modal transitions
-│   ├── js/
-│   │   ├── config.js       # Tailwind CSS dynamic configuration & anti-FOUC theme initialization
-│   │   ├── main.js         # Shared functionality: Dark/Light mode toggle, ⌘K Command Palette, nav highlighting
-│   │   ├── work.js         # Interactive case study deep dive accordions and tag filter engine
-│   │   ├── lab.js          # Grid/Table view switcher, real-time tool search, and live SSE token stream simulator
-│   │   └── writing.js      # Essay search, semantic tag chips, active article reader switcher, and code copy
-│   └── screenshots/        # High-resolution reference mockups
-│       ├── home.png
-│       ├── work.png
-│       ├── lab.png
-│       └── writing.png
-└── docs/
-    └── DESIGN.md           # Comprehensive Technical Editorial Design System specification
-```
+- [Astro 5](https://astro.build) for static pages, with React for interactive pieces (the spam-threshold demo)
+- TypeScript throughout, checked with `astro check`
+- Plain CSS with design tokens (light and dark themes) in `src/styles/global.css`
+- Self-hosted fonts via Fontsource: Bricolage Grotesque, Inter, JetBrains Mono
+- Cross-document View Transitions for the card-to-case-study morph (falls back to a normal page load)
 
----
+## Run it locally
 
-## ⚡ Features & Capabilities
-
-1. **Zero-Build Architecture**: Runs natively in any modern browser without requiring `npm install` or bundlers.
-2. **Dual-Theme Engineering (Light & Dark)**:
-   - **Light Theme**: Warm alabaster paper base (`#FCF9F8`) with deep archival pine accent (`#005C55`).
-   - **Dark Theme**: Deep carbon slate surfaces (`#0E0F11`) with phosphor teal indicators (`#2DD4BF`).
-   - Theme preference is stored in `localStorage` and respects system `prefers-color-scheme`.
-3. **Omni Command Palette (`⌘K` / `Ctrl+K`)**:
-   - Universal quick-launcher accessible from any page.
-   - Live search across all pages, 5 case studies, 5 lab tools, and essays.
-   - Built-in site assistant answering common questions about Henok's engineering background.
-4. **Interactive Sandboxes & Evals**:
-   - **Token Streaming Visualizer**: Interactive SSE chunk latency simulator with real-time SVG jitter sparkline and TTFT profiling.
-   - **Interactive Reader**: Master-detail reading pane dynamically rendering articles and code blocks with 1-click clipboard copy.
-   - **Architectural Breakdowns**: Expandable specifications for each case study (Streaming, Tool Calls, Evals, and Bundle Footprint).
-
----
-
-## 🚀 Preview Locally
-
-You can preview the portfolio using any static HTTP server:
-
-### Option 1: Python
 ```bash
-python -m http.server 3000
-```
-Then visit `http://localhost:3000`.
-
-### Option 2: Node / npx
-```bash
-npx serve .
+pnpm install
+pnpm dev        # http://localhost:4321
+pnpm check      # type-check
+pnpm build      # static site in dist/
+pnpm preview    # serve dist/
 ```
 
-### Option 3: VS Code / IDE Live Server
-Right-click `index.html` and select **Open with Live Server**.
+## Where things live
 
----
+| What | File |
+|---|---|
+| Name, links, skills, timeline, education | `src/data/site.ts` |
+| Case studies and "More projects" | `src/data/projects.ts` |
+| Spam-model scores for the threshold demo | `src/data/spamScores.ts` |
+| Home page sections | `src/components/*.astro` |
+| Case-study page | `src/pages/work/[slug].astro` |
+| Layout, meta tags, theme and page-morph scripts | `src/layouts/Base.astro` |
 
-## 🌐 Deploy to GitHub Pages / Vercel
+## Content to add
 
-### GitHub Pages:
-1. Push this repository to GitHub (`HenokInTheStars/portfolio`).
-2. Go to **Settings** > **Pages**.
-3. Under **Branch**, select `main` and root `/`.
-4. Your site will be live immediately!
+- **Résumé:** put `resume.pdf` in `public/`. The résumé buttons appear automatically.
+- **Education:** fill in `EDUCATION` in `src/data/site.ts`. It is added to the About timeline.
+- **Real spam scores:** the threshold demo uses simulated scores that match the measured results at 0.50. Export the model's probabilities as described in `src/data/spamScores.ts` to make every threshold real.
 
-### Vercel / Netlify:
-Deploy instantly by linking your repository; no build command required.
+## Deploy
+
+`.github/workflows/ci.yml` type-checks and builds every push. Pushes to `main` deploy `dist/` to GitHub Pages.
+
+One-time setup:
+1. **Settings → Pages → Source:** GitHub Actions.
+2. **Settings → Pages → Custom domain:** `www.henoksolomon.com`, then enable **Enforce HTTPS**.
+3. DNS: a `CNAME` record for `www` pointing to `henokinthestars.github.io`, plus GitHub Pages `A` records for the apex domain.

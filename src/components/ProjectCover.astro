@@ -1,0 +1,58 @@
+---
+import type { CoverKind } from '../data/projects';
+
+interface Props {
+  kind: CoverKind;
+  /** Marks this cover as the element that morphs into the case-study header. */
+  vt?: boolean;
+}
+const { kind, vt = false } = Astro.props;
+const vtAttr = vt ? { 'data-vt': 'cover' } : {};
+---
+
+{
+  kind === 'spam' && (
+    <div class="cover cover-spam" aria-hidden="true" {...vtAttr}>
+      <div class="thread">
+        <div class="bubble ham"><span>Running 10 min late, start without me</span><b>not spam</b></div>
+        <div class="bubble spam"><span>WINNER! Claim your prize, txt CLAIM to 80082</span><b>spam</b></div>
+        <div class="bubble ham"><span>Can you send the slides before 3?</span><b>not spam</b></div>
+      </div>
+    </div>
+  )
+}
+{
+  kind === 'flight' && (
+    <div class="cover cover-flight" aria-hidden="true" {...vtAttr}>
+      <svg viewBox="0 0 400 200">
+        <g class="grid">
+          <line x1="20" y1="170" x2="380" y2="170" />
+          <line x1="20" y1="120" x2="380" y2="120" stroke-dasharray="3 5" />
+          <line x1="20" y1="70" x2="380" y2="70" stroke-dasharray="3 5" />
+        </g>
+        <path class="area" d="M20 150 C 60 140, 80 120, 110 128 S 160 70, 190 92 S 240 140, 270 120 S 330 40, 360 58 L 380 64 L 380 170 L 20 170 Z" />
+        <path class="fare" pathLength="1" d="M20 150 C 60 140, 80 120, 110 128 S 160 70, 190 92 S 240 140, 270 120 S 330 40, 360 58 L 380 64" />
+        <g class="peak">
+          <circle class="halo" cx="360" cy="58" r="11" />
+          <circle class="dot" cx="360" cy="58" r="4.5" />
+          <text x="352" y="38" text-anchor="end">HOLIDAY PEAK</text>
+        </g>
+        <text x="20" y="188">MESKEREM</text>
+        <text x="380" y="188" text-anchor="end">NEHASE</text>
+        <path class="plane" d="M30 36 l22 6 6-7 3 1-3 8 9 3-2 3-9-2-6 8-3 0 3-9-21-5z" />
+      </svg>
+    </div>
+  )
+}
+{
+  kind === 'desk' && (
+    <div class="cover cover-desk" aria-hidden="true" {...vtAttr}>
+      <div class="kiosk">
+        <div class="kiosk-head"><span><i />Front desk · Live</span><span>Lobby A</span></div>
+        <div class="visit"><span class="avatar">ST</span><span><strong>Selam T.</strong><small>Meeting with Dawit · 09:12</small></span><span class="pill ok">Host notified</span></div>
+        <div class="visit"><span class="avatar">MA</span><span><strong>Michael A.</strong><small>Interview · 09:20</small></span><span class="pill ok">Checked in</span></div>
+        <div class="visit"><span class="avatar">HG</span><span><strong>Hana G.</strong><small>Delivery · 09:31</small></span><span class="pill wait">Waiting</span></div>
+      </div>
+    </div>
+  )
+}

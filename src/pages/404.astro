@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+
+<Base title={`Lost in space · ${SITE.name}`} description="This page drifted out of orbit." noindex>
+  <div class="wrap lost">
+    <span class="label">404</span>
+    <h1>This page drifted out of orbit.</h1>
+    <p>The link may be old or mistyped. Everything that still exists is on the home page.</p>
+    <a class="btn btn-primary magnetic" href="/">Back to home <span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+</Base>

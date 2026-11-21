@@ -13,3 +13,13 @@ ehthumbs.db
 .env
 .env.local
 node_modules/
+
+# Agent State & Internal Tracking
+task.md
+*.log
+.scratch/
+.temp/
+
+# Build output
+dist/
+.astro/
