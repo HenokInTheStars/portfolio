@@ -687,10 +687,11 @@ footer.space {
 .reveal.pre .cst-star { opacity: 0; transform: scale(.2); }
 .reveal.pre.in .cst-star { opacity: 1; transform: none; transition: opacity .6s var(--ease) calc(var(--i) * 55ms + .2s), transform .8s var(--ease) calc(var(--i) * 55ms + .2s); }
 .sky figcaption {
-  position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px;
   color: var(--space-fg); font-size: 13px; font-weight: 500;
 }
 .sky figcaption .label { color: var(--space-muted); }
+.sky figcaption > span { white-space: nowrap; }
 
 /* ---------- Threshold demo ---------- */
 .demo {
@@ -778,4 +779,43 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
   .slider-row input[type="range"] { height: 44px; }
   .contact-links { gap: 8px 24px; }
   .space-links { gap: 4px 22px; }
+}
+
+/* ---------- Easter eggs ---------- */
+.egg-toast {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); z-index: 10001;
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none; max-width: calc(100vw - 32px);
+  background: var(--ink); color: var(--bg); font: 500 15px var(--f-body); padding: 12px 18px; border-radius: 12px;
+  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .5); transition: opacity .3s var(--ease), transform .45s var(--ease);
+}
+.egg-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Konami rocket */
+.egg-rocket { position: fixed; left: 0; top: 0; z-index: 9998; width: 46px; margin: -26px 0 0 -23px; pointer-events: none; }
+.egg-rocket img { display: block; width: 46px; height: auto; position: relative; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 60%, transparent)); }
+.egg-flame {
+  position: absolute; left: 50%; top: 82%; width: 14px; height: 30px; margin-left: -7px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  background: linear-gradient(var(--flame-a), var(--flame-b) 60%, transparent);
+  transform-origin: top; animation: flicker .09s ease-in-out infinite alternate;
+}
+.egg-spark {
+  position: fixed; z-index: 9997; pointer-events: none; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--flame-b); box-shadow: 0 0 8px var(--flame-a);
+}
+.egg-spark.star { width: auto; height: auto; background: none; box-shadow: none; color: var(--accent); font-size: 13px; line-height: 1; }
+
+/* Constellation: light every star */
+.cst-hit { fill: transparent; pointer-events: all; cursor: pointer; }
+.cst-core { transform-box: fill-box; transform-origin: center; transition: transform .35s var(--ease), fill .35s; }
+.cst-star.lit .cst-core { fill: #ffffff; transform: scale(1.7); }
+.cst-star.lit .cst-halo { animation: none; opacity: .65; }
+.cst-line.lit { opacity: 1; stroke-width: .8; }
+.sky.complete .cst-line { opacity: 1; filter: drop-shadow(0 0 1.2px var(--space-glow)); }
+.sky.complete .sky-fig { animation: sky-found 1.8s var(--ease) 1; }
+.sky.complete .sky-title { color: var(--space-glow); }
+@keyframes sky-found {
+  0% { filter: drop-shadow(0 0 0 transparent); }
+  35% { filter: drop-shadow(0 0 8px var(--space-glow)); }
+  100% { filter: drop-shadow(0 0 2px var(--space-glow)); }
 }

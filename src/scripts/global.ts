@@ -1,4 +1,5 @@
 import { prefersReducedMotion, finePointer } from './motion';
+import './easter-eggs';
 
 /* Scroll reveal: elements below the fold slide up gently. Never hidden at rest. */
 function initReveal() {
