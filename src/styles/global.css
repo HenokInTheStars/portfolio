@@ -55,6 +55,16 @@
   color-scheme: dark;
 }
 
+/* Secret third theme: night-sky mode (theme button clicked 5 times quickly) */
+:root[data-theme="night"] {
+  --bg: #03060c; --surface: #0a111c; --sunk: rgb(170 200 255 / .06); --ink: #e9f1ff; --muted: #8fa0b8;
+  --line: rgb(140 170 220 / .16); --accent: #5eead4; --accent-soft: rgb(94 234 212 / .12); --on-accent: #03201c;
+  --ok: #4cc795; --ok-soft: rgb(76 199 149 / .14); --bad: #ff7378; --bad-soft: rgb(255 115 120 / .14);
+  --c-ham: #1fa092; --c-spam: #e8602a; --warn: #e0a33a;
+  --space-bg: #03060c; --space-line: rgb(140 170 220 / .16);
+  color-scheme: dark;
+}
+
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
@@ -121,8 +131,8 @@ a { color: inherit; }
   :root:not([data-theme="light"]) .brand-logo.on-light { display: none; }
   :root:not([data-theme="light"]) .brand-logo.on-dark { display: block; }
 }
-:root[data-theme="dark"] .brand-logo.on-light { display: none; }
-:root[data-theme="dark"] .brand-logo.on-dark { display: block; }
+:root:is([data-theme="dark"], [data-theme="night"]) .brand-logo.on-light { display: none; }
+:root:is([data-theme="dark"], [data-theme="night"]) .brand-logo.on-dark { display: block; }
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav a {
   text-decoration: none; color: var(--muted); font-size: 14.5px; padding: 8px 12px; border-radius: 999px;
@@ -387,7 +397,7 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .skill-body p { margin: 0; color: var(--muted); font-size: 1.08rem; max-width: 52ch; text-wrap: pretty; }
 .skill-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .skill-tools { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); letter-spacing: .02em; }
-.skill-proof { font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.skill-proof { font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; gap: .35em; }
 .skill-proof:hover { text-decoration: underline; text-underline-offset: 4px; }
 .skill-proof .arrow { display: inline-block; transition: transform .35s var(--ease); }
 .skill-row:hover .skill-proof .arrow { transform: translateX(4px); }
@@ -416,7 +426,7 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
 }
-:root[data-theme="dark"] .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
+:root:is([data-theme="dark"], [data-theme="night"]) .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- More projects ---------- */
@@ -819,3 +829,43 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
   35% { filter: drop-shadow(0 0 8px var(--space-glow)); }
   100% { filter: drop-shadow(0 0 2px var(--space-glow)); }
 }
+
+/* ---------- Night-sky mode: starfield behind every section ---------- */
+.night-sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; overflow: hidden; }
+:root[data-theme="night"] .night-sky { opacity: 1; }
+.night-sky::before, .night-sky::after, .night-sky i { content: ""; position: absolute; inset: -50% 0 0 0; }
+/* small, dense stars */
+.night-sky::before {
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 87px 133px, #cfe9ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 151px 19px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 199px 167px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 41px 211px, #bff7ee 50%, transparent 51%),
+    radial-gradient(1px 1px at 233px 83px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 119px 241px, #fff 50%, transparent 51%);
+  background-size: 260px 260px; opacity: .55;
+  animation: night-drift 180s linear infinite;
+}
+/* fewer, brighter stars that twinkle */
+.night-sky::after {
+  background-image:
+    radial-gradient(1.6px 1.6px at 60px 80px, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 300px 40px, #a7f3eb 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 420px 310px, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 180px 360px, #fff 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 510px 160px, #d6e6ff 50%, transparent 51%);
+  background-size: 560px 420px; opacity: .8;
+  animation: night-drift 120s linear infinite, night-twinkle 4s ease-in-out infinite alternate;
+}
+/* faint nebula glow */
+.night-sky i {
+  inset: 0;
+  background:
+    radial-gradient(60vmax 40vmax at 85% 10%, rgb(45 212 191 / .10), transparent 60%),
+    radial-gradient(50vmax 35vmax at 5% 80%, rgb(99 102 241 / .10), transparent 60%);
+}
+@keyframes night-drift { to { transform: translateY(50%); } }
+@keyframes night-twinkle { from { opacity: .45; } to { opacity: .9; } }
+:root[data-theme="night"] .site-header { background: color-mix(in srgb, var(--bg) 70%, transparent); }
+@media (prefers-reduced-motion: reduce) { .night-sky::before, .night-sky::after { animation: none; } }

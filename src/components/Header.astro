@@ -32,6 +32,7 @@ const at = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
 
 <script>
   import { EASE, canViewTransition } from '../scripts/motion';
+  import { toast } from '../scripts/easter-eggs';
 
   const header = document.getElementById('site-header')!;
   const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
@@ -45,30 +46,58 @@ const at = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
     '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>';
   const MOON = '<path d="M20.2 14.6A8.5 8.5 0 0 1 9.4 3.8a8.5 8.5 0 1 0 10.8 10.8z"/>';
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : darkQuery.matches);
+  const isDark = () => (root.dataset.theme ? root.dataset.theme !== 'light' : darkQuery.matches);
+  const STAR = '<path d="M12 3.5l1.9 5.6 5.6 1.9-5.6 1.9L12 18.5l-1.9-5.6L4.5 11l5.6-1.9z"/><path d="M19 3v3M17.5 4.5h3"/>';
 
   function paint() {
     const dark = isDark();
-    icon.innerHTML = dark ? SUN : MOON;
+    icon.innerHTML = root.dataset.theme === 'night' ? STAR : dark ? SUN : MOON;
     btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
   }
   paint();
   darkQuery.addEventListener('change', paint);
 
   // New theme spreads out in a circle from the button.
-  btn.addEventListener('click', (e) => {
-    const next = isDark() ? 'light' : 'dark';
-    const apply = () => {
-      root.dataset.theme = next;
-      try {
-        localStorage.setItem('theme', next);
-      } catch {
-        /* storage unavailable: theme still applies to this page */
-      }
-      paint();
-    };
-    if (!canViewTransition()) {
-      apply();
+  // Secret: 5 clicks within 2 seconds unlock night-sky mode.
+  type Theme = 'light' | 'dark' | 'night';
+  let clicks: number[] = [];
+  let transition: ViewTransition | null = null;
+  let pending: Theme | null = null; // theme chosen while the reveal animation is still running
+
+  const setTheme = (theme: Theme) => {
+    root.dataset.theme = theme;
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      /* storage unavailable: theme still applies to this page */
+    }
+    paint();
+  };
+  const flip = (theme: string | null): Theme => {
+    const dark = theme ? theme !== 'light' : darkQuery.matches;
+    return dark ? 'light' : 'dark';
+  };
+
+  const onThemeClick = (e: MouseEvent) => {
+    const now = performance.now();
+    clicks = [...clicks.filter((t) => now - t < 2000), now];
+    const current = pending ?? root.dataset.theme ?? null;
+    const unlock = clicks.length >= 5 && current !== 'night';
+    if (unlock) {
+      clicks = [];
+      toast('✦ Night-sky mode unlocked');
+    }
+    const next: Theme = unlock ? 'night' : flip(current);
+
+    // While the reveal is running, only remember the choice; it is applied when the animation ends.
+    if (transition) {
+      pending = next;
+      return;
+    }
+    // Rapid follow-up clicks switch instantly; an unhurried click plays the circular reveal.
+    const rapid = clicks.length > 1 && now - clicks[clicks.length - 2] < 900;
+    if (rapid || !canViewTransition()) {
+      setTheme(next);
       return;
     }
     const r = btn.getBoundingClientRect();
@@ -76,13 +105,37 @@ const at = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
     const y = e.clientY || r.top + r.height / 2;
     const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     root.classList.add('theme-vt');
-    const t = document.startViewTransition(apply);
-    t.ready.then(() => {
-      root.animate(
-        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-        { duration: 700, easing: EASE, pseudoElement: '::view-transition-new(root)' },
-      );
+    const t = document.startViewTransition(() => setTheme(next));
+    transition = t;
+    t.ready
+      .then(() => {
+        root.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          { duration: 700, easing: EASE, pseudoElement: '::view-transition-new(root)' },
+        );
+      })
+      .catch(() => {});
+    t.finished.finally(() => {
+      transition = null;
+      root.classList.remove('theme-vt');
+      if (pending) {
+        const p = pending;
+        pending = null;
+        setTheme(p);
+      }
     });
-    t.finished.finally(() => root.classList.remove('theme-vt'));
-  });
+  };
+
+  btn.addEventListener('click', onThemeClick);
+  // While the reveal plays, the browser sends clicks to the page instead of the button.
+  // Count clicks that land on the button's position so rapid clicking still works.
+  window.addEventListener(
+    'click',
+    (e) => {
+      if (!transition || e.target === btn || btn.contains(e.target as Node)) return;
+      const r = btn.getBoundingClientRect();
+      if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) onThemeClick(e);
+    },
+    true,
+  );
 </script>

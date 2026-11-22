@@ -9,7 +9,7 @@ import { prefersReducedMotion } from './motion';
 /* ---------- Shared toast ---------- */
 let toastEl: HTMLDivElement | null = null;
 let toastTimer = 0;
-function toast(message: string) {
+export function toast(message: string) {
   if (!toastEl) {
     toastEl = document.createElement('div');
     toastEl.className = 'egg-toast';
@@ -25,7 +25,7 @@ function toast(message: string) {
 
 const isDarkTheme = () => {
   const t = document.documentElement.dataset.theme;
-  return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return t ? t === 'dark' || t === 'night' : window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 /* ---------- 1. Console note ---------- */

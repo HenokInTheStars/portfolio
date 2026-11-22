@@ -64,7 +64,7 @@ const jsonLd = {
     <script is:inline>
       try {
         const t = localStorage.getItem('theme');
-        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+        if (t === 'dark' || t === 'light' || t === 'night') document.documentElement.dataset.theme = t;
       } catch (e) {}
     </script>
 
@@ -110,6 +110,7 @@ const jsonLd = {
     </script>
   </head>
   <body>
+    <div class="night-sky" aria-hidden="true"><i></i></div>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header isHome={isHome} />
     <main id="main">
