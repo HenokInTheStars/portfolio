@@ -55,6 +55,16 @@
   color-scheme: dark;
 }
 
+/* Secret third theme: night-sky mode (theme button clicked 5 times quickly) */
+:root[data-theme="night"] {
+  --bg: #03060c; --surface: #0a111c; --sunk: rgb(170 200 255 / .06); --ink: #e9f1ff; --muted: #8fa0b8;
+  --line: rgb(140 170 220 / .16); --accent: #5eead4; --accent-soft: rgb(94 234 212 / .12); --on-accent: #03201c;
+  --ok: #4cc795; --ok-soft: rgb(76 199 149 / .14); --bad: #ff7378; --bad-soft: rgb(255 115 120 / .14);
+  --c-ham: #1fa092; --c-spam: #e8602a; --warn: #e0a33a;
+  --space-bg: #03060c; --space-line: rgb(140 170 220 / .16);
+  color-scheme: dark;
+}
+
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
@@ -121,8 +131,8 @@ a { color: inherit; }
   :root:not([data-theme="light"]) .brand-logo.on-light { display: none; }
   :root:not([data-theme="light"]) .brand-logo.on-dark { display: block; }
 }
-:root[data-theme="dark"] .brand-logo.on-light { display: none; }
-:root[data-theme="dark"] .brand-logo.on-dark { display: block; }
+:root:is([data-theme="dark"], [data-theme="night"]) .brand-logo.on-light { display: none; }
+:root:is([data-theme="dark"], [data-theme="night"]) .brand-logo.on-dark { display: block; }
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav a {
   text-decoration: none; color: var(--muted); font-size: 14.5px; padding: 8px 12px; border-radius: 999px;
@@ -387,7 +397,7 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .skill-body p { margin: 0; color: var(--muted); font-size: 1.08rem; max-width: 52ch; text-wrap: pretty; }
 .skill-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .skill-tools { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); letter-spacing: .02em; }
-.skill-proof { font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.skill-proof { font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); white-space: nowrap; gap: .35em; }
 .skill-proof:hover { text-decoration: underline; text-underline-offset: 4px; }
 .skill-proof .arrow { display: inline-block; transition: transform .35s var(--ease); }
 .skill-row:hover .skill-proof .arrow { transform: translateX(4px); }
@@ -416,7 +426,7 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
 }
-:root[data-theme="dark"] .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
+:root:is([data-theme="dark"], [data-theme="night"]) .marquee li:hover svg { color: color-mix(in srgb, var(--b, var(--accent)) 62%, #ffffff); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- More projects ---------- */
@@ -687,10 +697,11 @@ footer.space {
 .reveal.pre .cst-star { opacity: 0; transform: scale(.2); }
 .reveal.pre.in .cst-star { opacity: 1; transform: none; transition: opacity .6s var(--ease) calc(var(--i) * 55ms + .2s), transform .8s var(--ease) calc(var(--i) * 55ms + .2s); }
 .sky figcaption {
-  position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px;
   color: var(--space-fg); font-size: 13px; font-weight: 500;
 }
 .sky figcaption .label { color: var(--space-muted); }
+.sky figcaption > span { white-space: nowrap; }
 
 /* ---------- Threshold demo ---------- */
 .demo {
@@ -779,3 +790,82 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
   .contact-links { gap: 8px 24px; }
   .space-links { gap: 4px 22px; }
 }
+
+/* ---------- Easter eggs ---------- */
+.egg-toast {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); z-index: 10001;
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none; max-width: calc(100vw - 32px);
+  background: var(--ink); color: var(--bg); font: 500 15px var(--f-body); padding: 12px 18px; border-radius: 12px;
+  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .5); transition: opacity .3s var(--ease), transform .45s var(--ease);
+}
+.egg-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Konami rocket */
+.egg-rocket { position: fixed; left: 0; top: 0; z-index: 9998; width: 46px; margin: -26px 0 0 -23px; pointer-events: none; }
+.egg-rocket img { display: block; width: 46px; height: auto; position: relative; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 60%, transparent)); }
+.egg-flame {
+  position: absolute; left: 50%; top: 82%; width: 14px; height: 30px; margin-left: -7px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  background: linear-gradient(var(--flame-a), var(--flame-b) 60%, transparent);
+  transform-origin: top; animation: flicker .09s ease-in-out infinite alternate;
+}
+.egg-spark {
+  position: fixed; z-index: 9997; pointer-events: none; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--flame-b); box-shadow: 0 0 8px var(--flame-a);
+}
+.egg-spark.star { width: auto; height: auto; background: none; box-shadow: none; color: var(--accent); font-size: 13px; line-height: 1; }
+
+/* Constellation: light every star */
+.cst-hit { fill: transparent; pointer-events: all; cursor: pointer; }
+.cst-core { transform-box: fill-box; transform-origin: center; transition: transform .35s var(--ease), fill .35s; }
+.cst-star.lit .cst-core { fill: #ffffff; transform: scale(1.7); }
+.cst-star.lit .cst-halo { animation: none; opacity: .65; }
+.cst-line.lit { opacity: 1; stroke-width: .8; }
+.sky.complete .cst-line { opacity: 1; filter: drop-shadow(0 0 1.2px var(--space-glow)); }
+.sky.complete .sky-fig { animation: sky-found 1.8s var(--ease) 1; }
+.sky.complete .sky-title { color: var(--space-glow); }
+@keyframes sky-found {
+  0% { filter: drop-shadow(0 0 0 transparent); }
+  35% { filter: drop-shadow(0 0 8px var(--space-glow)); }
+  100% { filter: drop-shadow(0 0 2px var(--space-glow)); }
+}
+
+/* ---------- Night-sky mode: starfield behind every section ---------- */
+.night-sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; overflow: hidden; }
+:root[data-theme="night"] .night-sky { opacity: 1; }
+.night-sky::before, .night-sky::after, .night-sky i { content: ""; position: absolute; inset: -50% 0 0 0; }
+/* small, dense stars */
+.night-sky::before {
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 87px 133px, #cfe9ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 151px 19px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 199px 167px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 41px 211px, #bff7ee 50%, transparent 51%),
+    radial-gradient(1px 1px at 233px 83px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 119px 241px, #fff 50%, transparent 51%);
+  background-size: 260px 260px; opacity: .55;
+  animation: night-drift 180s linear infinite;
+}
+/* fewer, brighter stars that twinkle */
+.night-sky::after {
+  background-image:
+    radial-gradient(1.6px 1.6px at 60px 80px, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 300px 40px, #a7f3eb 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 420px 310px, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 180px 360px, #fff 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 510px 160px, #d6e6ff 50%, transparent 51%);
+  background-size: 560px 420px; opacity: .8;
+  animation: night-drift 120s linear infinite, night-twinkle 4s ease-in-out infinite alternate;
+}
+/* faint nebula glow */
+.night-sky i {
+  inset: 0;
+  background:
+    radial-gradient(60vmax 40vmax at 85% 10%, rgb(45 212 191 / .10), transparent 60%),
+    radial-gradient(50vmax 35vmax at 5% 80%, rgb(99 102 241 / .10), transparent 60%);
+}
+@keyframes night-drift { to { transform: translateY(50%); } }
+@keyframes night-twinkle { from { opacity: .45; } to { opacity: .9; } }
+:root[data-theme="night"] .site-header { background: color-mix(in srgb, var(--bg) 70%, transparent); }
+@media (prefers-reduced-motion: reduce) { .night-sky::before, .night-sky::after { animation: none; } }
