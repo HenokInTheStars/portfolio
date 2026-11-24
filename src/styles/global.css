@@ -226,6 +226,11 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .card:hover::after { opacity: 1; }
 .card.feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; gap: 28px; padding: 14px 28px 14px 14px; }
 @media (max-width: 760px) { .card.feature { grid-template-columns: minmax(0, 1fr); padding: 14px 14px 22px; gap: 18px; } }
+/* Second feature card mirrors the first: picture on the right */
+@media (min-width: 761px) {
+  .card.feature.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); padding: 14px 14px 14px 28px; }
+  .card.feature.flip .cover { order: 2; }
+}
 .card-body { display: flex; flex-direction: column; gap: 10px; padding: 0 8px; min-width: 0; }
 .card-title {
   font-family: var(--f-display); font-weight: 600; font-size: clamp(1.35rem, 2.2vw, 1.7rem);
@@ -285,6 +290,21 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .in .cover-flight .area, .d-cover .cover-flight .area { animation: fadein 1.2s .6s var(--ease) both; }
 @keyframes draw { from { stroke-dashoffset: 1; } }
 @keyframes fadein { from { opacity: 0; } }
+
+/* Flame in Freefall: an Earth flame beside a round microgravity flame, on a night sky in both themes */
+.cover-flame { background: radial-gradient(120% 90% at 50% 0%, #10203a, var(--space-bg) 70%); }
+.cover-flame svg { width: 96%; height: 92%; }  /* scales to fit any frame shape */
+.cover-flame text { fill: var(--space-muted); font: 500 10px var(--f-mono); letter-spacing: .08em; }
+.ffl-stars circle { fill: var(--space-fg); opacity: .55; }
+.ffl-tear { transform-box: fill-box; transform-origin: 50% 100%; animation: ffl-flicker 1.6s ease-in-out infinite alternate; }
+.ffl-wick { fill: #8a96a8; }
+.ffl-ball { transform-box: fill-box; transform-origin: center; animation: ffl-pulse 4s ease-in-out infinite alternate; }
+.ffl-drop { fill: #cfe2ff; }
+.ffl-scale line { stroke: var(--space-line); stroke-width: 2; }
+.ffl-scale .ffl-tick { stroke: var(--space-glow); }
+.ffl-scale text { fill: var(--space-fg); font-size: 9.5px; }
+@keyframes ffl-flicker { 0% { transform: scale(1, 1) skewX(0deg); } 50% { transform: scale(.96, 1.05) skewX(1.5deg); } 100% { transform: scale(1.02, .97) skewX(-1deg); } }
+@keyframes ffl-pulse { from { transform: scale(.97); opacity: .85; } to { transform: scale(1.04); opacity: 1; } }
 
 /* EthioFoodCast: a household risk card on warm farmland tones */
 .cover-food { background: linear-gradient(160deg, color-mix(in srgb, var(--warn) 16%, var(--sunk)), color-mix(in srgb, var(--accent) 12%, var(--sunk))); }

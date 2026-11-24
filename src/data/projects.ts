@@ -1,4 +1,4 @@
-export type CoverKind = 'spam' | 'flight' | 'desk' | 'food';
+export type CoverKind = 'spam' | 'flight' | 'desk' | 'food' | 'flame';
 
 export interface Metric {
   value: number;
@@ -14,6 +14,8 @@ export interface Project {
   category: string;
   inProgress?: boolean;
   feature?: boolean;
+  /** Feature card with the picture on the right instead of the left. */
+  flip?: boolean;
   cover: CoverKind;
   lede: string;
   stack: string[];
@@ -63,6 +65,36 @@ export const PROJECTS: Project[] = [
     repo: 'https://github.com/HenokInTheStars/EthioFoodCast',
     live: 'https://ethio-food-cast.vercel.app',
     team: { size: 3, role: 'Data and frontend' },
+  },
+  {
+    slug: 'flame-in-freefall',
+    title: 'Flame in Freefall',
+    year: '2026',
+    category: 'NASA Space Apps 2026 · Data + AI · Team project',
+    selected: true,
+    feature: true,
+    flip: true,
+    cover: 'flame',
+    lede: 'Turns NASA microgravity fire-safety data into an interactive dashboard with tested models and a cited AI assistant.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'd3', 'Python', 'pandas', 'scikit-learn', 'Gemini (RAG)'],
+    metrics: [
+      { value: 586, decimals: 0, suffix: '', label: 'Measured fire-test results' },
+      { value: 83, decimals: 0, suffix: '%', label: 'Flame-survival accuracy (held-out tests)' },
+      { value: 9, decimals: 0, suffix: ' / 9', label: 'Flame-outs caught' },
+      { value: 7, decimals: 0, suffix: ' / 26', label: 'Materials that would burn in 34% oxygen' },
+    ],
+    problem:
+      'NASA approves spacecraft materials with a fire test done on Earth, but flames survive on less oxygen in microgravity, and future Moon habitats will breathe oxygen-richer air. That gap can make materials that pass on Earth unsafe in space.',
+    built:
+      'A five-page dashboard built from 586 measured fire tests from 5 NASA space experiments, NASA technical reports and a peer-reviewed study: a reproducible Python data pipeline, three scikit-learn models (flame survival, flame-spread speed, droplet burning rate), hand-written SVG charts, a d3 globe, a habitat "stress test", and an AI research assistant docked on every page. Built with Melat Taye (OrbitAI Lab) for the NASA Space Apps Challenge 2026.',
+    decision:
+      'No value is invented: ambiguous source values stay empty with the reason noted, and the pipeline regenerates every file byte for byte. The assistant answers only from 575 retrieved passages with numbered citations, and an automatic evaluation caught and fixed a real error: a wrong answer with a citation.',
+    results:
+      'The flame-survival model is right 83% of the time on tests it never saw and caught 9 of 9 flame-outs. Flames on the space station kept burning down to 16.8% oxygen, against a modelled Earth cut-off near 18.5%, and 7 of 26 spacecraft materials would burn in the 34%-oxygen air planned for future habitats. The assistant answers in 1–3 s and passes 14–16 of 16 test questions.',
+    next: 'Extend the models as new microgravity tests are published, starting with the planned FM2 lunar combustion experiment.',
+    repo: 'https://github.com/HenokInTheStars/orbitai-flame-in-freefall',
+    live: 'https://orbitai-flame-in-freefall.vercel.app',
+    team: { size: 2, role: 'Co-built with Melat Taye (OrbitAI Lab)' },
   },
   {
     slug: 'spam-detector',
@@ -135,7 +167,7 @@ export const PROJECTS: Project[] = [
 ];
 
 /** Order of the three covers in the hero fan (last one sits on top). */
-export const FAN_ORDER = ['flight-fares', 'front-desk', 'ethiofoodcast'] as const;
+export const FAN_ORDER = ['flight-fares', 'flame-in-freefall', 'ethiofoodcast'] as const;
 
 export const SELECTED = () => PROJECTS.filter((p) => p.selected);
 

@@ -17,7 +17,7 @@ const span = `${Math.min(...years)}–${Math.max(...years)}`;
       {
         projects.map((p, i) => (
           <a
-            class:list={['card', 'reveal', { feature: p.feature }]}
+            class:list={['card', 'reveal', { feature: p.feature, flip: p.flip }]}
             href={`/work/${p.slug}/`}
             data-project={p.slug}
             style={`--d:${(i * 0.08).toFixed(2)}s`}
