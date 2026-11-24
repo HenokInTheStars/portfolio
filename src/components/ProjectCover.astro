@@ -45,6 +45,24 @@ const vtAttr = vt ? { 'data-vt': 'cover' } : {};
   )
 }
 {
+  kind === 'food' && (
+    <div class="cover cover-food" aria-hidden="true" {...vtAttr}>
+      <div class="risk">
+        <div class="risk-head"><span>Household assessment</span><span class="risk-band">High risk</span></div>
+        <div class="risk-score">
+          <b>0.81</b>
+          <span class="risk-bar"><i /><em /></span>
+        </div>
+        <ul class="risk-drivers">
+          <li><span>Rainfall below normal</span><small>raises risk</small></li>
+          <li><span>Few livestock</span><small>raises risk</small></li>
+          <li><span>Irrigated land</span><small class="down">lowers risk</small></li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+{
   kind === 'desk' && (
     <div class="cover cover-desk" aria-hidden="true" {...vtAttr}>
       <div class="kiosk">

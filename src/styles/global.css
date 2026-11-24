@@ -284,6 +284,27 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 @keyframes draw { from { stroke-dashoffset: 1; } }
 @keyframes fadein { from { opacity: 0; } }
 
+/* EthioFoodCast: a household risk card on warm farmland tones */
+.cover-food { background: linear-gradient(160deg, color-mix(in srgb, var(--warn) 16%, var(--sunk)), color-mix(in srgb, var(--accent) 12%, var(--sunk))); }
+.risk {
+  width: min(84%, 30em); background: var(--surface); border-radius: 1em; padding: 1em 1.1em; display: flex; flex-direction: column; gap: .75em;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -26px rgba(0,0,0,.45);
+}
+.risk-head { display: flex; justify-content: space-between; align-items: center; gap: .8em; font: 500 .8em var(--f-mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.risk-band { padding: .2em .6em; border-radius: 999px; background: var(--bad-soft); color: var(--bad); white-space: nowrap; }
+.risk-score { display: flex; align-items: center; gap: .9em; }
+.risk-score b { font: 600 1.9em var(--f-display); letter-spacing: -.02em; line-height: 1; }
+.risk-bar { position: relative; flex: 1; height: .5em; border-radius: 999px; background: linear-gradient(90deg, var(--ok), var(--warn) 55%, var(--bad)); opacity: .9; }
+.risk-bar i { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: inherit; background: transparent; }
+.risk-bar em { position: absolute; top: 50%; left: 81%; width: .95em; height: .95em; margin: -.475em 0 0 -.475em; border-radius: 50%; background: var(--surface); border: .2em solid var(--ink); }
+.risk-drivers { list-style: none; margin: 0; padding: .55em 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: .4em; }
+.risk-drivers li { display: flex; justify-content: space-between; gap: .8em; }
+.risk-drivers small { color: var(--bad); font: 500 .8em var(--f-mono); white-space: nowrap; }
+.risk-drivers small.down { color: var(--ok); }
+.risk-drivers span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.in .cover-food .risk-bar em, .d-cover .cover-food .risk-bar em, .card:hover .cover-food .risk-bar em { animation: risk-slide 1.4s var(--ease) both; }
+@keyframes risk-slide { from { left: 8%; } }
+
 .cover-desk { background: linear-gradient(160deg, var(--sunk), color-mix(in srgb, var(--ok) 12%, var(--sunk))); }
 .kiosk {
   width: min(84%, 30em); background: var(--surface); border-radius: 1em; padding: 1em 1.1em; display: flex; flex-direction: column; gap: .6em;
@@ -478,6 +499,10 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .pv-txt { fill: var(--ink); font: 500 11px var(--f-body); }
 .pv-txt-me { fill: var(--on-accent); font: 500 11px var(--f-body); }
 .pv-tag { fill: var(--accent-soft); }
+.pv-ok-bg { fill: var(--ok-soft); }
+.pv-ok-t { fill: var(--ok); font: 600 9.5px var(--f-mono); }
+.pv-bad-bg { fill: var(--bad-soft); }
+.pv-bad-t { fill: var(--bad); font: 600 9.5px var(--f-mono); }
 .pv-tag-t { fill: var(--accent); font: 500 9px var(--f-mono); letter-spacing: .04em; }
 
 /* ---------- Timeline (About) ---------- */

@@ -3,14 +3,17 @@ import type { GetStaticPaths } from 'astro';
 import Base from '../../layouts/Base.astro';
 import ProjectCover from '../../components/ProjectCover.astro';
 import ThresholdDemo from '../../components/ThresholdDemo.tsx';
-import { PROJECTS, type Project } from '../../data/projects';
+import { PROJECTS, SELECTED, type Project } from '../../data/projects';
 import { SITE } from '../../data/site';
 
-export const getStaticPaths = (() =>
-  PROJECTS.map((project, i) => ({
-    params: { slug: project.slug },
-    props: { project, next: PROJECTS[(i + 1) % PROJECTS.length] },
-  }))) satisfies GetStaticPaths;
+// "Next project" cycles through Selected work; other case studies lead back into it.
+export const getStaticPaths = (() => {
+  const selected = SELECTED();
+  return PROJECTS.map((project) => {
+    const i = selected.indexOf(project);
+    return { params: { slug: project.slug }, props: { project, next: selected[(i + 1) % selected.length] } };
+  });
+}) satisfies GetStaticPaths;
 
 interface Props {
   project: Project;
@@ -44,13 +47,22 @@ const { project: p, next } = Astro.props;
         )
       }
 
-      {p.demo === 'threshold' && <ThresholdDemo client:visible />}
+      {p.interactive === 'threshold' && <ThresholdDemo client:visible />}
 
       <div class="d-body">
         <dl class="d-meta">
           <div><dt class="label">Year</dt><dd>{p.year}</dd></div>
           <div><dt class="label">Status</dt><dd>{p.inProgress ? 'In development' : 'Shipped'}</dd></div>
+          {p.team && <div><dt class="label">Team</dt><dd>{p.team.role} · team of {p.team.size}</dd></div>}
           <div><dt class="label">Stack</dt><dd>{p.stack.join(', ')}</dd></div>
+          {
+            p.live && (
+              <div>
+                <dt class="label">Live</dt>
+                <dd><a href={p.live} target="_blank" rel="noopener">Open the app ↗</a></dd>
+              </div>
+            )
+          }
           {
             p.repo && (
               <div>

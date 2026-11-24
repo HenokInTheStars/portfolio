@@ -1,4 +1,4 @@
-export type CoverKind = 'spam' | 'flight' | 'desk';
+export type CoverKind = 'spam' | 'flight' | 'desk' | 'food';
 
 export interface Metric {
   value: number;
@@ -24,16 +24,51 @@ export interface Project {
   results: string;
   next: string;
   repo?: string;
-  demo?: 'threshold';
+  /** Live version of the project, if there is one. */
+  live?: string;
+  /** For team projects: the team size and Henok's part in it. */
+  team?: { size: number; role: string };
+  /** Shown in "Selected work" and the hero fan. Unselected projects keep their case-study page. */
+  selected?: boolean;
+  /** Interactive widget shown on the case-study page. */
+  interactive?: 'threshold';
 }
 
 export const PROJECTS: Project[] = [
+  {
+    slug: 'ethiofoodcast',
+    title: 'EthioFoodCast',
+    year: '2026',
+    category: 'Full-stack · Machine learning · Team project',
+    selected: true,
+    feature: true,
+    cover: 'food',
+    lede: 'Finds the Ethiopian farming households most likely to face food insecurity, so field teams know whom to visit first.',
+    stack: ['Next.js 15', 'React 19', 'TypeScript', 'FastAPI', 'Docker', 'Graph neural network', 'scikit-learn', 'LightGBM'],
+    metrics: [
+      { value: 78.4, decimals: 1, suffix: '%', label: 'Accuracy (5 test splits)' },
+      { value: 84.4, decimals: 1, suffix: '%', label: 'Food-insecure households found' },
+      { value: 80.2, decimals: 1, suffix: '%', label: 'Precision' },
+      { value: 0.86, decimals: 2, suffix: '', label: 'ROC-AUC' },
+    ],
+    problem:
+      'Programme staff cannot visit every farming household, and food insecurity often shows up only after it has already happened. They need a fair way to decide whom to see first.',
+    built:
+      'A web app that scores a household from a 14-question interview and the area it was surveyed in, explains what moved the score, and ranks households into a planning list. It includes regional risk maps, batch scoring from a CSV, an offline-capable interface for field use, and a knowledge centre whose AI answers cite a source for every sentence. I worked on the data and the frontend in a team of three.',
+    decision:
+      'The score supports a human assessment and never decides who receives help. Every AI-written sentence must cite a source and the server rejects answers whose citations do not check out; no household identifiers or coordinates are shipped, and the AI never sees interview answers.',
+    results:
+      'Trained on 4,837 households in 427 survey areas of the World Bank Ethiopia panel and tested on households the model never saw, it reaches 78.4% accuracy (±1.9) and finds 84.4% of food-insecure households, against a 61% baseline. The graph neural network beat extra trees, LightGBM and logistic regression in a like-for-like comparison.',
+    next: 'Retrain when the next survey round is published, and cover the regions that do not yet have enough data to score reliably.',
+    repo: 'https://github.com/HenokInTheStars/EthioFoodCast',
+    live: 'https://ethio-food-cast.vercel.app',
+    team: { size: 3, role: 'Data and frontend' },
+  },
   {
     slug: 'spam-detector',
     title: 'SMS Spam Detection',
     year: '2025',
     category: 'Machine learning · Open source',
-    feature: true,
     cover: 'spam',
     lede: 'A text classifier tuned to almost never flag a real message as spam.',
     stack: ['Python', 'scikit-learn', 'TF-IDF', 'Naive Bayes', 'pandas'],
@@ -53,10 +88,11 @@ export const PROJECTS: Project[] = [
       'Evaluated on an 80/20 stratified split of the 5,572 messages. Precision of 99.24% means almost every message the model flags really is spam.',
     next: 'Try character n-grams and DistilBERT embeddings to catch obfuscated spam without giving up precision.',
     repo: 'https://github.com/HenokInTheStars/Spam-Detector',
-    demo: 'threshold',
+    interactive: 'threshold',
   },
   {
     slug: 'flight-fares',
+    selected: true,
     title: 'Flight Fare Predictor',
     year: '2025',
     category: 'Machine learning · Streamlit app',
@@ -78,6 +114,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: 'front-desk',
+    selected: true,
     title: 'Smart Front Desk',
     year: '2026',
     category: 'Full-stack · In progress',
@@ -98,28 +135,42 @@ export const PROJECTS: Project[] = [
 ];
 
 /** Order of the three covers in the hero fan (last one sits on top). */
-export const FAN_ORDER = ['flight-fares', 'front-desk', 'spam-detector'] as const;
+export const FAN_ORDER = ['flight-fares', 'front-desk', 'ethiofoodcast'] as const;
+
+export const SELECTED = () => PROJECTS.filter((p) => p.selected);
 
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
 
-export type PreviewKind = 'anomaly' | 'segments' | 'chat';
+export type PreviewKind = 'spam' | 'anomaly' | 'segments' | 'chat';
 
 export interface SideProject {
   name: string;
   line: string;
   stack: string;
   type: string;
-  repo: string;
+  /** Case-study page on this site, or the GitHub repository. */
+  href: string;
+  external: boolean;
   preview: PreviewKind;
 }
 
 export const MORE_PROJECTS: SideProject[] = [
   {
+    name: 'SMS Spam Detection',
+    line: 'A text classifier tuned to almost never flag a real message as spam: 99.24% precision on 1,115 test messages.',
+    stack: 'Python · scikit-learn · TF‑IDF',
+    type: 'NLP',
+    href: '/work/spam-detector/',
+    external: false,
+    preview: 'spam',
+  },
+  {
     name: 'Anomaly Detection',
     line: 'Finds unusual days in two years of daily sales, using median-based scores where standard deviation hides the outliers.',
     stack: 'Python · pandas · NumPy',
     type: 'Time series',
-    repo: 'https://github.com/HenokInTheStars/anomaly-detection',
+    href: 'https://github.com/HenokInTheStars/anomaly-detection',
+    external: true,
     preview: 'anomaly',
   },
   {
@@ -127,7 +178,8 @@ export const MORE_PROJECTS: SideProject[] = [
     line: 'Groups mall shoppers into five marketing personas by income and spending, checked with silhouette analysis.',
     stack: 'Python · scikit-learn · pandas',
     type: 'Clustering',
-    repo: 'https://github.com/HenokInTheStars/mall-customer-segmentation',
+    href: 'https://github.com/HenokInTheStars/mall-customer-segmentation',
+    external: true,
     preview: 'segments',
   },
   {
@@ -135,7 +187,8 @@ export const MORE_PROJECTS: SideProject[] = [
     line: 'A command-line chatbot that matches intents by keyword and falls back on sentiment when nothing matches.',
     stack: 'Python · TextBlob',
     type: 'Chatbot',
-    repo: 'https://github.com/HenokInTheStars/keywordsense-chatbot',
+    href: 'https://github.com/HenokInTheStars/keywordsense-chatbot',
+    external: true,
     preview: 'chat',
   },
 ];
