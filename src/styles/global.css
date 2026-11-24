@@ -68,6 +68,8 @@
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* Lenis drives scrolling itself; native smooth scrolling would fight it */
+html.lenis, html.lenis body { scroll-behavior: auto !important; }
 [id] { scroll-margin-top: 84px; }
 [hidden] { display: none !important; }
 img, svg { max-width: 100%; }
