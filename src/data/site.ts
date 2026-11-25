@@ -8,8 +8,11 @@ export const SITE = {
   githubLabel: 'github.com/HenokInTheStars',
   linkedin: 'https://www.linkedin.com/in/henok-solomon-ai',
   location: 'Addis Ababa (UTC+3)',
-  /** FormSubmit alias for the email above; keeps the raw address out of the form endpoint. */
-  formId: '654be654f596ab445f997f25b36c13fb',
+  /**
+   * Web3Forms access key for the contact form (get one free at web3forms.com).
+   * It is public by design: it can only send mail to the inbox it was created for.
+   */
+  formKey: '',
 } as const;
 
 export const ROTATING_WORDS = ['think.', 'scale.', 'feel instant.', 'people trust.'];

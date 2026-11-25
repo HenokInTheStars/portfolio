@@ -25,13 +25,14 @@ const year = new Date().getFullYear();
       </div>
 
       <div class="launch-wrap">
-        <!-- Without JavaScript the form posts straight to FormSubmit; with JS it sends via fetch and checks the result. -->
-        <form class="launch-form" id="launch-form" action={`https://formsubmit.co/${SITE.formId}`} method="POST">
-          <input type="hidden" name="_subject" value="[Portfolio] New message" />
-          <input type="hidden" name="_template" value="table" />
+        <!-- Without JavaScript the form posts straight to Web3Forms; with JS it sends via fetch and checks the result. -->
+        <form class="launch-form" id="launch-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value={SITE.formKey} />
+          <input type="hidden" name="subject" value="[Portfolio] New message" />
+          <input type="hidden" name="from_name" value="henoksolomon.com" />
           <div class="honey" aria-hidden="true">
             <label for="f-honey">Leave this field empty</label>
-            <input id="f-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            <input id="f-honey" type="text" name="botcheck" tabindex="-1" autocomplete="off" />
           </div>
 
           <div class="field-row">
@@ -88,7 +89,7 @@ const year = new Date().getFullYear();
   import { EASE, prefersReducedMotion } from '../scripts/motion';
   import { scrollToTop } from '../scripts/smooth-scroll';
 
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/654be654f596ab445f997f25b36c13fb';
+  const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
   const CONTACT_EMAIL = 'hhhenoksolomon@gmail.com';
 
   /* ---------- Giant name: scale the font so the name spans the full content width ---------- */
@@ -231,6 +232,10 @@ const year = new Date().getFullYear();
     s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
   async function send(fields: Record<string, string>) {
+    const key = (form.elements.namedItem('access_key') as HTMLInputElement | null)?.value;
+    if (!key) return false;
+    // A filled honeypot means a bot: act as if it worked, send nothing.
+    if (fields.botcheck) return true;
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), 15000);
     try {
@@ -238,15 +243,18 @@ const year = new Date().getFullYear();
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          ...fields,
-          _subject: `[Portfolio] Message from ${fields.name}`,
-          _template: 'table',
-          _replyto: fields.email,
+          access_key: key,
+          subject: `[Portfolio] Message from ${fields.name}`,
+          from_name: 'henoksolomon.com',
+          name: fields.name,
+          email: fields.email,
+          replyto: fields.email,
+          message: fields.message,
         }),
         signal: controller.signal,
       });
       const data = await res.json().catch(() => ({}));
-      return res.ok && (data.success === true || data.success === 'true');
+      return res.ok && data.success === true;
     } catch {
       return false;
     } finally {
@@ -295,7 +303,7 @@ const year = new Date().getFullYear();
       name: String(data.get('name') ?? '').trim(),
       email: String(data.get('email') ?? '').trim(),
       message: String(data.get('message') ?? '').trim(),
-      _honey: String(data.get('_honey') ?? ''),
+      botcheck: String(data.get('botcheck') ?? ''),
     };
 
     btn.disabled = true;
