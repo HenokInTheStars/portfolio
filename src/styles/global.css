@@ -527,19 +527,50 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .pv-bad-t { fill: var(--bad); font: 600 9.5px var(--f-mono); }
 .pv-tag-t { fill: var(--accent); font: 500 9px var(--f-mono); letter-spacing: .04em; }
 
-/* ---------- Timeline (About) ---------- */
-.timeline { list-style: none; margin: 32px 0 0; padding: 0; position: relative; display: flex; flex-direction: column; gap: 26px; }
-.timeline::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: var(--line); transform-origin: top; }
-.reveal.pre .timeline::before { transform: scaleY(0); }
-.reveal.pre.in .timeline::before { transform: scaleY(1); transition: transform 1.4s var(--ease) .3s; }
-.timeline li { position: relative; padding-left: 32px; display: flex; flex-direction: column; gap: 2px; }
-.timeline li::before {
-  content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 11px; border-radius: 50%;
-  background: var(--bg); border: 2px solid var(--accent);
+/* ---------- Experience (same editorial rows as "What I do") ---------- */
+.cv-btn:hover .arrow { transform: translateY(3px); }
+.xp-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.xp-row {
+  position: relative; display: grid; align-items: baseline;
+  grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1.5fr); gap: 12px 32px;
+  padding: clamp(28px, 4vw, 40px) 8px; border-bottom: 1px solid var(--line);
 }
-.timeline strong { font-weight: 600; font-size: 1.05rem; }
-.timeline .t-sub { color: var(--muted); font-size: 14px; }
-.timeline p { margin: 6px 0 0; font-size: .98rem; }
+@media (max-width: 1000px) { .xp-row, .edu { grid-template-columns: 170px minmax(0, 1fr); } .xp-body { grid-column: 2; } }
+.xp-row::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease);
+}
+.xp-row:hover::before { transform: scaleX(1); }
+.xp-when { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: color .3s; }
+.xp-row:hover .xp-when { color: var(--accent); }
+/* pulsing dot on the current role */
+.xp-live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; box-shadow: 0 0 0 0 var(--accent); animation: xp-pulse 2.4s ease-out infinite; }
+@keyframes xp-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 9px transparent; } }
+.xp-head { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.xp-role {
+  margin: 0; font-family: var(--f-display); font-weight: 600; letter-spacing: -.02em; line-height: 1.1;
+  font-size: clamp(1.35rem, 2.3vw, 1.8rem); text-wrap: balance; transition: transform .5s var(--ease);
+}
+.xp-row:hover .xp-role { transform: translateX(6px); }
+.xp-org { margin: 0; font-weight: 500; }
+.xp-meta { margin: 0; color: var(--muted); font-size: 14px; }
+.xp-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.xp-points { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.xp-points li { position: relative; padding-left: 20px; color: var(--muted); font-size: 1.02rem; max-width: 60ch; text-wrap: pretty; }
+.xp-points li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 1px; background: var(--accent); }
+.xp-row:hover .skill-proof .arrow { transform: translateX(4px); }
+.edu { margin-top: clamp(36px, 5vw, 56px); display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px 32px; padding-inline: 8px; }
+.edu-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 32px; }
+.edu-list li { display: flex; flex-direction: column; gap: 4px; }
+.edu-list strong { font-weight: 600; }
+.edu-list span:not(.label) { color: var(--muted); font-size: 14.5px; }
+@media (max-width: 760px) {
+  .xp-row { grid-template-columns: minmax(0, 1fr); padding-inline: 0; gap: 10px; }
+  .xp-body { grid-column: 1; margin-top: 6px; }
+  .edu { grid-template-columns: minmax(0, 1fr); padding-inline: 0; }
+  .edu-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .xp-live { animation: none; } }
 
 /* ---------- Space footer (deliberately always dark) ---------- */
 /* The footer is one full screen: contact at the top, name and links pinned to the bottom. */
@@ -707,12 +738,12 @@ footer.space {
 
 
 /* ---------- Header résumé button ---------- */
-.nav-cta {
+.nav a.nav-cta, .nav-cta {
   display: inline-flex; align-items: center; text-decoration: none;
   font: 500 14px var(--f-body); color: var(--on-accent); background: var(--accent); border: 0; cursor: pointer;
   height: 36px; padding: 0 14px; border-radius: 999px; margin: 0 4px 0 6px; transition: transform .35s var(--ease), filter .2s;
 }
-.nav-cta:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.nav a.nav-cta:hover, .nav-cta:hover { color: var(--on-accent); background: var(--accent); transform: translateY(-1px); filter: brightness(1.08); }
 @media (max-width: 420px) { .nav a.hide-xs { display: none; } }
 
 

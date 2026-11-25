@@ -1,8 +1,5 @@
 ---
 import Constellation from './Constellation.astro';
-import { EDUCATION, TIMELINE } from '../data/site';
-
-const entries = EDUCATION ? [...TIMELINE, EDUCATION] : TIMELINE;
 ---
 
 <section class="block" id="about" aria-labelledby="about-h">
@@ -26,18 +23,6 @@ const entries = EDUCATION ? [...TIMELINE, EDUCATION] : TIMELINE;
         <div><dt class="label">Focus</dt><dd>Full-stack web + ML</dd></div>
         <div><dt class="label">Open to</dt><dd>Remote, full-time, contract</dd></div>
       </dl>
-      <ol class="timeline">
-        {
-          entries.map((t) => (
-            <li>
-              <span class="label">{t.when}</span>
-              <strong>{t.title}</strong>
-              <span class="t-sub">{t.sub}</span>
-              {t.text && <p>{t.text}</p>}
-            </li>
-          ))
-        }
-      </ol>
     </div>
   </div>
 </section>

@@ -2,7 +2,7 @@
 import logo from '../assets/logo.png';
 import logoDark from '../assets/logo-dark.png';
 import { SITE } from '../data/site';
-import { HAS_RESUME, RESUME_PATH } from '../data/resume';
+import { HAS_RESUME, RESUME_DOWNLOAD_NAME, RESUME_PATH } from '../data/resume';
 
 interface Props {
   isHome?: boolean;
@@ -20,9 +20,10 @@ const at = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
     </a>
     <nav class="nav" aria-label="Primary">
       <a href={at('work')} class="hide-xs">Work</a>
+      <a href={at('experience')} class="hide-sm">Experience</a>
       <a href={at('about')} class="hide-sm">About</a>
       <a href="#contact">Contact</a>
-      {HAS_RESUME && <a class="nav-cta" href={RESUME_PATH} target="_blank" rel="noopener">Résumé</a>}
+      {HAS_RESUME && <a class="nav-cta" href={RESUME_PATH} download={RESUME_DOWNLOAD_NAME}>CV</a>}
       <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch to dark theme">
         <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"></svg>
       </button>

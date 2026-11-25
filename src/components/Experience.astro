@@ -1,0 +1,69 @@
+---
+import { EDUCATION, EXPERIENCE } from '../data/site';
+import { HAS_RESUME, RESUME_DOWNLOAD_NAME, RESUME_PATH } from '../data/resume';
+---
+
+<section class="block" id="experience" aria-labelledby="experience-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 id="experience-h">Experience</h2>
+      {
+        HAS_RESUME && (
+          <a class="btn btn-ghost magnetic cv-btn" href={RESUME_PATH} download={RESUME_DOWNLOAD_NAME}>
+            Download CV <span class="arrow" aria-hidden="true">↓</span>
+          </a>
+        )
+      }
+    </div>
+
+    <ol class="xp-list">
+      {
+        EXPERIENCE.map((x, i) => (
+          <li class="xp-row reveal" style={`--d:${(i * 0.08).toFixed(2)}s`}>
+            <span class="xp-when label">
+              {x.current && <i class="xp-live" aria-hidden="true" />}
+              {x.when}
+            </span>
+            <div class="xp-head">
+              <h3 class="xp-role">{x.role}</h3>
+              <p class="xp-org">{x.org}</p>
+              <p class="xp-meta">{x.meta}</p>
+            </div>
+            <div class="xp-body">
+              <ul class="xp-points">
+                {x.points.map((p) => (
+                  <li>{p}</li>
+                ))}
+              </ul>
+              {(x.tools || x.link) && (
+                <div class="skill-meta">
+                  {x.tools && <span class="skill-tools">{x.tools.join(' · ')}</span>}
+                  {x.link && (
+                    <a class="skill-proof" href={x.link.href}>
+                      {x.link.label} <span class="arrow" aria-hidden="true">→</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="edu reveal">
+      <span class="label">Education</span>
+      <ul class="edu-list">
+        {
+          EDUCATION.map((e) => (
+            <li>
+              <strong>{e.title}</strong>
+              <span>{e.org}</span>
+              <span class="label">{e.when}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

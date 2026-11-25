@@ -53,30 +53,59 @@ export const SKILLS: Skill[] = [
   },
 ];
 
-export interface TimelineEntry {
+/** Experience section, kept in step with the CV (public/resume.pdf). Newest first. */
+export interface ExperienceEntry {
   when: string;
-  title: string;
-  sub: string;
-  text?: string;
+  role: string;
+  org: string;
+  meta: string;
+  current?: boolean;
+  points: string[];
+  tools?: string[];
+  link?: { label: string; href: string };
 }
 
-export const TIMELINE: TimelineEntry[] = [
+export const EXPERIENCE: ExperienceEntry[] = [
   {
-    when: '2025 – now',
-    title: 'Full-stack developer',
-    sub: 'Independent and contract projects · Addis Ababa',
-    text: 'React, TypeScript and FastAPI apps with real-time features and schema-first validation.',
+    when: 'Jul 2026 – Present',
+    role: 'Full-Stack Developer & AI Engineer',
+    org: 'Matrix Technology',
+    meta: 'Addis Ababa · Joined as an intern, moved to full-time',
+    current: true,
+    points: [
+      'Designed and built an end-to-end RAG system (ingestion, chunking, embeddings, retrieval, LLM generation) that lets staff search internal documents in plain language.',
+      'Built a smart front desk management application end to end with Next.js, TypeScript, FastAPI and PostgreSQL, from UI to API to database design.',
+      'Developed and optimized REST APIs and PostgreSQL schemas for reliable, fast data handling, testing endpoints with Postman.',
+    ],
+    tools: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL', 'RAG', 'Postman'],
   },
   {
-    when: '2024 – 2025',
-    title: 'Machine learning projects',
-    sub: 'Open source',
-    text: 'Spam detection, flight fare prediction, anomaly detection and customer segmentation.',
+    when: '2026',
+    role: 'NASA Space Apps Challenge',
+    org: 'Galactic Problem Solver certificate',
+    meta: 'Team of 2 with Melat Taye (OrbitAI Lab)',
+    points: [
+      'Built Flame in Freefall: a dashboard of 586 microgravity fire tests with three scikit-learn models and a Gemini research assistant that cites its sources.',
+    ],
+    tools: ['Next.js', 'd3', 'scikit-learn', 'Gemini RAG'],
+    link: { label: 'Case study', href: '/work/flame-in-freefall/' },
+  },
+  {
+    when: 'Jul – Sep 2026',
+    role: 'Intelligent Data & AI Engineering',
+    org: 'Qiyas AI',
+    meta: 'Training program',
+    points: ['Machine learning, model training and data cleaning.'],
   },
 ];
 
-/**
- * Fill this in to show education in the About timeline.
- * Example: { when: '2024', title: 'B.Sc. Computer Science', sub: 'Addis Ababa University' }
- */
-export const EDUCATION: TimelineEntry | null = null;
+export interface EducationEntry {
+  when: string;
+  title: string;
+  org: string;
+}
+
+export const EDUCATION: EducationEntry[] = [
+  { when: 'June 2025', title: 'B.Sc. in Computer Science', org: 'Debre Tabor University' },
+  { when: 'June 2024', title: 'Level V Diploma, Industrial Automation & PLC Programming', org: 'Debre Tabor Polytechnic College' },
+];
