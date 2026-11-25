@@ -79,24 +79,6 @@ export const EXPERIENCE: ExperienceEntry[] = [
     ],
     tools: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL', 'RAG', 'Postman'],
   },
-  {
-    when: '2026',
-    role: 'NASA Space Apps Challenge',
-    org: 'Galactic Problem Solver certificate',
-    meta: 'Team of 2 with Melat Taye (OrbitAI Lab)',
-    points: [
-      'Built Flame in Freefall: a dashboard of 586 microgravity fire tests with three scikit-learn models and a Gemini research assistant that cites its sources.',
-    ],
-    tools: ['Next.js', 'd3', 'scikit-learn', 'Gemini RAG'],
-    link: { label: 'Case study', href: '/work/flame-in-freefall/' },
-  },
-  {
-    when: 'Jul – Sep 2026',
-    role: 'Intelligent Data & AI Engineering',
-    org: 'Qiyas AI',
-    meta: 'Training program',
-    points: ['Machine learning, model training and data cleaning.'],
-  },
 ];
 
 export interface EducationEntry {
