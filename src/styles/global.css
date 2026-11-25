@@ -556,7 +556,7 @@ footer.space {
 }
 .stars { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .space-inner { position: relative; z-index: 1; width: 100%; flex: 1; display: flex; flex-direction: column; gap: clamp(20px, 3.5vh, 36px); }
-#giant-box { margin-top: auto; }
+#giant-box { margin-top: auto; text-align: center; }
 .space-kicker { color: var(--space-muted); margin: 0 0 8px; }
 .space-line { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: clamp(1.6rem, min(3.2vw, 5.5vh), 2.5rem); letter-spacing: -.025em; line-height: 1.1; max-width: 18ch; text-wrap: balance; }
 .rocket { position: relative; z-index: 60; width: 30px; height: 34px; display: grid; place-items: center; }
