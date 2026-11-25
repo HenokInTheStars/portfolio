@@ -86,6 +86,7 @@ const year = new Date().getFullYear();
 
 <script>
   import { EASE, prefersReducedMotion } from '../scripts/motion';
+  import { scrollToTop } from '../scripts/smooth-scroll';
 
   const FORM_ENDPOINT = 'https://formsubmit.co/ajax/654be654f596ab445f997f25b36c13fb';
   const CONTACT_EMAIL = 'hhhenoksolomon@gmail.com';
@@ -193,9 +194,7 @@ const year = new Date().getFullYear();
   }).observe(footer);
 
   /* ---------- Back to top ---------- */
-  document.getElementById('top-link')!.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-  });
+  document.getElementById('top-link')!.addEventListener('click', scrollToTop);
 
   /* ---------- Copy email ---------- */
   const copyBtn = document.getElementById('copy-btn')!;

@@ -8,6 +8,18 @@ const seed = (i: number) => {
 
 /** Small illustrative SVGs shown beside the cursor in the "More projects" list. */
 export function previewSvg(kind: PreviewKind): string {
+  if (kind === 'spam') {
+    const row = (y: number, w: number, text: string, spam: boolean) =>
+      `<rect class="pv-bub" x="16" y="${y}" width="${w}" height="30" rx="12"/>
+       <text class="pv-txt" x="28" y="${y + 19}">${text}</text>
+       <rect class="${spam ? 'pv-bad-bg' : 'pv-ok-bg'}" x="${16 + w + 8}" y="${y + 6}" width="${spam ? 40 : 58}" height="18" rx="5"/>
+       <text class="${spam ? 'pv-bad-t' : 'pv-ok-t'}" x="${16 + w + 16}" y="${y + 19}">${spam ? 'spam' : 'not spam'}</text>`;
+    return `<svg viewBox="0 0 280 180"><rect class="pv-bg" width="280" height="180"/>
+      ${row(22, 170, 'Running late, go ahead', false)}
+      ${row(68, 150, 'WINNER! Claim your prize', true)}
+      ${row(114, 170, 'Can you send the slides?', false)}
+      <text class="pv-t" x="16" y="168">PRECISION 99.24%</text></svg>`;
+  }
   if (kind === 'anomaly') {
     const spikes: Record<number, number> = { 9: 34, 24: 150, 33: 40 };
     const pts: string[] = [];

@@ -1,8 +1,9 @@
 ---
 import ProjectCover from './ProjectCover.astro';
-import { PROJECTS } from '../data/projects';
+import { SELECTED } from '../data/projects';
 
-const years = PROJECTS.map((p) => Number(p.year));
+const projects = SELECTED();
+const years = projects.map((p) => Number(p.year));
 const span = `${Math.min(...years)}–${Math.max(...years)}`;
 ---
 
@@ -10,13 +11,13 @@ const span = `${Math.min(...years)}–${Math.max(...years)}`;
   <div class="wrap">
     <div class="sec-head reveal">
       <h2 id="work-h">Selected work</h2>
-      <span class="label">{PROJECTS.length} projects · {span}</span>
+      <span class="label">{projects.length} projects · {span}</span>
     </div>
     <div class="work-grid">
       {
-        PROJECTS.map((p, i) => (
+        projects.map((p, i) => (
           <a
-            class:list={['card', 'reveal', { feature: p.feature }]}
+            class:list={['card', 'reveal', { feature: p.feature, flip: p.flip }]}
             href={`/work/${p.slug}/`}
             data-project={p.slug}
             style={`--d:${(i * 0.08).toFixed(2)}s`}

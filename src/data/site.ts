@@ -17,7 +17,7 @@ export const ROTATING_WORDS = ['think.', 'scale.', 'feel instant.', 'people trus
 export const MAIN_TOOLS = ['React', 'TypeScript', 'FastAPI', 'Python', 'scikit-learn', 'Tailwind CSS'];
 
 export const TECH_STRIP = [
-  'React', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'FastAPI', 'Python', 'Pydantic', 'WebSockets',
+  'React', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'FastAPI', 'Python', 'Pydantic', 'WebSockets',
   'Node.js', 'scikit-learn', 'pandas', 'NumPy', 'LightGBM', 'XGBoost', 'Streamlit', 'Git',
 ];
 
@@ -34,8 +34,8 @@ export const SKILLS: Skill[] = [
     title: 'Frontend',
     icon: 'frontend',
     text: 'Interfaces that load fast, respond instantly and work for everyone, keyboard and screen reader users included.',
-    tools: ['React', 'TypeScript', 'Tailwind CSS', 'Accessibility'],
-    proof: { label: 'Smart Front Desk', slug: 'front-desk' },
+    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Accessibility'],
+    proof: { label: 'EthioFoodCast', slug: 'ethiofoodcast' },
   },
   {
     title: 'Backend',

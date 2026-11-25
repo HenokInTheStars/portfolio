@@ -68,6 +68,8 @@
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* Lenis drives scrolling itself; native smooth scrolling would fight it */
+html.lenis, html.lenis body { scroll-behavior: auto !important; }
 [id] { scroll-margin-top: 84px; }
 [hidden] { display: none !important; }
 img, svg { max-width: 100%; }
@@ -224,6 +226,11 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .card:hover::after { opacity: 1; }
 .card.feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; gap: 28px; padding: 14px 28px 14px 14px; }
 @media (max-width: 760px) { .card.feature { grid-template-columns: minmax(0, 1fr); padding: 14px 14px 22px; gap: 18px; } }
+/* Second feature card mirrors the first: picture on the right */
+@media (min-width: 761px) {
+  .card.feature.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); padding: 14px 14px 14px 28px; }
+  .card.feature.flip .cover { order: 2; }
+}
 .card-body { display: flex; flex-direction: column; gap: 10px; padding: 0 8px; min-width: 0; }
 .card-title {
   font-family: var(--f-display); font-weight: 600; font-size: clamp(1.35rem, 2.2vw, 1.7rem);
@@ -283,6 +290,42 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .in .cover-flight .area, .d-cover .cover-flight .area { animation: fadein 1.2s .6s var(--ease) both; }
 @keyframes draw { from { stroke-dashoffset: 1; } }
 @keyframes fadein { from { opacity: 0; } }
+
+/* Flame in Freefall: an Earth flame beside a round microgravity flame, on a night sky in both themes */
+.cover-flame { background: radial-gradient(120% 90% at 50% 0%, #10203a, var(--space-bg) 70%); }
+.cover-flame svg { width: 96%; height: 92%; }  /* scales to fit any frame shape */
+.cover-flame text { fill: var(--space-muted); font: 500 10px var(--f-mono); letter-spacing: .08em; }
+.ffl-stars circle { fill: var(--space-fg); opacity: .55; }
+.ffl-tear { transform-box: fill-box; transform-origin: 50% 100%; animation: ffl-flicker 1.6s ease-in-out infinite alternate; }
+.ffl-wick { fill: #8a96a8; }
+.ffl-ball { transform-box: fill-box; transform-origin: center; animation: ffl-pulse 4s ease-in-out infinite alternate; }
+.ffl-drop { fill: #cfe2ff; }
+.ffl-scale line { stroke: var(--space-line); stroke-width: 2; }
+.ffl-scale .ffl-tick { stroke: var(--space-glow); }
+.ffl-scale text { fill: var(--space-fg); font-size: 9.5px; }
+@keyframes ffl-flicker { 0% { transform: scale(1, 1) skewX(0deg); } 50% { transform: scale(.96, 1.05) skewX(1.5deg); } 100% { transform: scale(1.02, .97) skewX(-1deg); } }
+@keyframes ffl-pulse { from { transform: scale(.97); opacity: .85; } to { transform: scale(1.04); opacity: 1; } }
+
+/* EthioFoodCast: a household risk card on warm farmland tones */
+.cover-food { background: linear-gradient(160deg, color-mix(in srgb, var(--warn) 16%, var(--sunk)), color-mix(in srgb, var(--accent) 12%, var(--sunk))); }
+.risk {
+  width: min(84%, 30em); background: var(--surface); border-radius: 1em; padding: 1em 1.1em; display: flex; flex-direction: column; gap: .75em;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -26px rgba(0,0,0,.45);
+}
+.risk-head { display: flex; justify-content: space-between; align-items: center; gap: .8em; font: 500 .8em var(--f-mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.risk-band { padding: .2em .6em; border-radius: 999px; background: var(--bad-soft); color: var(--bad); white-space: nowrap; }
+.risk-score { display: flex; align-items: center; gap: .9em; }
+.risk-score b { font: 600 1.9em var(--f-display); letter-spacing: -.02em; line-height: 1; }
+.risk-bar { position: relative; flex: 1; height: .5em; border-radius: 999px; background: linear-gradient(90deg, var(--ok), var(--warn) 55%, var(--bad)); opacity: .9; }
+.risk-bar i { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: inherit; background: transparent; }
+.risk-bar em { position: absolute; top: 50%; left: 81%; width: .95em; height: .95em; margin: -.475em 0 0 -.475em; border-radius: 50%; background: var(--surface); border: .2em solid var(--ink); }
+.risk-drivers { list-style: none; margin: 0; padding: .55em 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: .4em; }
+.risk-drivers li { display: flex; justify-content: space-between; gap: .8em; }
+.risk-drivers small { color: var(--bad); font: 500 .8em var(--f-mono); white-space: nowrap; }
+.risk-drivers small.down { color: var(--ok); }
+.risk-drivers span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.in .cover-food .risk-bar em, .d-cover .cover-food .risk-bar em, .card:hover .cover-food .risk-bar em { animation: risk-slide 1.4s var(--ease) both; }
+@keyframes risk-slide { from { left: 8%; } }
 
 .cover-desk { background: linear-gradient(160deg, var(--sunk), color-mix(in srgb, var(--ok) 12%, var(--sunk))); }
 .kiosk {
@@ -478,6 +521,10 @@ section.block { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var
 .pv-txt { fill: var(--ink); font: 500 11px var(--f-body); }
 .pv-txt-me { fill: var(--on-accent); font: 500 11px var(--f-body); }
 .pv-tag { fill: var(--accent-soft); }
+.pv-ok-bg { fill: var(--ok-soft); }
+.pv-ok-t { fill: var(--ok); font: 600 9.5px var(--f-mono); }
+.pv-bad-bg { fill: var(--bad-soft); }
+.pv-bad-t { fill: var(--bad); font: 600 9.5px var(--f-mono); }
 .pv-tag-t { fill: var(--accent); font: 500 9px var(--f-mono); letter-spacing: .04em; }
 
 /* ---------- Timeline (About) ---------- */
@@ -509,7 +556,7 @@ footer.space {
 }
 .stars { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .space-inner { position: relative; z-index: 1; width: 100%; flex: 1; display: flex; flex-direction: column; gap: clamp(20px, 3.5vh, 36px); }
-#giant-box { margin-top: auto; }
+#giant-box { margin-top: auto; text-align: center; }
 .space-kicker { color: var(--space-muted); margin: 0 0 8px; }
 .space-line { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: clamp(1.6rem, min(3.2vw, 5.5vh), 2.5rem); letter-spacing: -.025em; line-height: 1.1; max-width: 18ch; text-wrap: balance; }
 .rocket { position: relative; z-index: 60; width: 30px; height: 34px; display: grid; place-items: center; }
@@ -824,6 +871,14 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
 .sky.complete .cst-line { opacity: 1; filter: drop-shadow(0 0 1.2px var(--space-glow)); }
 .sky.complete .sky-fig { animation: sky-found 1.8s var(--ease) 1; }
 .sky.complete .sky-title { color: var(--space-glow); }
+/* After all stars are lit: the constellation rocket lifts off and lands */
+.cst-flame { fill: url(#cst-flame-g); opacity: 0; transform-box: fill-box; transform-origin: 50% 0; transition: opacity .25s; pointer-events: none; }
+.sky.burning .cst-flame { opacity: 1; animation: cst-flicker .08s ease-in-out infinite alternate; }
+@keyframes cst-flicker { from { transform: scale(.85, .8); } to { transform: scale(1.1, 1.15); } }
+.sky.launching .cst-star.lit .cst-core { fill: #ffffff; }
+.sky.landed { cursor: pointer; }
+.sky-title { transition: opacity .4s; }
+.sky.launching .sky-title { opacity: 0; } /* keeps the flame off the caption text; the label shows the flight stage */
 @keyframes sky-found {
   0% { filter: drop-shadow(0 0 0 transparent); }
   35% { filter: drop-shadow(0 0 8px var(--space-glow)); }
@@ -858,14 +913,112 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
   background-size: 560px 420px; opacity: .8;
   animation: night-drift 120s linear infinite, night-twinkle 4s ease-in-out infinite alternate;
 }
-/* faint nebula glow */
+/* nebula: layered teal, violet and rose clouds that slowly breathe */
 .night-sky i {
   inset: 0;
   background:
-    radial-gradient(60vmax 40vmax at 85% 10%, rgb(45 212 191 / .10), transparent 60%),
-    radial-gradient(50vmax 35vmax at 5% 80%, rgb(99 102 241 / .10), transparent 60%);
+    radial-gradient(60vmax 40vmax at 85% 8%, rgb(45 212 191 / .13), transparent 60%),
+    radial-gradient(40vmax 26vmax at 70% 30%, rgb(168 85 247 / .11), transparent 62%),
+    radial-gradient(50vmax 35vmax at 4% 82%, rgb(99 102 241 / .13), transparent 60%),
+    radial-gradient(34vmax 22vmax at 24% 98%, rgb(236 72 153 / .08), transparent 62%);
 }
 @keyframes night-drift { to { transform: translateY(50%); } }
 @keyframes night-twinkle { from { opacity: .45; } to { opacity: .9; } }
 :root[data-theme="night"] .site-header { background: color-mix(in srgb, var(--bg) 70%, transparent); }
-@media (prefers-reduced-motion: reduce) { .night-sky::before, .night-sky::after { animation: none; } }
+
+/* Objects in the night sky. Kept near the edges and dimmed so text stays readable. */
+.night-sky .ns { position: absolute; display: block; }
+
+/* Moon: shaded sphere with craters, top right */
+.ns-moon {
+  right: clamp(14px, 6vw, 96px); top: 15vh; width: clamp(58px, 7.5vw, 118px); aspect-ratio: 1; border-radius: 50%; opacity: .82;
+  background:
+    radial-gradient(circle at 63% 36%, rgb(60 58 52 / .22) 0 7%, transparent 8%),
+    radial-gradient(circle at 38% 62%, rgb(60 58 52 / .18) 0 10%, transparent 11%),
+    radial-gradient(circle at 70% 69%, rgb(60 58 52 / .16) 0 5%, transparent 6%),
+    radial-gradient(circle at 28% 34%, rgb(60 58 52 / .12) 0 4%, transparent 5%),
+    radial-gradient(circle at 32% 30%, #f7f4ea, #d4d0c4 52%, #9e9a90);
+  box-shadow: inset -16px -9px 26px rgb(3 6 12 / .78), 0 0 40px 6px rgb(210 225 255 / .13), 0 0 130px 34px rgb(150 180 255 / .07);
+}
+
+/* Black hole: glowing accretion disk spinning around a dark core, half off the left edge */
+.ns-bh { left: clamp(-120px, -6vw, -44px); top: 52vh; width: clamp(170px, 22vw, 320px); aspect-ratio: 1; opacity: .85; }
+.ns-bh::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgb(255 170 90 / 0), rgb(255 196 128 / .9) 12%, rgb(255 112 60 / .45) 26%, rgb(255 170 90 / 0) 40%,
+    rgb(255 214 156 / .75) 58%, rgb(255 122 70 / .35) 74%, rgb(255 170 90 / 0));
+  -webkit-mask: radial-gradient(circle, transparent 28%, #000 33%, #000 56%, transparent 71%);
+  mask: radial-gradient(circle, transparent 28%, #000 33%, #000 56%, transparent 71%);
+  transform: rotateX(74deg); filter: blur(1.2px);
+}
+.ns-bh b {
+  position: absolute; inset: 37%; border-radius: 50%; background: #000;
+  box-shadow: 0 0 0 1.5px rgb(255 216 164 / .8), 0 0 16px 4px rgb(255 150 80 / .5), 0 0 70px 24px rgb(255 120 60 / .14);
+}
+/* the far side of the disk, bent over the top of the hole by gravity */
+.ns-bh::after {
+  content: ""; position: absolute; inset: 29%; border-radius: 50%;
+  border: 3px solid transparent; border-top-color: rgb(255 204 146 / .7); filter: blur(1.6px);
+}
+
+/* Ringed planet, bottom right */
+.ns-planet { right: clamp(22px, 9vw, 160px); bottom: 9vh; width: clamp(48px, 6vw, 92px); aspect-ratio: 1; rotate: -18deg; opacity: .9; }
+.ns-planet b {
+  position: absolute; inset: 0; z-index: 1; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #b4f5ea, #2fa596 44%, #0d3d45 82%);
+  box-shadow: inset -10px -6px 16px rgb(3 6 12 / .72), 0 0 30px rgb(45 212 191 / .18);
+}
+.ns-planet::before, .ns-planet::after {
+  content: ""; position: absolute; left: -58%; right: -58%; top: 37%; bottom: 37%; border-radius: 50%;
+  border: 2px solid rgb(206 240 234 / .6); box-shadow: 0 0 0 5px rgb(206 240 234 / .08);
+}
+.ns-planet::before { z-index: 0; clip-path: inset(0 0 50% 0); } /* back half, behind the planet */
+.ns-planet::after { z-index: 2; clip-path: inset(50% 0 0 0); }  /* front half, over the planet */
+
+/* Small red planet, top left */
+.ns-mars {
+  left: 11vw; top: 27vh; width: 11px; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 34% 32%, #ffc2a6, #c4573a 72%); box-shadow: 0 0 12px rgb(255 120 80 / .45);
+}
+
+/* Shooting stars, a couple of times a minute */
+.ns-shoot {
+  position: absolute; top: 10vh; left: 22vw; width: 150px; height: 1.5px; border-radius: 2px; opacity: 0;
+  background: linear-gradient(90deg, rgb(255 255 255 / 0), #ffffff); transform: rotate(18deg);
+}
+.ns-shoot.s2 { top: 34vh; left: 56vw; width: 110px; }
+
+:root[data-theme="night"] .ns-bh::before { animation: ns-spin 16s linear infinite; }
+:root[data-theme="night"] .night-sky i { animation: ns-breathe 16s ease-in-out infinite alternate; }
+:root[data-theme="night"] .ns-mars { animation: night-twinkle 5s ease-in-out infinite alternate; }
+:root[data-theme="night"] .ns-shoot { animation: ns-shoot 13s linear 4s infinite; }
+:root[data-theme="night"] .ns-shoot.s2 { animation-duration: 17s; animation-delay: 10s; }
+@keyframes ns-spin { from { transform: rotateX(74deg) rotateZ(0deg); } to { transform: rotateX(74deg) rotateZ(360deg); } }
+@keyframes ns-breathe { from { opacity: .7; transform: scale(1); } to { opacity: 1; transform: scale(1.06); } }
+@keyframes ns-shoot {
+  0% { opacity: 0; transform: rotate(18deg) translateX(0); }
+  1% { opacity: 1; }
+  6% { opacity: 0; transform: rotate(18deg) translateX(38vw); }
+  100% { opacity: 0; transform: rotate(18deg) translateX(38vw); }
+}
+
+/* Depth: as the page scrolls, nearer objects drift faster than far ones */
+@supports (animation-timeline: scroll()) {
+  :root[data-theme="night"] .ns-moon { animation: ns-par-far linear both; animation-timeline: scroll(root); }
+  :root[data-theme="night"] .ns-mars { animation: night-twinkle 5s ease-in-out infinite alternate, ns-par-far linear both; animation-timeline: auto, scroll(root); }
+  :root[data-theme="night"] .ns-bh { animation: ns-par-mid linear both; animation-timeline: scroll(root); }
+  :root[data-theme="night"] .ns-planet { animation: ns-par-near linear both; animation-timeline: scroll(root); }
+}
+@keyframes ns-par-far { to { translate: 0 -12vh; } }
+@keyframes ns-par-mid { to { translate: 0 -30vh; } }
+@keyframes ns-par-near { to { translate: 0 -48vh; } }
+
+@media (max-width: 640px) {
+  .ns-bh { top: 64vh; opacity: .6; }
+  .ns-moon { top: 11vh; opacity: .7; }
+  .ns-planet { bottom: 5vh; opacity: .75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .night-sky::before, .night-sky::after, .night-sky i, .night-sky .ns, .ns-bh::before { animation: none !important; }
+  .ns-shoot { display: none; }
+}

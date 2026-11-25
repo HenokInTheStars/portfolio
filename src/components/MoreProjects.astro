@@ -7,19 +7,19 @@ import { previewSvg } from '../lib/previews';
   <div class="wrap">
     <div class="sec-head reveal">
       <h2 id="more-h">More projects</h2>
-      <span class="label">Code on GitHub</span>
+      <span class="label">Case studies and code</span>
     </div>
     <ul class="rows reveal" id="rows">
       {
         MORE_PROJECTS.map((m) => (
           <li>
-            <a class="row" href={m.repo} target="_blank" rel="noopener" data-prev={m.preview}>
+            <a class="row" href={m.href} target={m.external ? '_blank' : undefined} rel={m.external ? 'noopener' : undefined} data-prev={m.preview}>
               <span class="row-name">{m.name}</span>
               <span class="row-line">{m.line}</span>
               <span class="row-stack">{m.stack}</span>
               <span class="row-type label">{m.type}</span>
-              <span class="row-arrow" aria-hidden="true">↗</span>
-              <span class="sr-only">(code on GitHub, opens in a new tab)</span>
+              <span class="row-arrow" aria-hidden="true">{m.external ? '↗' : '→'}</span>
+              {m.external && <span class="sr-only">(code on GitHub, opens in a new tab)</span>}
             </a>
           </li>
         ))

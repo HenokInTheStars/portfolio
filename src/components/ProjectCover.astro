@@ -45,6 +45,73 @@ const vtAttr = vt ? { 'data-vt': 'cover' } : {};
   )
 }
 {
+  kind === 'food' && (
+    <div class="cover cover-food" aria-hidden="true" {...vtAttr}>
+      <div class="risk">
+        <div class="risk-head"><span>Household assessment</span><span class="risk-band">High risk</span></div>
+        <div class="risk-score">
+          <b>0.81</b>
+          <span class="risk-bar"><i /><em /></span>
+        </div>
+        <ul class="risk-drivers">
+          <li><span>Rainfall below normal</span><small>raises risk</small></li>
+          <li><span>Few livestock</span><small>raises risk</small></li>
+          <li><span>Irrigated land</span><small class="down">lowers risk</small></li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+{
+  kind === 'flame' && (
+    <div class="cover cover-flame" aria-hidden="true" {...vtAttr}>
+      <svg viewBox="0 0 400 230">
+        <defs>
+          <radialGradient id="ffl-earth" cx="50%" cy="72%" r="60%">
+            <stop offset="0%" stop-color="#fff4c2" />
+            <stop offset="35%" stop-color="#ffd27a" />
+            <stop offset="75%" stop-color="#ff7a3d" />
+            <stop offset="100%" stop-color="#ff7a3d" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="ffl-halo" cx="50%" cy="55%" r="50%">
+            <stop offset="0%" stop-color="#ff9a4d" stop-opacity=".35" />
+            <stop offset="100%" stop-color="#ff9a4d" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="ffl-orbit" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#5b8cff" stop-opacity="0" />
+            <stop offset="62%" stop-color="#5b8cff" stop-opacity=".15" />
+            <stop offset="86%" stop-color="#7fb2ff" stop-opacity=".95" />
+            <stop offset="100%" stop-color="#cfe2ff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <g class="ffl-stars">
+          <circle cx="28" cy="26" r="1" /><circle cx="96" cy="58" r=".8" /><circle cx="170" cy="18" r="1.1" />
+          <circle cx="232" cy="44" r=".7" /><circle cx="318" cy="22" r="1" /><circle cx="372" cy="70" r=".8" />
+          <circle cx="56" cy="128" r=".7" /><circle cx="352" cy="132" r="1" /><circle cx="204" cy="110" r=".6" />
+        </g>
+        <g class="ffl-earth">
+          <ellipse cx="112" cy="108" rx="56" ry="66" fill="url(#ffl-halo)" />
+          <path class="ffl-tear" d="M112 46 C 124 74, 146 96, 140 122 C 135 145, 89 145, 84 122 C 78 96, 100 74, 112 46 Z" fill="url(#ffl-earth)" />
+          <rect x="109" y="138" width="6" height="16" rx="2" class="ffl-wick" />
+        </g>
+        <g class="ffl-orbit">
+          <circle class="ffl-ball" cx="288" cy="104" r="44" fill="url(#ffl-orbit)" />
+          <circle class="ffl-drop" cx="288" cy="104" r="3.5" />
+        </g>
+        <text x="112" y="176" text-anchor="middle">EARTH · 1 g</text>
+        <text x="288" y="176" text-anchor="middle">ORBIT · µg</text>
+        <g class="ffl-scale">
+          <line x1="40" y1="206" x2="360" y2="206" />
+          <line class="ffl-tick" x1="149" y1="200" x2="149" y2="212" />
+          <line class="ffl-tick" x1="240" y1="200" x2="240" y2="212" />
+          <text x="149" y="196" text-anchor="middle">16.8% O₂ · ISS</text>
+          <text x="240" y="224" text-anchor="middle">~18.5% O₂ · Earth</text>
+        </g>
+      </svg>
+    </div>
+  )
+}
+{
   kind === 'desk' && (
     <div class="cover cover-desk" aria-hidden="true" {...vtAttr}>
       <div class="kiosk">

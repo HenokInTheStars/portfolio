@@ -43,17 +43,30 @@ const stars = Object.entries(STARS).map(([k, [x, y]], i) => ({
     <g class="sky-bg" id="sky-bg">
       {background.map((s) => <circle cx={s.cx} cy={s.cy} r={s.r} style={s.style} />)}
     </g>
+    <defs>
+      <linearGradient id="cst-flame-g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff4c2" />
+        <stop offset="35%" stop-color="#ffd27a" />
+        <stop offset="75%" stop-color="#ff7a3d" />
+        <stop offset="100%" stop-color="#ff7a3d" stop-opacity="0" />
+      </linearGradient>
+    </defs>
     <g class="sky-fig" id="sky-fig">
-      {lines.map(({ a, b, ka, kb, i }) => <line class="cst-line" data-a={ka} data-b={kb} pathLength="1" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} style={`--i:${i}`} />)}
-      {
-        stars.map((s) => (
-          <g class="cst-star" data-k={s.k} style={s.style}>
-            <circle class="cst-halo" cx={s.x} cy={s.y} r={(s.r * 2.6).toFixed(1)} />
-            <circle class="cst-core" cx={s.x} cy={s.y} r={s.r} />
-            <circle class="cst-hit" cx={s.x} cy={s.y} r="7" />
-          </g>
-        ))
-      }
+      <!-- Exhaust sparks are drawn here so they stay behind as the rocket climbs (easter egg) -->
+      <g id="sky-trail"></g>
+      <g class="sky-ship" id="sky-ship">
+        <path class="cst-flame" d="M62 147 Q70 151 78 147 Q76 162 70 180 Q64 162 62 147 Z" />
+        {lines.map(({ a, b, ka, kb, i }) => <line class="cst-line" data-a={ka} data-b={kb} pathLength="1" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} style={`--i:${i}`} />)}
+        {
+          stars.map((s) => (
+            <g class="cst-star" data-k={s.k} style={s.style}>
+              <circle class="cst-halo" cx={s.x} cy={s.y} r={(s.r * 2.6).toFixed(1)} />
+              <circle class="cst-core" cx={s.x} cy={s.y} r={s.r} />
+              <circle class="cst-hit" cx={s.x} cy={s.y} r="7" />
+            </g>
+          ))
+        }
+      </g>
     </g>
   </svg>
   <figcaption><span class="label sky-label">Constellation</span><span class="sky-title">Henok in the Stars</span></figcaption>
