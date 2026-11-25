@@ -21,9 +21,13 @@ RewriteRule ^ https://www.%1%{REQUEST_URI} [R=301,L]
   <FilesMatch "\.(js|css|woff2?|png|svg)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  <FilesMatch "\.(html|xml|txt)$">
+  <FilesMatch "\.(html|xml|txt|pdf)$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # The CV has a phone number: let people download it, but keep it out of search results
+  <Files "resume.pdf">
+    Header set X-Robots-Tag "noindex, nofollow"
+  </Files>
 </IfModule>

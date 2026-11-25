@@ -2,7 +2,7 @@
 import ProjectCover from './ProjectCover.astro';
 import { FAN_ORDER, getProject } from '../data/projects';
 import { MAIN_TOOLS, ROTATING_WORDS } from '../data/site';
-import { HAS_RESUME, RESUME_PATH } from '../data/resume';
+import { HAS_RESUME, RESUME_DOWNLOAD_NAME, RESUME_PATH } from '../data/resume';
 
 const fan = FAN_ORDER.map((slug) => getProject(slug)!);
 
@@ -46,8 +46,8 @@ const spoken = `I build web apps that ${ROTATING_WORDS.slice(0, -1).map((w) => w
       <a class="btn btn-primary magnetic" href="#work">See my work <span class="arrow" aria-hidden="true">→</span></a>
       {
         HAS_RESUME ? (
-          <a class="btn btn-ghost magnetic" href={RESUME_PATH} target="_blank" rel="noopener">
-            Download résumé <span class="arrow" aria-hidden="true">↓</span>
+          <a class="btn btn-ghost magnetic cv-btn" href={RESUME_PATH} download={RESUME_DOWNLOAD_NAME}>
+            Download CV <span class="arrow" aria-hidden="true">↓</span>
           </a>
         ) : (
           <a class="btn btn-ghost magnetic" href="#contact">Get in touch</a>

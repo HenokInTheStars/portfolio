@@ -8,8 +8,11 @@ export const SITE = {
   githubLabel: 'github.com/HenokInTheStars',
   linkedin: 'https://www.linkedin.com/in/henok-solomon-ai',
   location: 'Addis Ababa (UTC+3)',
-  /** FormSubmit alias for the email above; keeps the raw address out of the form endpoint. */
-  formId: '654be654f596ab445f997f25b36c13fb',
+  /**
+   * Web3Forms access key for the contact form (get one free at web3forms.com).
+   * It is public by design: it can only send mail to the inbox it was created for.
+   */
+  formKey: '82c09e7f-84bd-4d5e-bfcf-6ea45cf88762',
 } as const;
 
 export const ROTATING_WORDS = ['think.', 'scale.', 'feel instant.', 'people trust.'];
@@ -53,30 +56,41 @@ export const SKILLS: Skill[] = [
   },
 ];
 
-export interface TimelineEntry {
+/** Experience section, kept in step with the CV (public/resume.pdf). Newest first. */
+export interface ExperienceEntry {
   when: string;
-  title: string;
-  sub: string;
-  text?: string;
+  role: string;
+  org: string;
+  meta: string;
+  current?: boolean;
+  points: string[];
+  tools?: string[];
+  link?: { label: string; href: string };
 }
 
-export const TIMELINE: TimelineEntry[] = [
+export const EXPERIENCE: ExperienceEntry[] = [
   {
-    when: '2025 – now',
-    title: 'Full-stack developer',
-    sub: 'Independent and contract projects · Addis Ababa',
-    text: 'React, TypeScript and FastAPI apps with real-time features and schema-first validation.',
-  },
-  {
-    when: '2024 – 2025',
-    title: 'Machine learning projects',
-    sub: 'Open source',
-    text: 'Spam detection, flight fare prediction, anomaly detection and customer segmentation.',
+    when: 'Jul 2026 – Present',
+    role: 'Full-Stack Developer & AI Engineer',
+    org: 'Matrix Technology',
+    meta: 'Addis Ababa · Joined as an intern, moved to full-time',
+    current: true,
+    points: [
+      'Designed and built an end-to-end RAG system (ingestion, chunking, embeddings, retrieval, LLM generation) that lets staff search internal documents in plain language.',
+      'Built a smart front desk management application end to end with Next.js, TypeScript, FastAPI and PostgreSQL, from UI to API to database design.',
+      'Developed and optimized REST APIs and PostgreSQL schemas for reliable, fast data handling, testing endpoints with Postman.',
+    ],
+    tools: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL', 'RAG', 'Postman'],
   },
 ];
 
-/**
- * Fill this in to show education in the About timeline.
- * Example: { when: '2024', title: 'B.Sc. Computer Science', sub: 'Addis Ababa University' }
- */
-export const EDUCATION: TimelineEntry | null = null;
+export interface EducationEntry {
+  when: string;
+  title: string;
+  org: string;
+}
+
+export const EDUCATION: EducationEntry[] = [
+  { when: 'June 2025', title: 'B.Sc. in Computer Science', org: 'Debre Tabor University' },
+  { when: 'June 2024', title: 'Level V Diploma, Industrial Automation & PLC Programming', org: 'Debre Tabor Polytechnic College' },
+];
