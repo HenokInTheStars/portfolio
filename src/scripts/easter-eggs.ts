@@ -1,8 +1,8 @@
 /**
  * Easter eggs:
  *  1. A note for developers in the browser console.
- *  2. Konami code (↑ ↑ ↓ ↓ ← → ← → B A): the rocket logo launches across the screen.
- *  3. Light every star in the About constellation.
+ *  2. Arrow code (↑ ↑ ↓ ↓ ← → ← →): the rocket logo launches across the screen.
+ *  3. Light every star in the About constellation: the constellation rocket lifts off and lands again.
  */
 import { prefersReducedMotion } from './motion';
 
@@ -45,14 +45,14 @@ function consoleNote() {
   console.log(
     "%cHey, you're inspecting my code. I like you already.%c\n" +
       "Let's talk: hhhenoksolomon@gmail.com · github.com/HenokInTheStars\n\n" +
-      'Psst… there are two more secrets on this site. One starts with ↑ ↑ ↓ ↓.',
+      'Psst… there are more secrets on this site. Try typing ↑ ↑ ↓ ↓ ← → ← → on your keyboard.',
     'font:600 14px system-ui,sans-serif;color:#2dd4bf',
     'font:13px system-ui,sans-serif;color:inherit',
   );
 }
 
-/* ---------- 2. Konami code → rocket launch ---------- */
-const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+/* ---------- 2. Arrow code → rocket launch ---------- */
+const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright'];
 let progress = 0;
 let launching = false;
 
@@ -148,6 +148,8 @@ function initConstellation() {
       sky.classList.add('complete');
       if (title) title.textContent = 'You found Henok in the Stars ✦';
       toast('✦ You found Henok in the Stars');
+      // Let the "found" glow play, then the constellation rocket lifts off.
+      window.setTimeout(() => launchConstellation(sky, label), 1500);
     }
   };
 
@@ -160,6 +162,114 @@ function initConstellation() {
       update();
     });
   }
+
+  // Once it has landed, clicking the sky launches it again.
+  sky.addEventListener('click', () => {
+    if (sky.classList.contains('landed')) launchConstellation(sky, label);
+  });
+}
+
+/**
+ * Ignition (rumble + sparks), climb out of the top of the frame, then a slow
+ * retro-burn landing back on the pad. Driven frame by frame so the exhaust
+ * sparks can be dropped at the rocket's tail as it moves.
+ */
+function launchConstellation(sky: HTMLElement, label: HTMLElement | null) {
+  const ship = sky.querySelector<SVGGElement>('#sky-ship');
+  const trail = sky.querySelector<SVGGElement>('#sky-trail');
+  if (!ship || !trail || sky.classList.contains('launching')) return;
+  if (prefersReducedMotion()) return;
+
+  const SVG = 'http://www.w3.org/2000/svg';
+  const IGNITE = 1100;
+  const CLIMB = 1700;
+  const COAST = 700;
+  const LAND = 2200;
+  const TOP = -250; // far enough up that the whole rocket and its flame leave the frame
+  const TAIL_Y = 150;
+  const again = window.matchMedia('(pointer: fine)').matches ? 'Click to fly again' : 'Tap to fly again';
+
+  sky.classList.remove('landed');
+  sky.classList.add('launching');
+  if (label) label.textContent = 'Ignition';
+
+  const spark = (x: number, y: number, spread: number, fall: number) => {
+    const c = document.createElementNS(SVG, 'circle');
+    const hot = Math.random() < 0.6;
+    c.setAttribute('cx', (x + (Math.random() - 0.5) * 6).toFixed(1));
+    c.setAttribute('cy', y.toFixed(1));
+    c.setAttribute('r', (0.5 + Math.random() * 1.1).toFixed(2));
+    c.setAttribute('fill', hot ? (Math.random() < 0.5 ? '#ffd27a' : '#ff7a3d') : '#e6fffb');
+    trail.appendChild(c);
+    c.animate(
+      [
+        { opacity: 1, transform: 'translate(0px, 0px)' },
+        { opacity: 0, transform: `translate(${((Math.random() - 0.5) * spread).toFixed(1)}px, ${(fall * (0.6 + Math.random() * 0.8)).toFixed(1)}px)` },
+      ],
+      { duration: 700 + Math.random() * 600, easing: 'ease-out', fill: 'forwards' },
+    ).finished.then(() => c.remove());
+  };
+
+  const t0 = performance.now();
+  let lastSpark = 0;
+  let phase = '';
+  const setLabel = (text: string) => {
+    if (phase === text) return;
+    phase = text;
+    if (label) label.textContent = text;
+  };
+
+  const frame = (now: number) => {
+    const t = now - t0;
+    let x = 0;
+    let y = 0;
+    let burning = true;
+    let spread = 10;
+    let fall = 16;
+
+    if (t < IGNITE) {
+      // Rumble on the pad, growing stronger; smoke and sparks spray sideways.
+      const k = t / IGNITE;
+      x = Math.sin(t / 16) * 0.9 * k;
+      y = Math.sin(t / 23) * 0.35 * k;
+      spread = 34;
+      fall = 6;
+      setLabel(k < 0.5 ? 'Ignition' : 'Liftoff');
+    } else if (t < IGNITE + CLIMB) {
+      const k = (t - IGNITE) / CLIMB;
+      y = TOP * k ** 2.2;
+      x = Math.sin(t / 30) * 0.4 * (1 - k);
+      fall = 22;
+    } else if (t < IGNITE + CLIMB + COAST) {
+      y = TOP;
+      burning = false;
+      setLabel('In orbit');
+    } else if (t < IGNITE + CLIMB + COAST + LAND) {
+      // Come back down tail first, slowing to a soft touchdown.
+      const k = (t - IGNITE - CLIMB - COAST) / LAND;
+      y = TOP * (1 - k) ** 3;
+      spread = k > 0.85 ? 28 : 8;
+      fall = k > 0.85 ? 5 : 12;
+      setLabel('Landing');
+    } else {
+      ship.style.transform = '';
+      sky.classList.remove('launching', 'burning');
+      sky.classList.add('landed');
+      if (label) label.textContent = again;
+      toast('✦ Touchdown. Thanks for exploring');
+      return;
+    }
+
+    ship.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+    sky.classList.toggle('burning', burning);
+    if (burning && now - lastSpark > 34 && y > TOP + 20) {
+      lastSpark = now;
+      spark(70 + x, TAIL_Y + y, spread, fall);
+      spark(70 + x, TAIL_Y + y, spread, fall);
+    }
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
 }
 
 consoleNote();

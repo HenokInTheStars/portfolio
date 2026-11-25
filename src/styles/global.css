@@ -871,6 +871,14 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
 .sky.complete .cst-line { opacity: 1; filter: drop-shadow(0 0 1.2px var(--space-glow)); }
 .sky.complete .sky-fig { animation: sky-found 1.8s var(--ease) 1; }
 .sky.complete .sky-title { color: var(--space-glow); }
+/* After all stars are lit: the constellation rocket lifts off and lands */
+.cst-flame { fill: url(#cst-flame-g); opacity: 0; transform-box: fill-box; transform-origin: 50% 0; transition: opacity .25s; pointer-events: none; }
+.sky.burning .cst-flame { opacity: 1; animation: cst-flicker .08s ease-in-out infinite alternate; }
+@keyframes cst-flicker { from { transform: scale(.85, .8); } to { transform: scale(1.1, 1.15); } }
+.sky.launching .cst-star.lit .cst-core { fill: #ffffff; }
+.sky.landed { cursor: pointer; }
+.sky-title { transition: opacity .4s; }
+.sky.launching .sky-title { opacity: 0; } /* keeps the flame off the caption text; the label shows the flight stage */
 @keyframes sky-found {
   0% { filter: drop-shadow(0 0 0 transparent); }
   35% { filter: drop-shadow(0 0 8px var(--space-glow)); }
@@ -905,14 +913,112 @@ html.theme-vt::view-transition-new(root) { z-index: 2; }
   background-size: 560px 420px; opacity: .8;
   animation: night-drift 120s linear infinite, night-twinkle 4s ease-in-out infinite alternate;
 }
-/* faint nebula glow */
+/* nebula: layered teal, violet and rose clouds that slowly breathe */
 .night-sky i {
   inset: 0;
   background:
-    radial-gradient(60vmax 40vmax at 85% 10%, rgb(45 212 191 / .10), transparent 60%),
-    radial-gradient(50vmax 35vmax at 5% 80%, rgb(99 102 241 / .10), transparent 60%);
+    radial-gradient(60vmax 40vmax at 85% 8%, rgb(45 212 191 / .13), transparent 60%),
+    radial-gradient(40vmax 26vmax at 70% 30%, rgb(168 85 247 / .11), transparent 62%),
+    radial-gradient(50vmax 35vmax at 4% 82%, rgb(99 102 241 / .13), transparent 60%),
+    radial-gradient(34vmax 22vmax at 24% 98%, rgb(236 72 153 / .08), transparent 62%);
 }
 @keyframes night-drift { to { transform: translateY(50%); } }
 @keyframes night-twinkle { from { opacity: .45; } to { opacity: .9; } }
 :root[data-theme="night"] .site-header { background: color-mix(in srgb, var(--bg) 70%, transparent); }
-@media (prefers-reduced-motion: reduce) { .night-sky::before, .night-sky::after { animation: none; } }
+
+/* Objects in the night sky. Kept near the edges and dimmed so text stays readable. */
+.night-sky .ns { position: absolute; display: block; }
+
+/* Moon: shaded sphere with craters, top right */
+.ns-moon {
+  right: clamp(14px, 6vw, 96px); top: 15vh; width: clamp(58px, 7.5vw, 118px); aspect-ratio: 1; border-radius: 50%; opacity: .82;
+  background:
+    radial-gradient(circle at 63% 36%, rgb(60 58 52 / .22) 0 7%, transparent 8%),
+    radial-gradient(circle at 38% 62%, rgb(60 58 52 / .18) 0 10%, transparent 11%),
+    radial-gradient(circle at 70% 69%, rgb(60 58 52 / .16) 0 5%, transparent 6%),
+    radial-gradient(circle at 28% 34%, rgb(60 58 52 / .12) 0 4%, transparent 5%),
+    radial-gradient(circle at 32% 30%, #f7f4ea, #d4d0c4 52%, #9e9a90);
+  box-shadow: inset -16px -9px 26px rgb(3 6 12 / .78), 0 0 40px 6px rgb(210 225 255 / .13), 0 0 130px 34px rgb(150 180 255 / .07);
+}
+
+/* Black hole: glowing accretion disk spinning around a dark core, half off the left edge */
+.ns-bh { left: clamp(-120px, -6vw, -44px); top: 52vh; width: clamp(170px, 22vw, 320px); aspect-ratio: 1; opacity: .85; }
+.ns-bh::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgb(255 170 90 / 0), rgb(255 196 128 / .9) 12%, rgb(255 112 60 / .45) 26%, rgb(255 170 90 / 0) 40%,
+    rgb(255 214 156 / .75) 58%, rgb(255 122 70 / .35) 74%, rgb(255 170 90 / 0));
+  -webkit-mask: radial-gradient(circle, transparent 28%, #000 33%, #000 56%, transparent 71%);
+  mask: radial-gradient(circle, transparent 28%, #000 33%, #000 56%, transparent 71%);
+  transform: rotateX(74deg); filter: blur(1.2px);
+}
+.ns-bh b {
+  position: absolute; inset: 37%; border-radius: 50%; background: #000;
+  box-shadow: 0 0 0 1.5px rgb(255 216 164 / .8), 0 0 16px 4px rgb(255 150 80 / .5), 0 0 70px 24px rgb(255 120 60 / .14);
+}
+/* the far side of the disk, bent over the top of the hole by gravity */
+.ns-bh::after {
+  content: ""; position: absolute; inset: 29%; border-radius: 50%;
+  border: 3px solid transparent; border-top-color: rgb(255 204 146 / .7); filter: blur(1.6px);
+}
+
+/* Ringed planet, bottom right */
+.ns-planet { right: clamp(22px, 9vw, 160px); bottom: 9vh; width: clamp(48px, 6vw, 92px); aspect-ratio: 1; rotate: -18deg; opacity: .9; }
+.ns-planet b {
+  position: absolute; inset: 0; z-index: 1; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #b4f5ea, #2fa596 44%, #0d3d45 82%);
+  box-shadow: inset -10px -6px 16px rgb(3 6 12 / .72), 0 0 30px rgb(45 212 191 / .18);
+}
+.ns-planet::before, .ns-planet::after {
+  content: ""; position: absolute; left: -58%; right: -58%; top: 37%; bottom: 37%; border-radius: 50%;
+  border: 2px solid rgb(206 240 234 / .6); box-shadow: 0 0 0 5px rgb(206 240 234 / .08);
+}
+.ns-planet::before { z-index: 0; clip-path: inset(0 0 50% 0); } /* back half, behind the planet */
+.ns-planet::after { z-index: 2; clip-path: inset(50% 0 0 0); }  /* front half, over the planet */
+
+/* Small red planet, top left */
+.ns-mars {
+  left: 11vw; top: 27vh; width: 11px; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 34% 32%, #ffc2a6, #c4573a 72%); box-shadow: 0 0 12px rgb(255 120 80 / .45);
+}
+
+/* Shooting stars, a couple of times a minute */
+.ns-shoot {
+  position: absolute; top: 10vh; left: 22vw; width: 150px; height: 1.5px; border-radius: 2px; opacity: 0;
+  background: linear-gradient(90deg, rgb(255 255 255 / 0), #ffffff); transform: rotate(18deg);
+}
+.ns-shoot.s2 { top: 34vh; left: 56vw; width: 110px; }
+
+:root[data-theme="night"] .ns-bh::before { animation: ns-spin 16s linear infinite; }
+:root[data-theme="night"] .night-sky i { animation: ns-breathe 16s ease-in-out infinite alternate; }
+:root[data-theme="night"] .ns-mars { animation: night-twinkle 5s ease-in-out infinite alternate; }
+:root[data-theme="night"] .ns-shoot { animation: ns-shoot 13s linear 4s infinite; }
+:root[data-theme="night"] .ns-shoot.s2 { animation-duration: 17s; animation-delay: 10s; }
+@keyframes ns-spin { from { transform: rotateX(74deg) rotateZ(0deg); } to { transform: rotateX(74deg) rotateZ(360deg); } }
+@keyframes ns-breathe { from { opacity: .7; transform: scale(1); } to { opacity: 1; transform: scale(1.06); } }
+@keyframes ns-shoot {
+  0% { opacity: 0; transform: rotate(18deg) translateX(0); }
+  1% { opacity: 1; }
+  6% { opacity: 0; transform: rotate(18deg) translateX(38vw); }
+  100% { opacity: 0; transform: rotate(18deg) translateX(38vw); }
+}
+
+/* Depth: as the page scrolls, nearer objects drift faster than far ones */
+@supports (animation-timeline: scroll()) {
+  :root[data-theme="night"] .ns-moon { animation: ns-par-far linear both; animation-timeline: scroll(root); }
+  :root[data-theme="night"] .ns-mars { animation: night-twinkle 5s ease-in-out infinite alternate, ns-par-far linear both; animation-timeline: auto, scroll(root); }
+  :root[data-theme="night"] .ns-bh { animation: ns-par-mid linear both; animation-timeline: scroll(root); }
+  :root[data-theme="night"] .ns-planet { animation: ns-par-near linear both; animation-timeline: scroll(root); }
+}
+@keyframes ns-par-far { to { translate: 0 -12vh; } }
+@keyframes ns-par-mid { to { translate: 0 -30vh; } }
+@keyframes ns-par-near { to { translate: 0 -48vh; } }
+
+@media (max-width: 640px) {
+  .ns-bh { top: 64vh; opacity: .6; }
+  .ns-moon { top: 11vh; opacity: .7; }
+  .ns-planet { bottom: 5vh; opacity: .75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .night-sky::before, .night-sky::after, .night-sky i, .night-sky .ns, .ns-bh::before { animation: none !important; }
+  .ns-shoot { display: none; }
+}
