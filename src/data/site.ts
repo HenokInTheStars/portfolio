@@ -12,7 +12,7 @@ export const SITE = {
    * Web3Forms access key for the contact form (get one free at web3forms.com).
    * It is public by design: it can only send mail to the inbox it was created for.
    */
-  formKey: '',
+  formKey: '82c09e7f-84bd-4d5e-bfcf-6ea45cf88762',
 } as const;
 
 export const ROTATING_WORDS = ['think.', 'scale.', 'feel instant.', 'people trust.'];
